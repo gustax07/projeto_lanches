@@ -81,4 +81,19 @@ class Clientes
         return $comando->rowCount();
     }
 
+    //logar no sistema
+    public function Logar()
+    {
+        $sql = "SELECT * FROM clientes WHERE email = ? AND senha = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->email,
+            $hash = hash('sha256', $this->senha)
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
 }
