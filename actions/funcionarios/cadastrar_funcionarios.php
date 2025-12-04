@@ -6,7 +6,7 @@ $funcionarios = new funcionarios();
 $funcionarios->nome = $_POST['nome'];
 $funcionarios->email = $_POST['email'];
 $funcionarios->senha = $_POST['senha'];
-$funcionarios->id_cargos = $_POST['id_cargos'];
+$funcionarios->id_cargos_fk = $_POST['id_cargos'];
 $funcionarios->data_contratacao = $_POST['data_contratacao'];
 
 if ($funcionarios->nome == ''){

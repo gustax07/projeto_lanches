@@ -39,4 +39,46 @@ class funcionarios
         Banco::desconectar();
         return $comando->rowCount();
     }
+    //Listar funcionarios
+    public function Listar()
+    {
+        $sql = "SELECT * FROM funcionarios";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
+    //ListarPorID
+    public function ListarPorID()
+    {
+        $sql = "SELECT * FROM funcionarios WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+         $this->id
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
+    //Editar funcionarios
+    public function Editar(){
+        $sql = "UPDATE funcionarios SET nome = ?, email = ?, senha = ?, data_contratacao = ?, id_cargos_fk = ? WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->nome,
+            $this->email,
+            $this->senha,
+            $this->data_contratacao,
+            $this->id_cargos_fk,
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
 }
