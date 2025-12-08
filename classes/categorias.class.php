@@ -18,7 +18,7 @@ class Categorias{
 
     //adicionar categorias
     public function Cadastrar(){
-        $sql = "INSERT INTO categorias (nome_categoria) 
+        $sql = "INSERT INTO categorias (nome) 
         VALUES (?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);

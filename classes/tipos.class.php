@@ -2,12 +2,12 @@
 
 require_once('Banco.class.php');
 
-class Cargos{
+class Tipos{
     public $id;
-    public $nome_cargo;
+    public $nome_tipo;
 
     public function Listar(){
-        $sql = "SELECT * FROM cargos";
+        $sql = "SELECT * FROM tipos";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();

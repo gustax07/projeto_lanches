@@ -1,14 +1,14 @@
 <?php
 require_once("banco.class.php");
 
-class Lanches
+class Itens
 {
     public $id;
     public $nome;
     public $descricao;
     public $preco;
     public $imagem;
-    public $id_categorias_fk;
+    public $id_categoria_fk;
 
     //listar os itens
     public function Listar()
@@ -25,7 +25,7 @@ class Lanches
     //cadastrar um novo item
     public function Cadastrar()
     {
-        $sql = "INSERT INTO itens (nome, descricao, preco, imagem, id_categorias_fk) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO itens (nome, descricao, preco, imagem, id_categoria_fk) VALUES (?, ?, ?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -33,7 +33,7 @@ class Lanches
             $this->descricao,
             $this->preco,
             $this->imagem,
-            $this->id_categorias_fk
+            $this->id_categoria_fk
         ]);
         Banco::desconectar();
         return $comando->rowCount();
@@ -42,7 +42,7 @@ class Lanches
     //editar um item
     public function Editar()
     {
-        $sql = "UPDATE itens SET nome = ?, descricao = ?, preco = ?, imagem = ?, id_categorias_fk = ? WHERE id = ?";
+        $sql = "UPDATE itens SET nome = ?, descricao = ?, preco = ?, imagem = ?, id_categoria_fk = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -50,7 +50,7 @@ class Lanches
             $this->descricao,
             $this->preco,
             $this->imagem,
-            $this->id_categorias_fk,
+            $this->id_categoria_fk,
             $this->id
         ]);
         Banco::desconectar();
@@ -87,7 +87,7 @@ class Lanches
     //listar um item por id + innerJoin com a tabela de categoria
     public function ListarInnerJoin()
     {
-        $sql = "SELECT * FROM itens WHERE id = ? INNER JOIN categorias ON itens.id_categorias_fk = categorias.id";
+        $sql = "SELECT * FROM itens WHERE id = ? INNER JOIN categorias ON itens.id_categoria_fk = categorias.id";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([

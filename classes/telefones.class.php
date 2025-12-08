@@ -2,15 +2,15 @@
 
 require_once("banco.class.php");
 
-class telefones_funcionarios
+class Telefones
 {
     public $id;
-    public $id_funcionarios_fk;
+    public $id_usuarios_fk;
     public $numero;
 
-    //listar numeros dos funcionarios
+    //listar numeros
     public function Listar() {
-        $sql = "SELECT * FROM telefones_funcionarios";
+        $sql = "SELECT * FROM telefones";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -19,39 +19,39 @@ class telefones_funcionarios
         return $arr_resultado;
     }
 
-    //listar numeros por id dos funcionarios com innerjoin com o funcionario
+    //listar numeros por id com innerjoin com o usuario
     public function ListarInnerJoin() {
-        $sql = "SELECT * FROM telefones_funcionarios WHERE id_funcionarios_fk = ? INNER JOIN funcionarios ON telefones_funcionarios.id_funcionarios_fk = funcionarios.id";
+        $sql = "SELECT * FROM telefones WHERE id_usuarios_fk = ? INNER JOIN usuarios ON telefones.id_usuarios_fk = usuarios.id";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_funcionarios_fk
+            $this->id_usuarios_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
         return $arr_resultado;
     }
 
-    //cadastrar o numero do funcionario
+    //cadastrar o numero
     public function Cadastrar() {
-        $sql = "INSERT INTO telefones_funcionarios (id_funcionarios_fk, numero) VALUES (?, ?)";
+        $sql = "INSERT INTO telefones (id_usuarios_fk, numero) VALUES (?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_funcionarios_fk,
+            $this->id_usuarios_fk,
             $this->numero
         ]);
         Banco::desconectar();
         return $comando->rowCount();
     }
 
-    //editar o numero de um funcionario
+    //editar o numero
     public function Editar() {
-        $sql = "UPDATE telefones_funcionarios SET id_funcionarios_fk = ?, numero = ? WHERE id = ?";
+        $sql = "UPDATE telefones SET id_usuarios_fk = ?, numero = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_funcionarios_fk,
+            $this->id_usuarios_fk,
             $this->numero,
             $this->id
         ]);
@@ -59,9 +59,9 @@ class telefones_funcionarios
         return $comando->rowCount();
     }
 
-    //excluir o numero de um funcionario
+    //excluir o numero
     public function Excluir() {
-        $sql = "DELETE FROM telefones_funcionarios WHERE id = ?";
+        $sql = "DELETE FROM telefones WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([

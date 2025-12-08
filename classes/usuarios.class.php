@@ -2,18 +2,18 @@
 
 require_once('Banco.class.php');
 
-class funcionarios
+class Usuarios
 {
     public $id;
     public $nome;
     public $email;
     public $senha;
-    public $id_cargos_fk;
-    public $data_contratacao;
+    public $id_tipo_fk;
+    public $data_cadastro;
 
     public function Logar()
     {
-        $sql = "SELECT * FROM funcionarios WHERE email = ? AND senha = ?";
+        $sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -26,7 +26,7 @@ class funcionarios
     }
     public function Cadastrar()
     {
-        $sql = "INSERT INTO funcionarios (nome, email, senha, data_contratacao, id_cargos_fk)
+        $sql = "INSERT INTO usuarios (nome, email, senha, data_cadastro, id_tipo_fk)
         VALUES (?, ?, ?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -34,16 +34,16 @@ class funcionarios
             $this->nome,
             $this->email,
             $$hash = hash('sha256', $this->senha),
-            $this->data_contratacao,
-            $this->id_cargos_fk
+            $this->data_cadastro,
+            $this->id_tipo_fk
         ]);
         Banco::desconectar();
         return $comando->rowCount();
     }
-    //Listar funcionarios
+    //Listar usuarios
     public function Listar()
     {
-        $sql = "SELECT * FROM funcionarios";
+        $sql = "SELECT * FROM usuarios";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -55,7 +55,7 @@ class funcionarios
     //ListarPorID
     public function ListarPorID()
     {
-        $sql = "SELECT * FROM funcionarios WHERE id = ?";
+        $sql = "SELECT * FROM usuarios WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -66,32 +66,32 @@ class funcionarios
         return $arr_resultado;
     }
 
-    //Editar funcionarios
+    //Editar usuarios
     public function Editar()
     {
         if ($this->senha == null) {
-            $sql = "UPDATE funcionarios SET nome = ?, email = ?, data_contratacao = ?, id_cargos_fk = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, data_cadastro = ?, id_tipo_fk = ? WHERE id = ?";
             $banco = Banco::conectar();
             $comando = $banco->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
-                $this->data_contratacao,
-                $this->id_cargos_fk,
+                $this->data_cadastro,
+                $this->id_tipo_fk,
                 $this->id
             ]);
             Banco::desconectar();
             return $comando->rowCount();
         } else {
-            $sql = "UPDATE funcionarios SET nome = ?, email = ?, senha = ?, data_contratacao = ?, id_cargos_fk = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, data_cadastro = ?, id_tipo_fk = ? WHERE id = ?";
             $banco = Banco::conectar();
             $comando = $banco->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
                 $$hash = hash('sha256', $this->senha),
-                $this->data_contratacao,
-                $this->id_cargos_fk,
+                $this->data_cadastro,
+                $this->id_tipo_fk,
                 $this->id
             ]);
             Banco::desconectar();
@@ -100,9 +100,9 @@ class funcionarios
     }
     public function ListarFuncionarios()
     {
-        $sql = "SELECT funcionarios.id, funcionarios.nome, funcionarios.email, funcionarios.data_contratacao, cargos.nome_cargo
-                from funcionarios
-                INNER JOIN cargos ON id_cargos_fk = cargos.id_cargo;";
+        $sql = "SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.data_cadastro, tipos.nome
+                from usuarios
+                INNER JOIN tipos ON id_tipo_fk = tipos.id;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -111,10 +111,10 @@ class funcionarios
         return $arr_resultado;
     }
 
-    //Excluir funcionarios
+    //Excluir usuarios
     public function Excluir()
     {
-        $sql = "DELETE FROM funcionarios WHERE id = ?";
+        $sql = "DELETE FROM usuarios WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([

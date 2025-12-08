@@ -2,10 +2,10 @@
 
 require_once("banco.class.php");
 
-class enderecos
+class Enderecos
 {
     public $id;
-    public $clientes_id;
+    public $id_usuarios_fk;
     public $rua;
     public $numero;
     public $bairro;
@@ -24,9 +24,9 @@ class enderecos
         return $arr_resultado;
     }
 
-    //listar enderecos com inner join com o cliente
+    //listar enderecos com inner join com o usuarios
     public function ListarInnerJoin() {
-        $sql = "SELECT * FROM enderecos INNER JOIN clientes ON enderecos.clientes_id = clientes.id";
+        $sql = "SELECT * FROM enderecos INNER JOIN usuarios ON enderecos.id_usuarios_fk = usuarios.id";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -37,11 +37,11 @@ class enderecos
 
     //cadastrar um novo endereco
     public function Cadastrar() {
-        $sql = "INSERT INTO enderecos (clientes_id, rua, numero, bairro, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO enderecos (id_usuarios_fk, rua, numero, bairro, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->clientes_id,
+            $this->id_usuarios_fk,
             $this->rua,
             $this->numero,
             $this->bairro,
@@ -55,11 +55,11 @@ class enderecos
 
     //editar um endereco
     public function Editar() {
-        $sql = "UPDATE enderecos SET clientes_id = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ? WHERE id = ?";
+        $sql = "UPDATE enderecos SET id_usuarios_fk = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->clientes_id,
+            $this->id_usuarios_fk,
             $this->rua,
             $this->numero,
             $this->bairro,
