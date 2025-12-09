@@ -65,18 +65,29 @@ class Usuarios
         Banco::desconectar();
         return $arr_resultado;
     }
+    public function ListarPorIDCargo()
+    {
+        $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_tipo_fk
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 
     //Editar usuarios
     public function Editar()
     {
         if ($this->senha == null) {
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, data_cadastro = ?, id_tipo_fk = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, id_tipo_fk = ? WHERE id = ?";
             $banco = Banco::conectar();
             $comando = $banco->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
-                $this->data_cadastro,
                 $this->id_tipo_fk,
                 $this->id
             ]);
@@ -100,7 +111,7 @@ class Usuarios
     }
     public function ListarFuncionarios()
     {
-        $sql = "SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.data_cadastro, tipos.nome
+        $sql = "SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.data_cadastro, tipos.nome_tipo
                 from usuarios
                 INNER JOIN tipos ON id_tipo_fk = tipos.id;";
         $banco = Banco::conectar();
