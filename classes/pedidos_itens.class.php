@@ -52,7 +52,32 @@ class Pedido_Itens
     }
 
 
-    //TEM QUE TERMINAR< EU N TERMINEI PQ TAVA ARMANDO CHUVA DAI FUI EMBORA
+    //editar um pedido_itens
+    public function Editar() {
+        $sql = "UPDATE pedido_itens SET id_pedidos_fk = ?, id_itens_fk = ?, quantidade = ? WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_pedidos_fk,
+            $this->id_itens_fk,
+            $this->quantidade,
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    //excluir um pedido_itens
+    public function Excluir() {
+        $sql = "DELETE FROM pedido_itens WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
 }
 
 ?>
