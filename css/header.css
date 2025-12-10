@@ -1,0 +1,114 @@
+/* header.css */
+:root {
+    --color-primary-dark: #874B00;
+    --color-primary:      #AE6914;
+    --color-accent:       #E9A652;
+    --color-light:        #FFC781;
+  }
+  
+  .site-header {
+    background: var(--color-light);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+    border-radius: 30px;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    min-height: 60px;
+  }
+  
+  .logo-title a {
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    letter-spacing: -1px;
+  }
+  
+  .logo-title a:hover {
+    color: var(--color-primary);
+  }
+  
+  /* Botões */
+  .header-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .btn-login {
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .btn-login:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+  
+  .btn-register {
+    background: var(--color-primary);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(174, 105, 20, 0.3);
+    transition: all 0.3s;
+  }
+  
+  .btn-register:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(135, 75, 0, 0.35);
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .logo-title a {
+      font-size: 32px;
+    }
+    
+    .header-buttons {
+      gap: 8px;
+    }
+    
+    .btn-login,
+    .btn-register {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-content {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+    
+    .header-buttons {
+      padding: 15px 0;
+    }
+  }
