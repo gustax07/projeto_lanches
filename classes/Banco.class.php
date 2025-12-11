@@ -1,5 +1,5 @@
 <?php
- 
+
 class Banco
 {
     private static $dbNome = 'projeto_lanches';
@@ -16,11 +16,21 @@ class Banco
     
     public static function conectar()
     {
-        if(null == self::$cont)
+        if (null == self::$cont)
         {
             try
             {
-                self::$cont =  new PDO( "mysql:host=".self::$dbHost.";"."dbname=".self::$dbNome, self::$dbUsuario, self::$dbSenha); 
+                self::$cont = new PDO(
+                    "mysql:host=".self::$dbHost.";dbname=".self::$dbNome.";charset=utf8mb4",
+                    self::$dbUsuario,
+                    self::$dbSenha,
+                    array(
+                        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
+                    )
+                );
+
+                // Garantia extra (não é obrigatório mas evita doença)
+                self::$cont->exec("SET CHARACTER SET utf8mb4");
             }
             catch(PDOException $exception)
             {
@@ -35,5 +45,5 @@ class Banco
         self::$cont = null;
     }
 }
- 
+
 ?>

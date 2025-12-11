@@ -18,7 +18,7 @@ if(isset($_SERVER['REQUEST_METHOD']) == 'POST'){
     $funcionarios->email = $_POST['email'];
     $funcionarios->id_tipo_fk = $_POST['id_tipo_fk'];
     if ($funcionarios->Editar()) {
-        header('Location: ../../admin/gerenciar_funcionarios.php?msg=funcionario_editado');
+        header('Location: ../../admin/gerenciar_funcionarios.php?msg=funcionario_editado&id_tipo_fk=-1');
     }else{
         header('Location: ../../admin/gerenciar_funcionarios.php?err=funcionario_editar_falha');
     }
