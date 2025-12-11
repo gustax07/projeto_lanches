@@ -19,21 +19,21 @@ header('Content-type: text/html; charset=utf-8');
     <title>Hello, world!</title>
 </head>
 
-<body>
-    <div class="container-fluid">
+<body style="margin: 0px; border: none; padding: 0px;">
+    <div class="container-fluid" style="margin: 0px; border: none; padding: 0px;">
 
         <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
             <div class="col-12">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="..." class="d-block w-100" alt="..." style="width: 100%; height: 500px;">
+                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="..." class="d-block w-100" alt="..." style="width: 100%; height: 500px;">
+                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="..." class="d-block w-100" alt="..." style="width: 100%; height: 500px;">
+                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
