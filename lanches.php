@@ -20,7 +20,6 @@ header('Content-type: text/html; charset=utf-8');
 </head>
 
 <body>
-    
     <div class="container-fluid">
 
         <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
