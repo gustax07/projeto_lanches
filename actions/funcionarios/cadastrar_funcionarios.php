@@ -16,7 +16,7 @@ if ($funcionarios->nome == ''){
 }elseif($funcionarios->senha == ''){
     echo "senha nao pode ser vazio";
 }elseif($funcionarios->Cadastrar()){
-    header('Location: ../../admin/gerenciar_funcionarios.php?msg=funcionario_cadastrado');
+    header('Location: ../../admin/gerenciar_funcionarios.php?msg=funcionario_cadastrado&id_tipo_fk=-1');
 }else{
     header('Location: ../../admin/gerenciar_funcionarios.php?err=funcionario_cadastro_falha');
 }

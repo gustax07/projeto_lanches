@@ -73,7 +73,7 @@ $tipos_listar = $tipos->Listar();
     </div>
     <!-- Listar todos funcionarios cadastrados -->
     <div class="container col-8 displey-flex justify-content-center align-items-center shadow p-3 mt-5  bg-body-white rounded">
-        <h1 class="text-center mt-5 mb-5">Gerenciar Funcionarios</h1>
+        <h1 class="text-center mt-5 mb-5">Gerenciar Funcionários</h1>
 
         <form action="gerenciar_funcionarios.php" method="get" novalidate>
             <div class="row align-items-center mb-3 justify-content-between">
@@ -150,7 +150,7 @@ $tipos_listar = $tipos->Listar();
                         <td><?= $f['data_cadastro'] ?></td>
                         <td><?= $f['nome_tipo'] ?></td>
                         <td>
-                            <a href="./gerenciar_funcionarios.php?id=<?= $id ?>"><button class="btn btn-primary mx-2"> Editar</button></a>
+                            <a href="./gerenciar_funcionarios.php?id_tipo_fk=-1&id=<?= $id ?>"><button class="btn btn-primary mx-2"> Editar</button></a>
                             <button class="btn btn-danger" onclick="excluir(<?= $id ?>, '<?= $f['nome'] ?>')">Excluir</button>
                         </td>
                     </tr>
@@ -207,7 +207,7 @@ $tipos_listar = $tipos->Listar();
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="./gerenciar_funcionarios.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button></a>
+                    <a href="./gerenciar_funcionarios.php?id_tipo_fk=-1"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button></a>
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>
                 </form>
