@@ -22,5 +22,8 @@
     <br>
     <button type="submit">Entrar</button>
     </form>
+    <?php
+    include_once("../includes/sweet_alert2_include.php")
+    ?>
 </body>
 </html>

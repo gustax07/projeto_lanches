@@ -1,18 +1,23 @@
 <?php
 
-require_once('../../classes/funcionarios.class.php');
-print_r($_POST);
+require_once('../../classes/usuarios.class.php');
 
-$funcionarios = new funcionarios();
-$funcionarios->email = $_POST['email'];
-$funcionarios->senha = $_POST['senha'];
+$usuarios = new Usuarios();
+$email = $usuarios->email = $_POST['email'];
+$senha =$usuarios->senha = $_POST['senha'];
 
-if($funcionarios->email == "" && $funcionarios->senha == ""){
-    echo "email ou senha não podem ser vazios";
-}elseif($funcionarios->Logar()){
-    header('Location: ../../admin/painel.php');
+if(empty($email)){
+    header('Location: ../../admin/logar.php?err=email_vazio');
+}elseif(empty($senha)){
+    header('Location: ../../admin/logar.php?err=senha_vazio');
+}else
+if(sizeof($usuarios->Logar()) == 0){
+    header('Location: ../../admin/logar.php?err=email_ou_senha_incorretos');
 }else{
-    echo "email ou senha incorretos";
+    session_start();
+    $_SESSION['usuario'] = $usuarios->Logar()[0];
+    header('Location: ../../admin/painel.php');
+    
 }
 
 ?>
