@@ -1,4 +1,4 @@
-<?php // header.php ?>
+
 <link rel="stylesheet" href="../projeto_lanches/css/header.css">
 <header class="site-header">
   <div class="container">
@@ -17,3 +17,7 @@
     </div>
   </div>
 </header>
+
+
+
+
