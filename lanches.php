@@ -39,6 +39,31 @@ header('Content-type: text/html; charset=utf-8');
     body {
         overflow-x: hidden;
     }
+
+    a {
+        text-decoration: none;
+        color: #222;
+    }
+
+    .card {
+        transition: 0.7s;
+
+    }
+
+    .card:hover {
+        transform: scale(1.1);
+        border: 1px solid #E9A652;
+
+    }
+
+    .card:active {
+        transform: scale(0.1);
+        transition: 0.7s;
+    }
+
+    a:hover {
+        color: #E9A652;
+    }
 </style>
 
 <body style="margin: 0px; border: none; padding: 0px;">
@@ -81,24 +106,32 @@ header('Content-type: text/html; charset=utf-8');
         <div class="row" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
             <?php foreach ($itens_listar as $i) { ?>
                 <div class="col-2">
-                    <div class="card"
-                        style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
-                        <img src="./images/<?= $i['imagem'] ?>" class="card-img-top" alt="..." style="height: 220px; width: 270px;">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $i['nome'] ?></h5>
-                            <h6>R$ <?= $i['preco'] ?></h6>
-                            <p class="card-text"><?= $i['descricao'] ?></p>
+                    <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+                        <div class="card"
+                            style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
+                            <img src="./images/<?= $i['imagem'] ?>" class="card-img-top" alt="..." style="height: 220px; width: 270px;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $i['nome'] ?></h5>
+                                <h6>R$ <?= $i['preco'] ?></h6>
+                                <p class="card-text"><?= $i['descricao'] ?></p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             <?php } ?>
         </div> <!-- Linha 3 || fim -->
     </div>
-    <iframe src="./footer.html"
-        style="height: 40vh; width: 100vw; margin: 0; border: none; padding: 0 ; overflow: hidden;">
+    <iframe src="./footer.html" id="footerIframe"
+        style="width: 100vw; margin: 0; border: none; padding: 0 ; overflow: hidden; display: flex;">
     </iframe>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener("message", function(e) {
+            const iframe = document.getElementById("footerIframe");
+            iframe.style.height = e.data + "px";
+        });
+    </script>   
 </body>
 
 </html>

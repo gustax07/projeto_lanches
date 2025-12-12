@@ -60,6 +60,19 @@
       © 2025 Tasty Burguers - Todos os direitos reservados.
     </div>
   </footer>
-
+  <script>
+    function enviarAltura() {
+        const height = document.body.scrollHeight;
+        window.parent.postMessage(height, "*");
+    }
+    
+    window.addEventListener('load', enviarAltura);
+    window.addEventListener('resize', enviarAltura);
+    window.addEventListener('orientationchange', enviarAltura);
+    
+    // Pequeno delay que corrige mudanças de layout por CSS grid
+    setTimeout(enviarAltura, 100);
+    setTimeout(enviarAltura, 300);
+    </script>
 </body>
 </html>

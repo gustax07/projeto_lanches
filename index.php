@@ -1,5 +1,5 @@
 <?php
-
+include_once('./includes/bootstrap_include.php');
 
 ?>
 
@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div class="topo" style="position: fixed; width: 100%; padding: 0px; ">
+    <div class="fixed-top" style="position: fixed; width: 100%; padding: 0px; ">
         <!-- iframe do header -->
         <iframe src="./header.php" frameborder="0" scrolling="no" id="headerIframe"
             style="width: 100%; height: 155px; margin: 0; border: none; padding: 0 ; overflow: hidden;">
