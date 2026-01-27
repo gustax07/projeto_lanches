@@ -3,7 +3,7 @@
 class Banco
 {
     private static $dbNome = 'projeto_lanches';
-    private static $dbHost = '10.141.46.18';
+    private static $dbHost = '10.141.46.21';
     private static $dbUsuario = 'admin';
     private static $dbSenha = 'senac';
     
