@@ -76,13 +76,13 @@ header('Content-type: text/html; charset=utf-8');
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -105,7 +105,7 @@ header('Content-type: text/html; charset=utf-8');
 
         <div class="row" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
             <?php foreach ($itens_listar as $i) { ?>
-                <div class="col-2">
+                <div class="col col-xl-2">
                     <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
                         <div class="card"
                             style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
