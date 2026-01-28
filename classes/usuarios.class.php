@@ -134,4 +134,14 @@ class Usuarios
         Banco::desconectar();
         return $comando->rowCount();
     }
+
+    public function ListarClientes(){
+        $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = 0";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }

@@ -14,9 +14,14 @@ class Pedidos
     //listar os pedidos com inner join com a tabela usuarios e a tabela enderecos
     public function ListarInnerJoin()
     {
-        $sql = "SELECT * FROM pedidos 
-        INNER JOIN usuarios ON pedidos.id_usuarios_fk = usuarios.id 
-        INNER JOIN enderecos ON pedidos.id_enderecos_fk = enderecos.id";
+        $sql = "SELECT 
+p.id,
+u.nome,
+p.status,
+p.data_pedido,
+p.observacoes
+FROM pedidos p
+JOIN usuarios u on u.id = p.id_usuarios_fk;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
