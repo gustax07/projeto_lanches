@@ -47,7 +47,9 @@ header('Content-type: text/html; charset=utf-8');
 
     .card {
         transition: 0.7s;
-
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .card:hover {
@@ -57,13 +59,14 @@ header('Content-type: text/html; charset=utf-8');
     }
 
     .card:active {
-        transform: scale(0.1);
+        transform: scale(0.8);
         transition: 0.7s;
     }
 
     a:hover {
         color: #E9A652;
     }
+    
 </style>
 
 <body style="margin: 0px; border: none; padding: 0px;">
@@ -76,13 +79,13 @@ header('Content-type: text/html; charset=utf-8');
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
                         </div>
                         <div class="carousel-item">
-                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 800px; border-radius: 0 0 25% 25%;">
+                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -103,13 +106,13 @@ header('Content-type: text/html; charset=utf-8');
             </div>
         </div> <!-- Linha 2 || final -->
 
-        <div class="row" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
+        <div class="row row g-4 justify-content-center" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
             <?php foreach ($itens_listar as $i) { ?>
                 <div class="col col-xl-2">
                     <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
                         <div class="card"
                             style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
-                            <img src="./images/<?= $i['imagem'] ?>" class="card-img-top" alt="..." style="height: 220px; width: 270px;">
+                            <img src="./images/<?= $i['imagem'] ?>" class="card-img-top card-img-fixed" alt="..." style="height: 200px; width: 250px;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $i['nome'] ?></h5>
                                 <h6>R$ <?= $i['preco'] ?></h6>
@@ -121,6 +124,9 @@ header('Content-type: text/html; charset=utf-8');
             <?php } ?>
         </div> <!-- Linha 3 || fim -->
     </div>
+    <div class="antesDoFooter" style="margin-top: 60px ">  </div>
+
+   
     <iframe src="./footer.html" id="footerIframe"
         style="width: 100vw; margin: 0; border: none; padding: 0 ; overflow: hidden; display: flex;">
     </iframe>

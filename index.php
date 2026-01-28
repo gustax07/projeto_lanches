@@ -35,7 +35,7 @@ include_once('./includes/bootstrap_include.php');
     </div>
     <!-- iframe do corpo -->
     <iframe src="./lanches.php" id="corpoIframe"
-        style="width: 100vw; height: 100vh; margin: 0; border: none; padding: 0;">
+        style="width: 100%; height: 100vh; margin: 0; border: none; padding: 0;">
     </iframe>
 
 
