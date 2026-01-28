@@ -8,10 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/logar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <title>Login</title>
 </head>
 <body>
-
+    
+<h1 class="brand-text">Tasty Burger</h1>
 <div class="login-container">
     <div class="login-card">
         <h1>Login</h1>
