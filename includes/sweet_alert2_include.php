@@ -10,6 +10,9 @@ $msg = [
     "lanches_cadastrados" => "Lanches cadastrados com sucesso!",
     "lanches_editados" => "Lanches editados com sucesso!",
     "lanches_excluidos" => "Lanches excluídos com sucesso!",
+    //pedidos
+    "pedido_cancelado" => "Pedido cancelado com sucesso!",
+    "pedido_preparar" => "Pedido sendo preparado!",
 ];
 $err = [
     //Funcionarios
@@ -28,9 +31,15 @@ $err = [
     "lanches_cadastro_falha" => "Falha ao cadastrar lanches!",
     "lanches_editar_falha" => "Falha ao editar lanches!",
     "lanches_excluir_falha" => "Falha ao excluir lanches!",
-
-
-]
+    //Pedidos
+    "pedido_cancelar_falha" => "Falha ao cancelar o pedido!",
+    "pedido_preparar_falha" => "Falha ao preparar o pedido!",
+];
+    $warn = [
+    //Avisos
+    "pedido_cancelado" => "O pedido já foi cancelado!",
+    "pedido_preparar" => "O pedido já está sendo preparado!",
+    ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -71,5 +80,22 @@ $err = [
         url.searchParams.delete('err');
         window.history.replaceState({}, document.title, url.toString());
     }";
-    ?>
+
+    // Mensagens de aviso:
+    if (isset($_GET['warn']) && array_key_exists($_GET['warn'], $warn)) {
+        $message = $warn[$_GET['warn']];
+        echo "Swal.fire({
+            icon: 'warning',
+            title: 'Aviso',
+            text: '$message',
+            confirmButtonColor: '#f39c12',
+        });";
+    }
+    // Remover a mensagem da URL para evitar reaparecimento:
+    echo "if (history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('warn');
+        window.history.replaceState({}, document.title, url.toString());
+        }";
+        ?>
 </script>
