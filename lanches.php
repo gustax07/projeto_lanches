@@ -16,6 +16,7 @@ header('Content-type: text/html; charset=utf-8');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart_checkout" />
     <title>Hello, world!</title>
 </head>
 <style>
@@ -66,7 +67,14 @@ header('Content-type: text/html; charset=utf-8');
     a:hover {
         color: #E9A652;
     }
-    
+
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
+    }
 </style>
 
 <body style="margin: 0px; border: none; padding: 0px;">
@@ -100,10 +108,20 @@ header('Content-type: text/html; charset=utf-8');
             </div>
         </div> <!-- Linha 1 || final -->
 
-        <div class="row"> <!-- Linha 2 || começo -->
-            <div class="col-12" style="text-align: center; margin: 10px">
+        <div class="row justify-content-end"> <!-- Linha 2 || começo -->
+
+            <div class="col-3" style="margin: 10px; margin-top:100px; margin-bottom:100px">
                 <h1>Lanches</h1>
             </div>
+
+            <div class="col-4" style="margin: 10px; margin-top:100px; margin-bottom:100px">
+                <button
+                    type="button" class="btn btn-warning btn-lg"><span class="material-symbols-outlined">
+                        shopping_cart_checkout
+                    </span> Finalizar
+                </button>
+            </div>
+
         </div> <!-- Linha 2 || final -->
 
         <div class="row row g-4 justify-content-center" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
@@ -124,9 +142,9 @@ header('Content-type: text/html; charset=utf-8');
             <?php } ?>
         </div> <!-- Linha 3 || fim -->
     </div>
-    <div class="antesDoFooter" style="margin-top: 60px ">  </div>
+    <div class="antesDoFooter" style="margin-top: 60px "> </div>
 
-   
+
     <iframe src="./footer.html" id="footerIframe"
         style="width: 100vw; margin: 0; border: none; padding: 0 ; overflow: hidden; display: flex;">
     </iframe>
@@ -137,7 +155,7 @@ header('Content-type: text/html; charset=utf-8');
             const iframe = document.getElementById("footerIframe");
             iframe.style.height = e.data + "px";
         });
-    </script>   
+    </script>
 </body>
 
 </html>

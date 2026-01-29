@@ -11,8 +11,8 @@
 
       <!-- Botões direita -->
       <div class="header-buttons">
-        <a href="../projeto_lanches/admin/logar.php" target="_parent" class="btn-login">Logar</a>
-        <a href="#" class="btn-register">Cadastre-se</a>
+        <a href="./logar.php" target="_parent" class="btn-login">Logar</a>
+        <a href="./cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
       </div>
     </div>
   </div>
