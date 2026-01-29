@@ -21,10 +21,10 @@
 
         <form action="../actions/funcionarios/logar_funcionarios.php" method="post">
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
 
             <label for="senha">Senha:</label>
-            <input type="password" name="senha" id="senha" required>
+            <input type="password" name="senha" id="senha" placeholder="*********" required>
 
             <button type="submit">Entrar</button>
         </form>
