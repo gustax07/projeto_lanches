@@ -10,20 +10,26 @@ class Pedido_Itens
     public $quantidade;
 
     //listar os pedidos com inner join com a tabela pedidos e a tabela itens
-    public function ListarInnerJoin() {
-        $sql = "SELECT * FROM pedido_itens 
-        INNER JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id 
-        INNER JOIN itens ON pedido_itens.id_itens_fk = itens.id";
+    public function ListarPedidoInnerJoinComID()
+    {
+        $sql = "SELECT pi.id, i.nome AS Pedido, pi.quantidade, p.data_pedido, p.observacoes, i.descricao, i.preco
+        FROM pedido_itens pi
+        JOIN itens i ON pi.id_pedidos_fk = i.id
+        JOIN pedidos p ON pi.id_pedidos_fk = p.id
+        WHERE pi.id_pedidos_fk = ?;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
-        $comando->execute();
+        $comando->execute([
+            $this->id_pedidos_fk
+        ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
         return $arr_resultado;
     }
 
     //listar um pedido por id + innerJoin com a tabela de categoria
-    public function ListarInnerJoinPorID() {
+    public function ListarInnerJoinPorID()
+    {
         $sql = "SELECT * FROM pedido_itens WHERE id = ? 
         INNER JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id 
         INNER JOIN itens ON pedido_itens.id_itens_fk = itens.id";
@@ -38,7 +44,8 @@ class Pedido_Itens
     }
 
     //adicionar um novo pedido_itens
-    public function Cadastrar() {
+    public function Cadastrar()
+    {
         $sql = "INSERT INTO pedido_itens (id_pedidos_fk, id_itens_fk, quantidade) VALUES (?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -53,7 +60,8 @@ class Pedido_Itens
 
 
     //editar um pedido_itens
-    public function Editar() {
+    public function Editar()
+    {
         $sql = "UPDATE pedido_itens SET id_pedidos_fk = ?, id_itens_fk = ?, quantidade = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -68,7 +76,8 @@ class Pedido_Itens
     }
 
     //excluir um pedido_itens
-    public function Excluir() {
+    public function Excluir()
+    {
         $sql = "DELETE FROM pedido_itens WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -79,5 +88,3 @@ class Pedido_Itens
         return $comando->rowCount();
     }
 }
-
-?>

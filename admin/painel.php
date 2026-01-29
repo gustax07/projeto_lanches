@@ -18,6 +18,24 @@ if (!isset($_SESSION['usuario'])) {
         iframe {
             display: block;
         }
+
+        .sidebar {
+            width: 220px;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar.minimized {
+            width: 70px;
+        }
+
+        .sidebar .menu-text {
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar.minimized .menu-text {
+            opacity: 0;
+            display: none;
+        }
     </style>
 </head>
 
@@ -32,20 +50,16 @@ if (!isset($_SESSION['usuario'])) {
     </header>
 
     <div class="container-fluid px-0">
-    <div class="row g-0">
+        <div class="row g-0">
 
             <!-- SIDEBAR -->
-            <aside class="col-auto bg-dark" style="width:220px;">
-                <a class="btn btn-dark btn-lg w-100 mb-3" id="toggleMenu">
-    <i class="bi bi-list"></i>
-    <span class="menu-text">Menu</span>
-</a>
-
+            <aside class="col-auto bg-dark" style="width:220px;" id="sidebar">
+                <div class="p-2 text-light">
                     <a href="painel.php" class="btn btn-dark btn-lg">
                         <i class="bi bi-bar-chart-line-fill"></i>
                         Painel
                     </a>
-                    <a href="pedidos.php" target="pedidos" class="btn btn-dark btn-lg">
+                    <a href="pedidos.php" target="#pedidos" class="btn btn-dark btn-lg">
                         <i class="bi bi-cart-check-fill"></i>
                         Pedidos
                     </a>
@@ -61,19 +75,25 @@ if (!isset($_SESSION['usuario'])) {
             </aside>
 
             <!-- CONTEÚDO -->
-            
-                <main class="col p-0 mt-3">
-                    <iframe
-                        src="./dashboard.php"
-                        style="width:100%; height:100vh; border:none;"
-                        id="pedidos">
-                    </iframe>
-                </main>
-            </div>
-        
+
+            <main class="col p-0 mt-3">
+                <iframe
+                    src="./dashboard.php"
+                    style="width:100%; height:100vh; border:none;"
+                    id="pedidos">
+                </iframe>
+            </main>
+        </div>
+
 
     </div>
     <?php include_once("../includes/bootstrap_include.php"); ?>
+    <script>
+    document.getElementById('toggleMenu').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('minimized');
+    });
+</script>
+
 </body>
 
 

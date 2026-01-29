@@ -30,11 +30,9 @@ JOIN usuarios u on u.id = p.id_usuarios_fk;";
         return $arr_resultado;
     }
 
-    public function ListarInnerJoinPorID()
+    public function Listar()
     {
-        $sql = "SELECT * FROM pedidos WHERE id = ? 
-        INNER JOIN usuarios ON pedidos.id_usuarios_fk = usuarios.id 
-        INNER JOIN enderecos ON pedidos.id_enderecos_fk = enderecos.id";
+        $sql = "SELECT * FROM pedidos WHERE id = ?;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -84,6 +82,30 @@ JOIN usuarios u on u.id = p.id_usuarios_fk;";
     public function Excluir()
     {
         $sql = "DELETE FROM pedidos WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    public function CancelarPedido()
+    {
+        $sql = "UPDATE pedidos SET status = 'cancelado' WHERE id = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    public function PrepararPedido()
+    {
+        $sql = "UPDATE pedidos SET status = 'preparando' WHERE id = ?;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
