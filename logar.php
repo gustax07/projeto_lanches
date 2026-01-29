@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/logar.css">
+    <link rel="stylesheet" href="./admin/css/logar.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <title>Login</title>
 </head>
@@ -30,7 +30,7 @@
         </form>
 
         <?php
-            include_once("../includes/sweet_alert2_include.php");
+            include_once("./includes/sweet_alert2_include.php");
         ?>
     </div>
 </div>
