@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Cadastro</title>
@@ -20,7 +21,7 @@
       width: 100%;
       max-width: 400px;
       border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     .btn-principal {
@@ -40,18 +41,20 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="card card-cadastro p-4">
     <h3 class="text-center titulo mb-4">Criar conta</h3>
 
-    <form method="post" action="processa_cadastro.php" target="conteudo">
+    <form method="post" action="./actions/clientes/cadastrar_clientes.php" target="conteudo">
 
-    <div class="mb-3">
+      <div class="mb-3">
         <label class="form-label">Nome completo</label>
         <input
           type="text"
           name="nome"
+          id="nome"
           class="form-control"
           placeholder="Seu nome completo"
           required>
@@ -59,20 +62,22 @@
 
       <div class="mb-3">
         <label class="form-label">Email</label>
-        <input 
-          type="email" 
-          name="email" 
-          class="form-control" 
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
           placeholder="seu@email.com"
           required>
       </div>
 
       <div class="mb-4">
         <label class="form-label">Senha</label>
-        <input 
-          type="password" 
-          name="senha" 
-          class="form-control" 
+        <input
+          type="password"
+          name="senha"
+          id="senha"
+          class="form-control"
           placeholder="••••••••"
           required>
       </div>
@@ -83,8 +88,9 @@
 
     </form>
 
-    
+
   </div>
 
 </body>
+
 </html>
