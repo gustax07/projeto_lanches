@@ -14,9 +14,17 @@ if(empty($email)){
 if(sizeof($usuarios->Logar()) == 0){
     header('Location: ../../admin/logar.php?err=email_ou_senha_incorretos');
 }else{
+    
     session_start();
     $_SESSION['usuario'] = $usuarios->Logar()[0];
-    header('Location: ../../admin/painel.php');
+    
+    if ($_SESSION['usuario']['id_tipo_fk'] == 0) {
+        // cliente
+        header('Location: ../../index.php');
+    } else {
+        // funcionário
+        header('Location: ../../admin/painel.php');
+    }
     
 }
 

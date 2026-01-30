@@ -19,7 +19,7 @@
         <h1>Login</h1>
         <p class="subtitle">Área administrativa</p>
 
-        <form action="../actions/funcionarios/logar_funcionarios.php" method="post">
+        <form action="actions/funcionarios/logar_funcionarios.php" method="post">
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
 
