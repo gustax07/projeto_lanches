@@ -3,7 +3,7 @@
 include_once('../classes/pedidos.class.php');
 $pedidos = new Pedidos();
 $pedidos_listar = $pedidos->ListarInnerJoin();
-$idPedidoModal = 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -12,10 +12,9 @@ $idPedidoModal = 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gerenciar Pedidos</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -38,21 +37,14 @@ $idPedidoModal = 0;
                     <td><?= $p['data_pedido'] ?></td>
                     <td><?= $p['observacoes'] ?></td>
                     <td>
-                        <a href="../actions/pedidos/cancelar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-danger">Cancelar</a>
-                        <a href="../actions/pedidos/preparar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-primary">Preprarar</a>
                         <!-- Enviar o id do pedido para modal -->
                         <button
-                            class="btn btn-info"
+                            class="btn btn-info btn-sm text-white"
                             data-bs-toggle="modal"
                             data-bs-target="#visualizarPedido"
-                            data-id="<?= $p['id'] ?>"
-                            data-nome="<?= $p['nome'] ?>"
-                            data-status="<?= $p['status'] ?>">
-                            Visualizar
+                            data-id="<?= $p['id'] ?>">
+                            Detalhes do Pedido
                         </button>
-
-
-                        <a href="gerar_pdf.php?id=<?= $p['id'] ?>" class="btn btn-success">Finalizar Pedido</a>
                     </td>
                 </tr>
             <?php } ?>
@@ -62,15 +54,26 @@ $idPedidoModal = 0;
 
 
     <script>
-        document.getElementById('visualizarPedido').addEventListener('show.bs.modal', function(event) {
-            const btn = event.relatedTarget;
+        $(document).ready(function() {
+            $('.btn-info').click(function() {
+                var id = $(this).data('id');
+                $('#m_id').text(id);
+                // Fazer uma requisição AJAX para buscar os detalhes do pedido
+                $ajaxRequest = $.ajax({
+                    url: '../actions/pedido_itens/visualizar_itens.php',
+                    type: 'GET',
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        // Preencher o modal com os detalhes do pedido
+                        $('#modalBody').html(response);
+                    }
+                })
 
-            document.getElementById('m_id').textContent = btn.dataset.id;
-            document.getElementById('m_nome').textContent = btn.dataset.nome;
-            document.getElementById('m_status').textContent = btn.dataset.status;
+            });
         });
     </script>
-
 
     <!-- criar um modal do bootstrap para visualizar o pedido com mais detalhes -->
     <div class="modal fade" id="visualizarPedido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,15 +84,23 @@ $idPedidoModal = 0;
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <p><strong>ID:</strong> <span id="m_id"></span></p>
-                        <p><strong>Nome:</strong> <span id="m_nome"></span></p>
-                        <p><strong>Status:</strong> <span id="m_status"></span></p>
+                    <div id="modalBody">
 
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    <?php 
+                    $pedidos_listar_status = $pedidos->ListarStatusComID(); ?>
+                    <?php foreach ($pedidos_listar_status as $p) { ?>
+                        <?php if ($p['status'] == 'preparando') { ?>
+                            <a href="../actions/pedidos/finalizar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-success btn-sm">Concluir Pedido</a>
+                        <?php } else { ?>
+                            <a href="../actions/pedidos/preparar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Comecar a Preparar</a>
+                        <?php } ?>
+                        <!-- <a href="../actions/pedidos/cancelar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-danger btn-sm">Cancelar</a>
+                    <a href="../actions/pedidos/preparar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Preprarar</a>
+                    <a href="../actions/pedido_itens/finalizar_pedidos.php?id=<?= $p['id'] ?>" class="btn btn-success btn-sm">Finalizar Pedido</a> -->
+                    <?php } ?>
                 </div>
             </div>
         </div>

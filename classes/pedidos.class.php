@@ -15,13 +15,13 @@ class Pedidos
     public function ListarInnerJoin()
     {
         $sql = "SELECT 
-p.id,
-u.nome,
-p.status,
-p.data_pedido,
-p.observacoes
-FROM pedidos p
-JOIN usuarios u on u.id = p.id_usuarios_fk;";
+        p.id,
+        u.nome,
+        p.status,
+        p.data_pedido,
+        p.observacoes
+        FROM pedidos p
+        JOIN usuarios u on u.id = p.id_usuarios_fk;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -30,9 +30,29 @@ JOIN usuarios u on u.id = p.id_usuarios_fk;";
         return $arr_resultado;
     }
 
-    public function Listar()
+    public function ListarPedidosInnerJoinPorID(){
+        $sql = "SELECT 
+        p.id,
+        u.nome,
+        p.status,
+        p.data_pedido,
+        p.observacoes
+        FROM pedidos p
+        JOIN usuarios u on u.id = p.id_usuarios_fk
+        WHERE p.id = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
+    public function ListarStatusComID()
     {
-        $sql = "SELECT * FROM pedidos WHERE id = ?;";
+        $sql = "SELECT status FROM pedidos WHERE id = ?;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
