@@ -10,6 +10,7 @@ class Usuarios
     public $senha;
     public $id_tipo_fk;
     public $data_cadastro;
+    public $foto;
 
     public function Logar()
     {

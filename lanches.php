@@ -145,9 +145,7 @@ header('Content-type: text/html; charset=utf-8');
     <div class="antesDoFooter" style="margin-top: 60px "> </div>
 
 
-    <iframe src="./footer.html" id="footerIframe"
-        style="width: 100vw; margin: 0; border: none; padding: 0 ; overflow: hidden; display: flex;">
-    </iframe>
+    <?php include('./footer.html'); ?>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>

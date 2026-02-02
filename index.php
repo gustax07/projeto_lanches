@@ -25,9 +25,7 @@ include_once('./includes/bootstrap_include.php');
 <body>
     <div class="fixed-top" style="position: fixed; width: 100%; padding: 0px; ">
         <!-- iframe do header -->
-        <iframe src="./header.php" frameborder="0" scrolling="no" id="headerIframe"
-            style="margin: 0;width: 100vw; border: none; padding: 0 ; overflow: hidden;">
-        </iframe>
+        <?php include('./header.php'); ?>
         <!-- iframe do nav -->
         <iframe src="./nav.php"
             style="width: 100%; height: 72px; margin: 0; border: none; border-radius: 0 0 50% 50%; overflow: hidden;">

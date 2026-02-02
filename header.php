@@ -1,11 +1,11 @@
 <?php
 session_start();
-include_once("./includes/bootstrap_include.php")
+include_once("./includes/bootstrap_include.php");
+
 ?>
 
 <link rel="stylesheet" href="../projeto_lanches/css/header.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
-
 <style>
   .material-symbols-outlined {
     font-variation-settings:
@@ -19,6 +19,38 @@ include_once("./includes/bootstrap_include.php")
     color: inherit;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .menu-icon {
+    font-size: 42px;
+    cursor: pointer;
+  }
+
+  .perfil-offcanvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .perfil-offcanvas img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFC781;
+    /* cor do teu projeto */
+  }
+
+  .perfil-offcanvas h5 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .perfil-offcanvas small {
+    color: #666;
   }
 </style>
 
@@ -43,8 +75,51 @@ include_once("./includes/bootstrap_include.php")
         <!-- Botões direita (LOGADO) -->
         <div class="header-buttons">
           <h2>Bem-vindo, <?php echo $_SESSION['usuario']['nome']; ?>!</h2>
-          
-          
+
+          <!-- Botão menu que abre o offcanvas -->
+          <a
+
+            data-bs-toggle="offcanvas"
+            href="#offcanvasExample"
+            role="button"
+            aria-controls="offcanvasExample"
+            style="text-decoration: none; color: inherit;">
+            <span class="material-symbols-outlined menu-icon">
+              menu
+            </span>
+          </a>
+
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Meu perfil</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                <!-- setar uma foto padrão se a foto for vazia, se não for, pegar a foto do banco -->
+                <?php
+                $foto = !empty($_SESSION['usuario']['foto'])
+                  ? 'images/' . $_SESSION['usuario']['foto']
+                  : 'images/foto_perfil_default.png';
+
+                ?>
+                
+                <div class="perfil-offcanvas">
+                  <img src="<?= $foto ?>" alt="Foto do usuário">
+                  <h5><?= $_SESSION['usuario']['nome'] ?></h5>
+                  <small><?= $_SESSION['usuario']['email'] ?></small>
+                </div>
+
+                <a href="actions/clientes/deslogar.php" class="btn btn-danger">Sair</a>
+              </div>
+              <div class="dropdown mt-3">
+
+
+              </div>
+            </div>
+          </div>
+
 
         </div>
       <?php endif; ?>
