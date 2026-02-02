@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once("./includes/bootstrap_include.php")
 ?>
 
 <link rel="stylesheet" href="../projeto_lanches/css/header.css">
