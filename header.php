@@ -5,7 +5,8 @@ include_once("./includes/bootstrap_include.php");
 ?>
 
 <link rel="stylesheet" href="../projeto_lanches/css/header.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
+
 <style>
   .material-symbols-outlined {
     font-variation-settings:
@@ -41,7 +42,6 @@ include_once("./includes/bootstrap_include.php");
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #FFC781;
-    /* cor do teu projeto */
   }
 
   .perfil-offcanvas h5 {
@@ -74,11 +74,11 @@ include_once("./includes/bootstrap_include.php");
 
         <!-- Botões direita (LOGADO) -->
         <div class="header-buttons">
-          <h2>Bem-vindo, <?php echo $_SESSION['usuario']['nome']; ?>!</h2>
+          <h2 style="font-family: 'Poppins', 'Segoe UI', sans-serif;">Bem-vindo, <?php echo $_SESSION['usuario']['nome']; ?>!</h2>
 
           <!-- Botão menu que abre o offcanvas -->
           <a
-
+          
             data-bs-toggle="offcanvas"
             href="#offcanvasExample"
             role="button"
@@ -104,26 +104,116 @@ include_once("./includes/bootstrap_include.php");
                   : 'images/foto_perfil_default.png';
 
                 ?>
-                
+
                 <div class="perfil-offcanvas">
                   <img src="<?= $foto ?>" alt="Foto do usuário">
-                  <h5><?= $_SESSION['usuario']['nome'] ?></h5>
-                  <small><?= $_SESSION['usuario']['email'] ?></small>
+
+                  <h3><?= $_SESSION['usuario']['nome'] ?></h3>
+                  <p><?= $_SESSION['usuario']['email'] ?></p>
+                </div>
+                <!-- começo do acordion -->
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        configurações de conta
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+
+                        <form id="formFoto" action="actions/clientes/atualizar_foto.php" method="POST" enctype="multipart/form-data">
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+
+                            <!-- input escondido -->
+                            <input
+                              type="file"
+                              name="foto"
+                              id="inputFoto"
+                              accept="image/*"
+                              hidden>
+
+
+                            <div class="d-grid gap-2">
+                              <button type="button" onclick="abrirSeletor()" class="btn btn-outline-dark">Alterar foto de perfil</button>
+                            </div>
+
+
+                            <div class="d-grid gap-2">
+                              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-dark">segurança</a>
+                            </div>
+
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        endereços
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                          <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-dark">ver endereços cadastrados</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- fim do acordion -->
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <a href="actions/clientes/deslogar.php" class="btn btn-danger">Sair</a>
-              </div>
-              <div class="dropdown mt-3">
 
+                <div style="display: flex; flex-direction: column; height: 30px;"> </div>
+
+                <a href="actions/clientes/deslogar.php" class="btn btn-danger"> <i class="bi bi-box-arrow-left"></i> Sair
+                </a>
 
               </div>
             </div>
           </div>
-
-
         </div>
-      <?php endif; ?>
 
+        <script>
+          function abrirSeletor() {
+            document.getElementById('inputFoto').click();
+          }
+
+          document.getElementById('inputFoto').addEventListener('change', function() {
+            if (this.files.length > 0) {
+              document.getElementById('formFoto').submit();
+            }
+          });
+        </script>
+
+      <?php endif; ?>
     </div>
   </div>
 </header>

@@ -145,4 +145,16 @@ class Usuarios
         Banco::desconectar();
         return $arr_resultado;
     }
+
+    public function MudarFoto() {
+        $sql = "UPDATE usuarios SET foto = ? WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->foto,
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
 }
