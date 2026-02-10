@@ -83,7 +83,7 @@ class Usuarios
     public function Editar()
     {
         if ($this->senha == null) {
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, id_tipo_fk = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ? , id_tipo_fk = ? WHERE id = ?";
             $banco = Banco::conectar();
             $comando = $banco->prepare($sql);
             $comando->execute([
@@ -95,14 +95,13 @@ class Usuarios
             Banco::desconectar();
             return $comando->rowCount();
         } else {
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, data_cadastro = ?, id_tipo_fk = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?,id_tipo_fk = ? WHERE id = ?";
             $banco = Banco::conectar();
             $comando = $banco->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
                 $$hash = hash('sha256', $this->senha),
-                $this->data_cadastro,
                 $this->id_tipo_fk,
                 $this->id
             ]);

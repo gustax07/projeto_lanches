@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once("./includes/bootstrap_include.php");
 
 ?>
@@ -140,7 +142,7 @@ include_once("./includes/bootstrap_include.php");
 
 
                             <div class="d-grid gap-2">
-                              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-dark">segurança</a>
+                              <a type="button" href="seguranca.php" target="_parent" class="btn btn-outline-dark">minha conta</a>
                             </div>
 
                           </div>
@@ -169,27 +171,6 @@ include_once("./includes/bootstrap_include.php");
 
                 </div>
                 <!-- fim do acordion -->
-
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="2" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ...
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
 
                 <div style="display: flex; flex-direction: column; height: 30px;"> </div>
 
