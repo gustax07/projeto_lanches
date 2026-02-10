@@ -12,11 +12,18 @@ class Pedido_Itens
     //listar os pedidos com inner join com a tabela pedidos e a tabela itens
     public function ListarPedidoInnerJoinComID()
     {
-        $sql = "SELECT pi.id, i.nome AS Pedido, pi.quantidade, p.data_pedido, p.observacoes, i.descricao, i.preco
-        FROM pedido_itens pi
-        JOIN itens i ON pi.id_pedidos_fk = i.id
-        JOIN pedidos p ON pi.id_pedidos_fk = p.id
-        WHERE pi.id_pedidos_fk = ?;";
+        $sql = "SELECT 
+    p.id AS id_pedido,
+    p.data_pedido,
+    p.observacoes,
+    i.nome AS Pedido,
+    i.descricao,
+    i.preco,
+    pi.quantidade
+FROM pedido_itens pi
+JOIN pedidos p ON p.id = pi.id_pedidos_fk
+JOIN itens i ON i.id = pi.id_itens_fk
+WHERE p.id = ?;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
@@ -78,11 +85,11 @@ class Pedido_Itens
     //excluir um pedido_itens
     public function Excluir()
     {
-        $sql = "DELETE FROM pedido_itens WHERE id = ?";
+        $sql = "DELETE FROM pedido_itens WHERE id_pedidos_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id
+            $this->id_pedidos_fk
         ]);
         Banco::desconectar();
         return $comando->rowCount();

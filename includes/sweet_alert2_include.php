@@ -11,8 +11,9 @@ $msg = [
     "lanches_editados" => "Lanches editados com sucesso!",
     "lanches_excluidos" => "Lanches excluídos com sucesso!",
     //pedidos
+    "pedido_status_alterado" => "Status do pedido alterado com sucesso!",
     "pedido_cancelado" => "Pedido cancelado com sucesso!",
-    "pedido_preparar" => "Pedido sendo preparado!",
+    "pedido_removido" => "Pedido removido com sucesso!",
 ];
 $err = [
     //Funcionarios
@@ -32,13 +33,15 @@ $err = [
     "lanches_editar_falha" => "Falha ao editar lanches!",
     "lanches_excluir_falha" => "Falha ao excluir lanches!",
     //Pedidos
+    "pedido_status_falha" => "Falha na alteração do status do pedido!",
     "pedido_cancelar_falha" => "Falha ao cancelar o pedido!",
-    "pedido_preparar_falha" => "Falha ao preparar o pedido!",
+    "pedido_remover_falha" => "Falha ao remover o pedido!",
 ];
     $warn = [
     //Avisos
     "pedido_cancelado" => "O pedido já foi cancelado!",
     "pedido_preparar" => "O pedido já está sendo preparado!",
+    "pedido_concluido" => "O pedido já foi concluido!",
     ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

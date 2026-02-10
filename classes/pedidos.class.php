@@ -10,7 +10,7 @@ class Pedidos
     public $status;
     public $data_pedido;
     public $observacoes;
-
+    public $nome;
     //listar os pedidos com inner join com a tabela usuarios e a tabela enderecos
     public function ListarInnerJoin()
     {
@@ -30,7 +30,8 @@ class Pedidos
         return $arr_resultado;
     }
 
-    public function ListarPedidosInnerJoinPorID(){
+    public function ListarPedidosInnerJoinPorID()
+    {
         $sql = "SELECT 
         p.id,
         u.nome,
@@ -133,5 +134,49 @@ class Pedidos
         ]);
         Banco::desconectar();
         return $comando->rowCount();
+    }
+    public function ConcluirPedido()
+    {
+        $sql = "UPDATE pedidos SET status = 'concluido' WHERE id = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    public function SaiuParaEntregaPedido()
+    {
+        $sql = "UPDATE pedidos SET status = 'saiu para entrega' WHERE id = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    public function ListarPedidosPeloNomeCliente()
+    {
+        $sql = "SELECT 
+        p.id,
+        u.nome,
+        p.status,
+        p.data_pedido,
+        p.observacoes
+        FROM pedidos p
+        JOIN usuarios u on u.id = p.id_usuarios_fk
+        WHERE u.nome = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->nome
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
     }
 }

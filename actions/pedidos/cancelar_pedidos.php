@@ -2,7 +2,7 @@
 include_once('../../classes/pedidos.class.php');
 $pedidos = new Pedidos();
 $pedidos->id = $_GET['id'];
-$pedidos_info = $pedidos->listar();
+$pedidos_info = $pedidos->ListarStatusComID();
 $pedidos->status = $pedidos_info[0]['status'];
 
 if ($pedidos->status == 'cancelado') {
