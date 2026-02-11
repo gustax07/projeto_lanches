@@ -132,7 +132,7 @@ header('Content-type: text/html; charset=utf-8');
                             style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
                             <img src="./images/<?= $i['imagem'] ?>" class="card-img-top card-img-fixed" alt="..." style="height: 200px; width: 250px;">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $i['nome'] ?></h5>
+                                <h5 class="card-title"><?= $i['nome'] ?></h5>   
                                 <h6>R$ <?= $i['preco'] ?></h6>
                                 <p class="card-text"><?= $i['descricao'] ?></p>
                             </div>

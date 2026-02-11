@@ -24,12 +24,14 @@ class Enderecos
         return $arr_resultado;
     }
 
-    //listar enderecos com inner join com o usuarios
-    public function ListarInnerJoin() {
-        $sql = "SELECT * FROM enderecos INNER JOIN usuarios ON enderecos.id_usuarios_fk = usuarios.id";
+    //listar enderecos por id
+    public function ListarPorID($idusuario) {
+        $sql = "SELECT * FROM enderecos WHERE id_usuarios_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
-        $comando->execute();
+        $comando->execute([
+            $idusuario
+        ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
         return $arr_resultado;

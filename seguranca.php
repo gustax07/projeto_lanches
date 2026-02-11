@@ -14,6 +14,7 @@ $usuario = $_SESSION['usuario']; ?>
     <meta charset="UTF-8">
     <?php include('./includes/bootstrap_include.php'); ?>
     <link rel="stylesheet" href="css/seguranca.css">
+    <link rel="icon" type="image/png" href="images/icon_burguer.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tastyburger | minha conta</title>

@@ -161,7 +161,7 @@ include_once("./includes/bootstrap_include.php");
 
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                           <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-outline-dark">ver endereços cadastrados</button>
+                            <a type="button" href="enderecos.php" target="_parent" class="btn btn-outline-dark">ver endereços cadastrados</a>
                           </div>
                         </div>
 
