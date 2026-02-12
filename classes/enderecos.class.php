@@ -14,7 +14,8 @@ class Enderecos
     public $cep;
 
     // listar enderecos
-    public function Listar() {
+    public function Listar()
+    {
         $sql = "SELECT * FROM enderecos";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -24,8 +25,9 @@ class Enderecos
         return $arr_resultado;
     }
 
-    //listar enderecos por id
-    public function ListarPorID($idusuario) {
+    //listar enderecos por id do usuário
+    public function ListarPorID($idusuario)
+    {
         $sql = "SELECT * FROM enderecos WHERE id_usuarios_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -37,8 +39,24 @@ class Enderecos
         return $arr_resultado;
     }
 
+    public function BuscarPorId($idEndereco, $idUsuario)
+    {
+        $sql = "SELECT * FROM enderecos 
+            WHERE id = ? AND id_usuarios_fk = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $idEndereco,
+            $idUsuario
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
     //cadastrar um novo endereco
-    public function Cadastrar() {
+    public function Cadastrar()
+    {
         $sql = "INSERT INTO enderecos (id_usuarios_fk, rua, numero, bairro, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -56,7 +74,8 @@ class Enderecos
     }
 
     //editar um endereco
-    public function Editar() {
+    public function Editar()
+    {
         $sql = "UPDATE enderecos SET id_usuarios_fk = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -75,7 +94,8 @@ class Enderecos
     }
 
     //excluir um endereco
-    public function Excluir() {
+    public function Excluir()
+    {
         $sql = "DELETE FROM enderecos WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);

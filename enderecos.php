@@ -62,16 +62,6 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
             border-color: #FFC781;
             background-color: #fff4e1;
         }
-
-        .acoes-endereco {
-            display: none;
-
-        }
-
-        .acoes-endereco.mostrar {
-            display: flex;
-            gap: 10px;
-        }
     </style>
     </head>
 
@@ -138,22 +128,36 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
                             <p>Nenhum endereço cadastrado.</p>
                         <?php else: ?>
                             <?php foreach ($enderecos_listar as $e): ?>
-                                <div class="card mb-2 endereco-item">
-                                    <div class="card-body">
-                                        <strong><?= $e['rua'] ?>, <?= $e['numero'] ?></strong><br>
-                                        <?= $e['bairro'] ?> - <?= $e['cidade'] ?>/<?= $e['estado'] ?><br>
-                                        CEP: <?= $e['cep'] ?>
+                                <div class="card mb-3 endereco-item">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+
+                                        <div>
+                                            <strong><?= $e['rua'] ?>, <?= $e['numero'] ?></strong><br>
+                                            <?= $e['bairro'] ?> - <?= $e['cidade'] ?>/<?= $e['estado'] ?><br>
+                                            CEP: <?= $e['cep'] ?>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <a href="editar_endereco.php?id=<?= $e['id'] ?>"
+                                                class="btn btn-outline-primary btn-sm">
+                                                ✏️ Editar
+                                            </a>
+
+                                            <a href="actions/enderecos/remover_enderecos.php?id=<?= $e['id'] ?>"
+                                                class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Tem certeza que deseja excluir este endereço?');">
+                                                🗑 Excluir
+                                            </a>
+                                        </div>
+
                                     </div>
                                 </div>
+
                             <?php endforeach; ?>
                         <?php endif; ?>
 
 
-                        <!-- ações -->
-                        <div class="acoes-endereco mostrar mt-3">
-                            <button id="btnEditar" class="btn btn-outline-primary">Editar</button>
-                            <button id="btnExcluir" class="btn btn-outline-danger">Excluir</button>
-                        </div>
+
 
                     </div>
                 </div>
@@ -163,22 +167,6 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
         <?php include('footer.html'); ?>
 
         <script>
-            const enderecos = document.querySelectorAll('.endereco-item');
-            const acoes = document.querySelector('.acoes-endereco');
-
-            enderecos.forEach(endereco => {
-                endereco.addEventListener('click', () => {
-
-                    enderecos.forEach(e => e.classList.remove('ativo'));
-
-                    endereco.classList.add('ativo');
-
-                    acoes.classList.add('mostrar');
-                });
-            });
-
-
-
             async function BuscarEndereco() {
 
                 try {
@@ -195,9 +183,6 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
                 }
 
             }
-
-
-            
         </script>
 
     </body>
