@@ -34,6 +34,8 @@ $quantidade_usuarios = count($usuarios_listar);
 $usuario_cliente = $usuarios->ListarClientes();
 $quantidade_clientes = count($usuario_cliente);
 
+include('./sidebar.php');
+
 ?>
 
 <!DOCTYPE html>

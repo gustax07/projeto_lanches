@@ -179,4 +179,24 @@ class Pedidos
         Banco::desconectar();
         return $arr_resultado;
     }
+     public function ListarPedidosInnerJoinPorStatus()
+    {
+        $sql = "SELECT 
+        p.id,
+        u.nome,
+        p.status,
+        p.data_pedido,
+        p.observacoes
+        FROM pedidos p
+        JOIN usuarios u on u.id = p.id_usuarios_fk
+        WHERE p.status = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->status
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
