@@ -84,10 +84,19 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
                     <div class="card card-padrao p-4">
                         <h4 class="mb-4 text-center">Novo Endereço</h4>
 
+
+
                         <form method="POST" action="actions/enderecos/cadastrar_enderecos.php">
+
+                            <div class="mb-4">
+                                <label class="form-label">CEP</label>
+                                <input type="text" class="form-control" id="cep" name="cep" style="border: 3px solid orange">
+                                <a onclick="BuscarEndereco()" class="btn btn-principal mt-3">buscar</a>
+                            </div>
+
                             <div class="mb-3">
                                 <label class="form-label">Rua</label>
-                                <input type="text" class="form-control" name="rua">
+                                <input type="text" id="logradouro" class="form-control" name="rua">
                             </div>
 
                             <div class="row">
@@ -97,28 +106,25 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
                                 </div>
                                 <div class="col-8 mb-3">
                                     <label class="form-label">Bairro</label>
-                                    <input type="text" class="form-control" name="bairro">
+                                    <input type="text" id="bairro" class="form-control" name="bairro">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-8 mb-3">
                                     <label class="form-label">Cidade</label>
-                                    <input type="text" class="form-control" name="cidade">
+                                    <input type="text" id="localidade" class="form-control" name="cidade">
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label class="form-label">Estado</label>
-                                    <input type="text" class="form-control" name="estado" maxlength="2">
+                                    <input type="text" class="form-control" id="estado" name="estado" maxlength="2">
                                 </div>
                             </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">CEP</label>
-                                <input type="text" class="form-control" name="cep">
-                            </div>
+
 
                             <div class="d-grid">
-                                <button class="btn btn-principal btn-lg">Cadastrar Endereço</button>
+                                <button type="submit" class="btn btn-principal btn-lg">Cadastrar Endereço</button>
                             </div>
                         </form>
                     </div>
@@ -145,8 +151,8 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
 
                         <!-- ações -->
                         <div class="acoes-endereco mostrar mt-3">
-                            <button class="btn btn-outline-primary">Editar</button>
-                            <button class="btn btn-outline-danger">Excluir</button>
+                            <button id="btnEditar" class="btn btn-outline-primary">Editar</button>
+                            <button id="btnExcluir" class="btn btn-outline-danger">Excluir</button>
                         </div>
 
                     </div>
@@ -170,6 +176,28 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
                     acoes.classList.add('mostrar');
                 });
             });
+
+
+
+            async function BuscarEndereco() {
+
+                try {
+                    let cep = document.getElementById("cep").value;
+                    let url = `https://viacep.com.br/ws/${cep}/json/`;
+                    const response = await fetch(url);
+                    const endereco = await response.json();
+                    document.getElementById("logradouro").value = endereco.logradouro;
+                    document.getElementById("bairro").value = endereco.bairro;
+                    document.getElementById("localidade").value = endereco.localidade;
+                    document.getElementById("estado").value = endereco.uf;
+                } catch (error) {
+                    console.error('Erro ao buscar endereço:', error);
+                }
+
+            }
+
+
+            
         </script>
 
     </body>
