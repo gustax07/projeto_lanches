@@ -1,9 +1,28 @@
 <?php
 require_once('./classes/itens.class.php');
+require_once('./classes/pedidos.class.php');
+require_once('./classes/pedidos_itens.class.php');
 $itens = new Itens();
 $itens_listar = $itens->Listar();
 
 header('Content-type: text/html; charset=utf-8');
+
+$itensCarrinho = [];
+if (isset($_SESSION['usuario'])) {
+
+    $pedido = new Pedidos();
+    $pedido->id_usuarios_fk = $_SESSION['usuario']['id'];
+$idUsuario = $_SESSION['usuario']['id'];
+    $pedidoAberto = $pedido->BuscarPedidosAbertos();
+
+    if (!empty($pedidoAberto)) {
+        $pedidoItens = new Pedido_Itens();
+        $pedidoItens->id_pedidos_fk = $pedidoAberto[0]['id'];
+        $itensCarrinho = $pedidoItens->ListarPorPedido();
+    }
+}
+
+print_r($_SESSION);
 
 ?>
 
@@ -18,6 +37,7 @@ header('Content-type: text/html; charset=utf-8');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart_checkout" />
     <title>Hello, world!</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
     ::-webkit-scrollbar {
@@ -116,7 +136,7 @@ header('Content-type: text/html; charset=utf-8');
 
             <div class="col-4" style="margin: 10px; margin-top:100px; margin-bottom:100px">
                 <button
-                    type="button" class="btn btn-warning btn-lg"><span class="material-symbols-outlined">
+                    type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" data-id="<?=$_SESSION['pedido_aberto'] ?> ?>" class="btn btn-warning btn-lg"><span class="material-symbols-outlined">
                         shopping_cart_checkout
                     </span> Finalizar
                 </button>
@@ -132,7 +152,7 @@ header('Content-type: text/html; charset=utf-8');
                             style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
                             <img src="./images/<?= $i['imagem'] ?>" class="card-img-top card-img-fixed" alt="..." style="height: 200px; width: 250px;">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $i['nome'] ?></h5>   
+                                <h5 class="card-title"><?= $i['nome'] ?></h5>
                                 <h6>R$ <?= $i['preco'] ?></h6>
                                 <p class="card-text"><?= $i['descricao'] ?></p>
                             </div>
@@ -145,6 +165,60 @@ header('Content-type: text/html; charset=utf-8');
     <div class="antesDoFooter" style="margin-top: 60px "> </div>
 
 
+
+
+<!-- modal -->
+    <div class="modal fade" id="modalCarrinho" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">🛒 Meu Carrinho</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                
+                    <div id="modalBody"></div>
+                    <?php if (empty($itensCarrinho)) { ?>
+                        <p class="text-center text-muted">Carrinho vazio</p>
+                    <?php } else { ?>
+
+                        <?php foreach ($itensCarrinho as $item) { ?>
+                            <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+
+                                <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
+
+                                <div class="flex-grow-1">
+                                    <strong><?= $item['nome'] ?></strong><br>
+                                    Quantidade: <?= $item['quantidade'] ?><br>
+                                    Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
+                                    </strong>
+                                </div>
+
+                            </div>
+                        <?php } ?>
+
+                    <?php } ?>
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="finalizar_pedido.php" class="btn btn-success w-100">
+                        Finalizar Pedido
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
     <?php include('./footer.html'); ?>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -153,6 +227,8 @@ header('Content-type: text/html; charset=utf-8');
             const iframe = document.getElementById("footerIframe");
             iframe.style.height = e.data + "px";
         });
+
+
     </script>
 </body>
 

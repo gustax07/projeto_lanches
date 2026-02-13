@@ -59,18 +59,21 @@ $item_descricao = $item->ListarPorID();
 
 
             </div> <!-- fim da linha 1 -->
-            <form action="projeto_lanches/actions/adicionar_carrinho.php" method="POST">
-                <input type="hidden" name="id" value="<?= $i['id'] ?>">
-                <div class="row justify-content-md-center">
-                    <div class="col-12 col-md-auto">
-                        <button type="button" class="btn btn-warning btn-lg"> <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span> Adicionar ao carrinho</button>
-                    </div>
-                </div>
+            <form action="actions/pedido_itens/cadastrar_pedido_itens.php" target="_parent" method="post">
+    <input type="hidden" name="id_item" value="<?= $i['id'] ?>">
+
+
+                <button type="submit" class="btn btn-warning w-100">
+                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                    Adicionar ao carrinho
+                </button>
             </form>
+
         <?php } ?>
     </div>
+
+
+
 
 
 </body>

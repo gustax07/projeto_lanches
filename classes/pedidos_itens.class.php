@@ -50,6 +50,31 @@ WHERE p.id = ?;";
         return $arr_resultado;
     }
 
+    public function ListarPorPedido()
+    {
+        $sql = "
+        SELECT 
+            pi.id,
+            pi.quantidade,
+            i.nome,
+            i.preco,
+            i.imagem
+        FROM pedidos_itens pi
+        INNER JOIN itens i ON i.id = pi.id_itens_fk
+        WHERE pi.id_pedidos_fk = ?
+    ";
+
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([$this->id_pedidos_fk]);
+        $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+
+        return $resultado;
+    }
+
+
+
     //adicionar um novo pedido_itens
     public function Cadastrar()
     {

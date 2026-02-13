@@ -30,6 +30,8 @@ class Pedidos
         return $arr_resultado;
     }
 
+        
+
     public function ListarPedidosInnerJoinPorID()
     {
         $sql = "SELECT 
@@ -45,6 +47,22 @@ class Pedidos
         $comando = $banco->prepare($sql);
         $comando->execute([
             $this->id
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
+    public function BuscarPedidosAbertos()
+    {
+        $sql = "SELECT * FROM pedidos 
+                WHERE id_usuarios_fk = ? AND status = 'pendente'
+                LIMIT 1";
+
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_usuarios_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
@@ -67,15 +85,13 @@ class Pedidos
     //adicionar um novo pedido
     public function Cadastrar()
     {
-        $sql = "INSERT INTO pedidos (id_usuarios_fk, id_enderecos_fk, status, data_pedido, observacoes) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO pedidos (id_usuarios_fk, status, data_pedido) VALUES (?, ?, ?);";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk,
-            $this->id_enderecos_fk,
             $this->status,
             $this->data_pedido,
-            $this->observacoes
         ]);
         Banco::desconectar();
         return $comando->rowCount();
