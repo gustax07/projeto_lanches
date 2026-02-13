@@ -76,11 +76,10 @@ class Enderecos
     //editar um endereco
     public function Editar()
     {
-        $sql = "UPDATE enderecos SET id_usuarios_fk = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ? WHERE id = ?";
+        $sql = "UPDATE enderecos SET rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_usuarios_fk,
             $this->rua,
             $this->numero,
             $this->bairro,
