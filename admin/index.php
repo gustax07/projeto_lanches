@@ -26,7 +26,7 @@ $quantidade_tipos = count($tipos_listar);
 
 require_once('../classes/usuarios.class.php');
 $usuarios = new Usuarios();
-$usuarios_listar = $usuarios->Listar();
+$usuarios_listar = $usuarios->ListarFuncionarios();
 //contar a quantidade de usuarios atraves da quantidade de linhas do array
 $quantidade_usuarios = count($usuarios_listar);
 

@@ -2,12 +2,16 @@
 //criar sessao
 require_once('../classes/usuarios.class.php');
 $usuarios = new Usuarios();
-$usuario = $usuarios->Listar()[0];
+$usuarios_listar = $usuarios->ListarFuncionariosPorINNERJOIN();
+
+$usuarios->id_tipo_fk = $_GET['id_tipo_fk'] ?? 0;
+$listarPorCargo = $usuarios->ListarFuncionariosPorINNERJOINECARGO();
 
 require_once('../classes/tipos.class.php');
 $tipos = new Tipos();
 $tipos_listar = $tipos->Listar();
 
+unset($tipos_listar[0]);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +21,7 @@ $tipos_listar = $tipos->Listar();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Funcionarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -73,16 +77,17 @@ $tipos_listar = $tipos->Listar();
     </div>
     <!-- Listar todos funcionarios cadastrados -->
     <div class="container col-8 displey-flex justify-content-center align-items-center shadow p-3 mt-5  bg-body-white rounded">
-        <h1 class="text-center mt-5 mb-5">Gerenciar Funcionários</h1>
 
-        <form action="gerenciar_funcionarios.php" method="get" novalidate>
+        <form action="../actions/funcionarios/filtrar_funcionarios.php" method="POST" novalidate>
             <div class="row align-items-center mb-3 justify-content-between">
                 <div class="col-auto">
                     <div class="input-group mb-3">
                         <select class='form-select' name="id_tipo_fk" id="id_tipo_fk" required>
-                            <option value="-1">Todos</option>
-                            <?php foreach ($tipos_listar as $tipo) { ?>
-                                <option value="<?= $tipo['id'] ?>" <?= ($tipo['id'] == $_GET['id_tipo_fk'] ? 'selected' : '') ?>> <?= $tipo['nome_tipo'] ?>
+                            <option value="0">Todos</option>
+                            <?php
+                                
+                             foreach ($tipos_listar as $tipo) { ?>
+                                <option value="<?= $tipo['id'] ?>"> <?= $tipo['nome_tipo'] ?>
                                 </option>;
                             <?php } ?>
                         </select>
@@ -100,151 +105,111 @@ $tipos_listar = $tipos->Listar();
 
     </div>
 
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Data de Cadastro</th>
-                <th scope="col">Cargo</th>
-                <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <?php if ($_GET['id_tipo_fk'] != '-1') {
-
-            $usuarios->id_tipo_fk = $_GET['id_tipo_fk'];
-            foreach ($usuarios->ListarPorIDCargo() as $u) { ?>
-                <tbody class="table-group-divider">
-                    <tr>
-                        <td><?= $u['id'] ?></td>
-                        <td><?= $u['nome'] ?></td>
-                        <td><?= $u['email'] ?></td>
-                        <td><?= $u['data_cadastro'] ?></td>
-                        <td><?= $u['id_tipo_fk'] ?></td>
-                        <td>
-                            <a href="./gerenciar_funcionarios.php?id=<?= $u['id'] ?>"><button class="btn btn-primary mx-2"> Editar</button></a>
-                            <button class="btn btn-danger" onclick="excluir(<?= $u['id'] ?>, '<?= $u['nome'] ?>')">Excluir</button>
-                        </td>
-                    </tr>
-                </tbody>
-            <?php }
-
-        } elseif ($_GET['id_tipo_fk'] == '-1') {
-            
-            
-            $usuarios_listar = $usuarios->ListarFuncionarios();
-            
-           
-            ?>
-          
-            <?php foreach ($usuarios_listar as $f) {
-                $id = $f['id']; ?>
-
-                <tbody class="table-group-divider">
-                    <tr>
-                        <td><?= $f['id'] ?></td>
-                        <td><?= $f['nome'] ?></td>
-                        <td><?= $f['email'] ?></td>
-                        <td><?= $f['data_cadastro'] ?></td>
-                        <td><?= $f['nome_tipo'] ?></td>
-                        <td>
-                            <a href="./gerenciar_funcionarios.php?id_tipo_fk=-1&id=<?= $id ?>"><button class="btn btn-primary mx-2"> Editar</button></a>
-                            <button class="btn btn-danger" onclick="excluir(<?= $id ?>, '<?= $f['nome'] ?>')">Excluir</button>
-                        </td>
-                    </tr>
-                </tbody>
-        <?php }
-        }?>
-        <?php
-        $usuario = null;
-
-        if (isset($_GET['id'])) {
-            $usuarios->id = $_GET['id'];
-            $usuario = $usuarios->ListarPorID()[0];
+    <?php if (empty($_GET['id_tipo_fk'])) {
+        if (count($usuarios_listar) == 0) {
+            echo "Nenhum funcionario cadastrado";
+        }else {
+        Tabela($usuarios_listar);
         }
-        ?>
+    }else {
+        if (count($listarPorCargo) == 0) {
+           echo "<div class='alert alert-danger' role='alert'>
+                            Nenhum funcionario encontrado
+                    </div>";
+        }
+        else{
+        Tabela($listarPorCargo);
+        }
+    }
 
-    </table>
-    </div>
+    function Tabela($tabela)
+    { ?>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover ">
+                <thead>
+                    <tr class="table-dark text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Data de Cadastro</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <?php foreach ($tabela as $u) {  ?>
+                    <tbody class="table-group-divider">
+                        <tr class="text-center">
+                            <td><?= $u['id'] ?></td>
+                            <td><img src="../images/<?= $u['foto'] ?>" width="50px" height="50px" ></td>
+                            <td><?= $u['nome'] ?></td>
+                            <td><?= $u['email'] ?></td>
+                            <td><?= $u['data_cadastro'] ?></td>
+                            <td><?= $u['cargo'] ?></td>
+                            <td>
+                                <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editar" data-id="<?= $u['id'] ?>"> Editar</button>
+                                <button class="btn btn-danger" onclick="excluir(<?= $u['id'] ?>, '<?= $u['nome'] ?>')">Excluir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+            <?php }
+            } ?>
+            </table>
+        </div>
 
-    <div class="modal fade" id="editar" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Funcionario ID <?= $_GET['id'] ?></h1>
+        <div class="modal fade" id="editar" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Funcionario</h1>
+                    </div>
+                    <div class="modal-body">
+                    <div id="modalBody"></div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form action="../actions/funcionarios/editar_funcionarios.php?id=<?= $_GET['id'] ?>" method="post" class="form-floating was-validated" novalidate>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Usuario" value="<?= $usuario['nome'] ?>" required>
-                            <label for="nome" class="form-label">Nome</label>
-                            <div class="invalid-feedback">
-                                Esse campo é obrigatório
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com" value="<?= $usuario['email'] ?>" required>
-                            <label for="email" class="form-label">Email</label>
-                            <div class="invalid-feedback">
-                                Esse campo é obrigatório
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha123">
-                            <label for="senha" class="form-label">Senha</label>
-
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select class='form-select' name="id_tipo_fk" id="id_tipo_fk" required>
-                                <option value="" disabled selected>Selecione um cargos</option>
-                                <?php foreach ($tipos_listar as $t) { ?>
-                                    <option value="<?= $t['id']; ?>" <?= ($t['id'] == $usuario['id_tipo_fk'] ? 'selected' : '') ?>> <?= $t['nome_tipo'] ?></option>
-                                <?php } ?>
-                            </select>
-                            <label for="id_cargos" class="form-label">Selecione um cargos</label>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="./gerenciar_funcionarios.php?id_tipo_fk=-1"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button></a>
-                    <button type="submit" class="btn btn-primary">Editar</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
-    </div>
-    <?php if (isset($_GET['id'])): ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                var m = new bootstrap.Modal(document.getElementById('editar'));
-                m.show();
-            });
-        </script>
-    <?php endif; ?>
+        </div>
 
-    <script>
-        function excluir(id, nome) {
-            Swal.fire({
-                title: "Aviso!",
-                text: "Você tem certeza que deseja excluir o usuario " + nome + "?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sim, excluir!",
-                cancelButtonText: "Não, cancelar!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "../actions/funcionarios/remover_funcionarios.php?id=" + id;
-                }
+        <script>
+            function excluir(id, nome) {
+                Swal.fire({
+                    title: "Aviso!",
+                    text: "Você tem certeza que deseja excluir o usuario " + nome + "?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sim, excluir!",
+                    cancelButtonText: "Não, cancelar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "../actions/funcionarios/remover_funcionarios.php?id=" + id;
+                    }
+                });
+            }
+             $(document).ready(function() {
+            $('.btn-primary').click(function() {
+                var id = $(this).data('id');
+                $('#m_id').text(id);
+                // Fazer uma requisição AJAX para buscar os detalhes do pedido
+                $.ajax({
+                    url: 'editar/editar_funcionarios.php',
+                    type: 'GET',
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        // Preencher o modal com os detalhes do pedido
+                        $('#modalBody').html(response);
+                    }
+                })
+
             });
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <?php include_once('../includes/sweet_alert2_include.php'); ?>
+        });
+        </script>
+        <?php include_once('../includes/sweet_alert2_include.php');
+        include_once('../includes/bootstrap_include.php'); ?>
 
 </body>
 

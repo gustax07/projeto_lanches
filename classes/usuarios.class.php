@@ -42,9 +42,9 @@ class Usuarios
         return $comando->rowCount();
     }
     //Listar usuarios
-    public function Listar()
+    public function ListarFuncionarios()
     {
-        $sql = "SELECT * FROM usuarios";
+        $sql = "SELECT * FROM usuarios WHERE id_tipo_fk != 0";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -52,7 +52,44 @@ class Usuarios
         Banco::desconectar();
         return $arr_resultado;
     }
-
+    public function ListarFuncionariosPorINNERJOIN()
+    {
+        $sql = "SELECT u.foto, 
+u.id, 
+u.nome, 
+u.email, 
+u.data_cadastro, 
+t.nome_tipo AS cargo
+FROM usuarios u
+JOIN tipos t ON u.id_tipo_fk = t.id
+WHERE u.id_tipo_fk != 0;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+     public function ListarFuncionariosPorINNERJOINECARGO()
+    {
+        $sql = "SELECT u.foto, 
+                u.id, 
+                u.nome, 
+                u.email, 
+                u.data_cadastro, 
+                t.nome_tipo AS cargo
+                FROM usuarios u
+                JOIN tipos t ON u.id_tipo_fk = t.id
+                WHERE u.id_tipo_fk = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_tipo_fk
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
     //ListarPorID
     public function ListarPorID()
     {
@@ -109,18 +146,7 @@ class Usuarios
             return $comando->rowCount();
         }
     }
-    public function ListarFuncionarios()
-    {
-        $sql = "SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.data_cadastro, tipos.nome_tipo
-                from usuarios
-                INNER JOIN tipos ON id_tipo_fk = tipos.id;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
-        $comando->execute();
-        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
-        return $arr_resultado;
-    }
+
 
     //Excluir usuarios
     public function Excluir()
@@ -135,7 +161,8 @@ class Usuarios
         return $comando->rowCount();
     }
 
-    public function ListarClientes(){
+    public function ListarClientes()
+    {
         $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = 0";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
@@ -145,7 +172,8 @@ class Usuarios
         return $arr_resultado;
     }
 
-    public function MudarFoto() {
+    public function MudarFoto()
+    {
         $sql = "UPDATE usuarios SET foto = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);

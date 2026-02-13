@@ -23,7 +23,7 @@ if(sizeof($usuarios->Logar()) == 0){
         header('Location: ../../index.php');
     } else {
         // funcionário
-        header('Location: ../../admin/painel.php');
+        header('Location: ../../admin');
     }
     
 }

@@ -31,7 +31,7 @@ if (!isset($_SESSION['usuario'])) {
     <nav class="main-menu">
         <ul>
             <li>
-                <a href="./dashboard.php" target="_self">
+                <a href="./index.php" target="_self">
                     <i class="fa fa-home fa-2x"></i>
                     <span class="nav-text">
                         Tela Inicial
@@ -58,7 +58,7 @@ if (!isset($_SESSION['usuario'])) {
 
             </li>
             <li class="has-subnav">
-                <a href="#">
+                <a href="./gerenciar_funcionarios.php">
                     <i class="fa fa-camera-retro fa-2x"></i>
                     <span class="nav-text">
                         Funcionarios
