@@ -1,18 +1,22 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once('./classes/itens.class.php');
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
+
 $itens = new Itens();
 $itens_listar = $itens->Listar();
 
-header('Content-type: text/html; charset=utf-8');
-
 $itensCarrinho = [];
+
 if (isset($_SESSION['usuario'])) {
 
     $pedido = new Pedidos();
     $pedido->id_usuarios_fk = $_SESSION['usuario']['id'];
-$idUsuario = $_SESSION['usuario']['id'];
+
     $pedidoAberto = $pedido->BuscarPedidosAbertos();
 
     if (!empty($pedidoAberto)) {
@@ -21,25 +25,21 @@ $idUsuario = $_SESSION['usuario']['id'];
         $itensCarrinho = $pedidoItens->ListarPorPedido();
     }
 }
-
-print_r($_SESSION);
-
 ?>
 
 <!doctype html>
 <html lang="pt-BR">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart_checkout" />
-    <title>Hello, world!</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <title>Lanches</title>
+    <style>
     ::-webkit-scrollbar {
         width: 2px;
     }
@@ -95,14 +95,26 @@ print_r($_SESSION);
             'GRAD' 0,
             'opsz' 48
     }
+    .modal {
+    z-index: 2000 !important;
+}
+
+.modal-backdrop {
+    z-index: 1990 !important;
+}
+.modal-dialog {
+    margin-top: 120px;
+}
+
 </style>
+</head>
 
 <body style="margin: 0px; border: none; padding: 0px;">
     <div class="container-fluid" style="margin: 0px; border: none; padding: 0px;">
         <div style="background-color: black; height: 100px; width: 100%;"> </div>
+        
 
-
-        <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
+<div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
             <div class="col-12" style="padding: 0px;">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -128,108 +140,97 @@ print_r($_SESSION);
             </div>
         </div> <!-- Linha 1 || final -->
 
-        <div class="row justify-content-end"> <!-- Linha 2 || começo -->
 
-            <div class="col-3" style="margin: 10px; margin-top:100px; margin-bottom:100px">
-                <h1>Lanches</h1>
-            </div>
+<div class="container-fluid">
 
-            <div class="col-4" style="margin: 10px; margin-top:100px; margin-bottom:100px">
-                <button
-                    type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" data-id="<?=$_SESSION['pedido_aberto'] ?> ?>" class="btn btn-warning btn-lg"><span class="material-symbols-outlined">
-                        shopping_cart_checkout
-                    </span> Finalizar
-                </button>
-            </div>
+    <div class="row justify-content-between align-items-center my-5">
+        <div class="col">
+            <h1>Lanches</h1>
+        </div>
 
-        </div> <!-- Linha 2 || final -->
-
-        <div class="row row g-4 justify-content-center" style="gap: 30px; justify-content: space-evenly;"> <!-- Linha 3 || começo --> <!-- modelo dos cards -->
-            <?php foreach ($itens_listar as $i) { ?>
-                <div class="col col-xl-2">
-                    <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
-                        <div class="card"
-                            style="width: 18rem; border-radius: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #f5f5f5;">
-                            <img src="./images/<?= $i['imagem'] ?>" class="card-img-top card-img-fixed" alt="..." style="height: 200px; width: 250px;">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $i['nome'] ?></h5>
-                                <h6>R$ <?= $i['preco'] ?></h6>
-                                <p class="card-text"><?= $i['descricao'] ?></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            <?php } ?>
-        </div> <!-- Linha 3 || fim -->
-    </div>
-    <div class="antesDoFooter" style="margin-top: 60px "> </div>
-
-
-
-
-<!-- modal -->
-    <div class="modal fade" id="modalCarrinho" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">🛒 Meu Carrinho</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                
-                    <div id="modalBody"></div>
-                    <?php if (empty($itensCarrinho)) { ?>
-                        <p class="text-center text-muted">Carrinho vazio</p>
-                    <?php } else { ?>
-
-                        <?php foreach ($itensCarrinho as $item) { ?>
-                            <div class="d-flex align-items-center mb-3 border-bottom pb-2">
-
-                                <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
-
-                                <div class="flex-grow-1">
-                                    <strong><?= $item['nome'] ?></strong><br>
-                                    Quantidade: <?= $item['quantidade'] ?><br>
-                                    Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
-                                </div>
-
-                                <div>
-                                    <strong>
-                                        R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
-                                    </strong>
-                                </div>
-
-                            </div>
-                        <?php } ?>
-
-                    <?php } ?>
-
-                </div>
-
-                <div class="modal-footer">
-                    <a href="finalizar_pedido.php" class="btn btn-success w-100">
-                        Finalizar Pedido
-                    </a>
-                </div>
-
-            </div>
+        <div class="col text-end">
+            <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modalCarrinho"
+                class="btn btn-warning btn-lg">
+                <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                Finalizar
+            </button>
         </div>
     </div>
 
+    <div class="row g-4 justify-content-center">
 
+        <?php foreach ($itens_listar as $i) { ?>
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                <a href="./lanches_descricao.php?id=<?= $i['id'] ?>" class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="./images/<?= $i['imagem'] ?>" class="card-img-top" style="height:200px; object-fit:cover;">
+                        <div class="card-body">
+                            <h5><?= $i['nome'] ?></h5>
+                            <p class="text-muted">R$ <?= number_format($i['preco'], 2, ',', '.') ?></p>
+                            <p><?= $i['descricao'] ?></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php } ?>
 
-    <?php include('./footer.html'); ?>
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-        window.addEventListener("message", function(e) {
-            const iframe = document.getElementById("footerIframe");
-            iframe.style.height = e.data + "px";
-        });
+    </div>
+</div>
 
+<!-- MODAL CARRINHO -->
+<div class="modal fade" id="modalCarrinho" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
 
-    </script>
+            <div class="modal-header">
+                <h5 class="modal-title">🛒 Meu Carrinho</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                
+
+                    <?php foreach ($itensCarrinho as $item) { ?>
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+
+                            <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
+
+                            <div class="flex-grow-1">
+                                <strong><?= $item['nome'] ?></strong><br>
+                                Quantidade: <?= $item['quantidade'] ?><br>
+                                Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                            </div>
+
+                            <div>
+                                <strong>
+                                    R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
+                                </strong>
+                            </div>
+
+                        </div>
+                    <?php } ?>
+
+                
+
+            </div>
+
+            <div class="modal-footer">
+                <a href="finalizar_pedido.php" class="btn btn-success w-100">
+                    Finalizar Pedido
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php include('./footer.html'); ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
-
 </html>

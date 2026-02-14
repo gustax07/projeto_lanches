@@ -51,27 +51,27 @@ WHERE p.id = ?;";
     }
 
     public function ListarPorPedido()
-    {
-        $sql = "
+{
+    $sql = "
         SELECT 
-            pi.id,
-            pi.quantidade,
+            i.id,
             i.nome,
             i.preco,
-            i.imagem
-        FROM pedidos_itens pi
+            i.imagem,
+            SUM(pi.quantidade) AS quantidade
+        FROM pedido_itens pi
         INNER JOIN itens i ON i.id = pi.id_itens_fk
         WHERE pi.id_pedidos_fk = ?
+        GROUP BY i.id, i.nome, i.preco, i.imagem
     ";
 
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
-        $comando->execute([$this->id_pedidos_fk]);
-        $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->execute([$this->id_pedidos_fk]);
 
-        return $resultado;
-    }
+    return $comando->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
 
