@@ -1,6 +1,6 @@
 <?php
 
-require_once('Banco.class.php');
+require_once('banco.class.php');
 
 class Usuarios
 {
