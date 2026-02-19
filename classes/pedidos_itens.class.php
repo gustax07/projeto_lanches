@@ -119,4 +119,38 @@ WHERE p.id = ?;";
         Banco::desconectar();
         return $comando->rowCount();
     }
+    public function listarTop5Vendidos(){
+        $sql = "SELECT i.id, i.nome, i.preco, i.imagem, SUM(pi.quantidade) AS quantidade
+        FROM pedido_itens pi
+        INNER JOIN itens i ON i.id = pi.id_itens_fk
+        GROUP BY i.id, i.nome, i.preco, i.imagem
+        ORDER BY quantidade DESC
+        LIMIT 5";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function StatusFinanceiro(){
+        $sql = "SELECT * FROM pedido_itens WHERE id_pedidos_fk = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_pedidos_fk
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
+
+// SELECT DATE(pedidos.data_pedido) dia,
+// SUM(itens.preco) as faturamento
+// FROM pedido_itens
+// JOIN itens ON pedido_itens.id_itens_fk = itens.id
+// JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id
+// WHERE pedidos.data_pedido <=
+// DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+// GROUP BY DATE(pedidos.data_pedido)
+// ORDER BY dia ASC;
