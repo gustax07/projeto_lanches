@@ -21,24 +21,23 @@ $idItem = $_POST['id_item'];
 $pedido = new Pedidos();
 $pedido->id_usuarios_fk = $idUsuario;
 
-$pedidoAberto = $pedido->BuscarPedidosAbertos(); // deve retornar UM pedido ou null
+$pedidoAberto = $pedido->BuscarPedidosAbertos(); 
 
 
-// se não existir, cria pedido
+// se nao existir, cria pedido
 if (!$pedidoAberto) {
     $pedido->status = 'aberto';
     $pedido->Cadastrar();
 
-    // pega o pedido recém-criado
+    
     $pedidoAberto = $pedido->BuscarPedidosAbertos();
 }
 
-// agora temos o ID do pedido
+//
 $pedidoAberto[0]['id'];
 $idPedido = $pedidoAberto[0]['id'];
 
 
-// cadastra item no pedido
 $itemPedido = new Pedido_Itens();
 $itemPedido->id_pedidos_fk = $idPedido;
 $itemPedido->id_itens_fk = $idItem;
@@ -46,6 +45,5 @@ $itemPedido->quantidade = 1;
 
 $itemPedido->Cadastrar();
 
-// volta pra página
 header('Location: ../../index.php');
 exit;
