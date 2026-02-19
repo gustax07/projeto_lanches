@@ -85,13 +85,13 @@ class Pedidos
     //adicionar um novo pedido
     public function Cadastrar()
     {
-        $sql = "INSERT INTO pedidos (id_usuarios_fk, status, data_pedido) VALUES (?, ?, ?);";
+        $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?,?);";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk,
-            $this->status,
             $this->data_pedido,
+            
         ]);
         Banco::desconectar();
         return $comando->rowCount();
