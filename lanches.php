@@ -64,36 +64,54 @@ if (isset($_SESSION['usuario'])) {
         a {
             text-decoration: none;
             color: #222;
-        }
-
-        .card {
-            transition: 0.7s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card:hover {
-            transform: scale(1.1);
-            border: 1px solid #E9A652;
-
-        }
-
-        .card:active {
-            transform: scale(0.8);
-            transition: 0.7s;
+            transition: 0.3s;
         }
 
         a:hover {
             color: #E9A652;
         }
 
+        .card {
+            transition: 0.4s;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            border: 1px solid #E9A652;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+
+        .card-img-top {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            width: 100%;
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .card-description {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            font-size: 0.85rem;
+            color: #666;
+            height: 2.6em;
+        }
+
         .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 48
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
         }
 
         .modal {
@@ -107,6 +125,13 @@ if (isset($_SESSION['usuario'])) {
         .modal-dialog {
             margin-top: 120px;
         }
+
+        .card-title-custom {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -117,7 +142,7 @@ if (isset($_SESSION['usuario'])) {
 
         <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
             <div class="col-12" style="padding: 0px;">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 mt-md-4" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
@@ -161,24 +186,23 @@ if (isset($_SESSION['usuario'])) {
                 </div>
             </div>
 
-            <div class="row g-4 justify-content-center">
-
+            <div class="row g-3 justify-content-center">
                 <?php foreach ($itens_listar as $i) { ?>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                        <a href="./lanches_descricao.php?id=<?= $i['id'] ?>" class="text-decoration-none">
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
                             <div class="card h-100">
-                                <img src="./images/<?= $i['imagem'] ?>" class="card-img-top" style="height:200px; object-fit:cover;">
-                                <div class="card-body">
-                                    <h5><?= $i['nome'] ?></h5>
-                                    <p class="text-muted">R$ <?= number_format($i['preco'], 2, ',', '.') ?></p>
-                                    <p><?= $i['descricao'] ?></p>
+                                <img src="./images/<?= $i['imagem'] ?>" class="card-img-top">
+                                <div class="card-body p-2 p-md-3">
+                                    <span class="card-title-custom"><?= $i['nome'] ?></span>
+                                    <p class="text-muted small mb-1">R$ <?= number_format($i['preco'], 2, ',', '.') ?></p>
+                                    <p class="card-description"><?= $i['descricao'] ?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
                 <?php } ?>
-
             </div>
+
         </div>
 
         <!-- MODAL CARRINHO -->
