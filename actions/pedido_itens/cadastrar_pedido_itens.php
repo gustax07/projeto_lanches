@@ -7,7 +7,7 @@ require_once '../../classes/pedidos.class.php';
 require_once '../../classes/pedidos_itens.class.php';
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../login.php');
+    header('Location: ../../logar.php');
     exit;
 }
 
