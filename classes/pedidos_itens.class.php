@@ -51,8 +51,8 @@ WHERE p.id = ?;";
     }
 
     public function ListarPorPedido()
-{
-    $sql = "
+    {
+        $sql = "
         SELECT 
             i.id,
             i.nome,
@@ -65,12 +65,12 @@ WHERE p.id = ?;";
         GROUP BY i.id, i.nome, i.preco, i.imagem
     ";
 
-    $banco = Banco::conectar();
-    $comando = $banco->prepare($sql);
-    $comando->execute([$this->id_pedidos_fk]);
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([$this->id_pedidos_fk]);
 
-    return $comando->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 
@@ -110,16 +110,20 @@ WHERE p.id = ?;";
     //excluir um pedido_itens
     public function Excluir()
     {
-        $sql = "DELETE FROM pedido_itens WHERE id_pedidos_fk = ?";
+        $sql = "DELETE FROM pedido_itens
+WHERE id_pedidos_fk = ?
+AND id_itens_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_pedidos_fk
+            $this->id_pedidos_fk,
+            $this->id_itens_fk
         ]);
         Banco::desconectar();
         return $comando->rowCount();
     }
-    public function listarTop5Vendidos(){
+    public function listarTop5Vendidos()
+    {
         $sql = "SELECT i.id, i.nome, i.preco, i.imagem, SUM(pi.quantidade) AS quantidade
         FROM pedido_itens pi
         INNER JOIN itens i ON i.id = pi.id_itens_fk
@@ -132,7 +136,8 @@ WHERE p.id = ?;";
         return $comando->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function StatusFinanceiro(){
+    public function StatusFinanceiro()
+    {
         $sql = "SELECT * FROM pedido_itens WHERE id_pedidos_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);

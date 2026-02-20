@@ -6,7 +6,7 @@ include_once("./includes/bootstrap_include.php");
 
 ?>
 
-<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
 
 <style>
