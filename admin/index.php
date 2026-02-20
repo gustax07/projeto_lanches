@@ -48,7 +48,9 @@ $quantidade_telefones = count($telefones_listar);
 require_once('../classes/pedidos_itens.class.php');
 $pedidos_itens = new Pedido_Itens();
 $produtos_mais_vendidos = $pedidos_itens->listarTop5Vendidos();
-
+$pedidos_status = $pedidos_itens->StatusFinanceiro();
+$status_dos_pedidos = $pedidos_itens->StatusPedidos();
+$horarios_de_picos = $pedidos_itens->HorariosDePicos();
 
 // Se estiver no localhost, a raiz é a pasta do projeto. No servidor, é a pasta admin.
 $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/' : '/admin/';
@@ -91,7 +93,8 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela Inicial</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="<?php echo $base_path; ?>admin/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -103,44 +106,163 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <div class="container-fluid flex-nowrap flex-wrap mt-5">
         <div class="row justify-content-start">
             <?php
-            criarCard('Pedidos', $quantidade_pedidos, $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', 'pedidos.php');
-            criarCard('Funcionarios', $quantidade_funcionarios, 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', 'funcionarios.php');
-            criarCard('Clientes', $quantidade_clientes, 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', 'clientes.php');
-            criarCard('Categorias', $quantidade_categorias, 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', 'categorias.php');
-            criarCard('Cargos', $quantidade_tipos, 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', 'tipos.php');
-            criarCard('Produtos', $quantidade_itens, 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', 'produtos.php');
-            criarCard('Enderecos', $quantidade_enderecos, 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', 'enderecos.php');
-            criarCard('Telefones', $quantidade_telefones, 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', 'telefones.php');
+            criarCard('Pedidos', $quantidade_pedidos, $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'admin/pedidos.php');
+            criarCard('Funcionarios', $quantidade_funcionarios, 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'admin/gerenciar_funcionarios.php');
+            criarCard('Clientes', $quantidade_clientes, 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'admin/clientes.php');
+            criarCard('Categorias', $quantidade_categorias, 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'admin/categorias.php');
+            criarCard('Cargos', $quantidade_tipos, 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'admin/tipos.php');
+            criarCard('Produtos', $quantidade_itens, 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'admin/produtos.php');
+            criarCard('Enderecos', $quantidade_enderecos, 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'admin/enderecos.php');
+            criarCard('Telefones', $quantidade_telefones, 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'admin/telefones.php');
             ?>
         </div>
     </div>
-    <hr class="container col-6">
+    <hr class="container col-7">
+    <h1 class="text-center">Estatisticas em tempo real</h1>
     <!-- lista o produtos mais vendidos -->
     <div class="container-fluid">
-        <div class="col-md-3 col-lg-3 displey-flex justify-content-center align-items-center shadow p-3 mt-5 bg-body-white rounded">
-            <table class="table table-responsive">
-                <h3 class="text-center">Produtos Mais Vendidos</h3>
-                <thead class="text-center">
-                    <tr>
-                        <th scope="col">Produto</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Preço</th>
-                        <th scope="col">Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($produtos_mais_vendidos as $produto) { ?>
-                        <tr class="text-center">
-                            <td><img src="../images/<?= $produto['imagem'] ?>" width="50px" height="50px"></td>
-                            <td><?= $produto['nome'] ?></td>
-                            <td><?= $produto['preco'] ?></td>
-                            <td><?= $produto['quantidade'] ?></td>
+        <div class="row gap-4 justify-content-center flex-wrap">
+            <div class="col-md-6 col-sm-8 col-lg-5 card shadow-sm border-0 p-3 mt-4">
+                <table class="table table-responsive">
+                    <h4><i class="bi bi-graph-up-arrow me-2"></i> Produtos Mais Vendidos</h4>
+                    <thead class="text-center">
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Quantidade</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($produtos_mais_vendidos as $produto) { ?>
+                            <tr class="text-center">
+                                <td><img src="../images/<?= $produto['imagem'] ?>" width="50px" height="50px"></td>
+                                <td><?= $produto['nome'] ?></td>
+                                <td><?= $produto['preco'] ?></td>
+                                <td><?= $produto['quantidade'] ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+            $datas = [];
+            $faturamento = [];
+            $status_pedido = [];
+            $total_status = [];
+            $horario = [];
+            $tota_horario = [];
+
+            foreach ($pedidos_status as $status) {
+                $datas[] = $status['dia'];
+                $faturamento[] = $status['faturamento'];
+            }
+            foreach ($status_dos_pedidos as $status) {
+                $status_pedido[] = $status['status'];
+                $total_status[] = $status['total'];
+            }
+
+            foreach ($horarios_de_picos as $horarios) {
+                $horario[] = $horarios['hora'] . ':00';
+                $tota_horario[] = $horarios['total'];
+            }
+            ?>
+
+            <div class="col-md-5 col-sm-9 col-lg-6 card shadow-sm border-0 p-3 mt-4">
+                <h4><i class="bi bi-graph-up-arrow me-2"></i> Status dos Pedidos</h4>
+                <?php if (count($status_pedido) == 0) {
+
+                    echo "<div class='d-flex align-items-center justify-content-center mt-5'>
+        <h3 class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i> Dados Insuficientes</h3>
+        </div>";
+                } else { ?>
+                    <canvas id="graficoPedidos" style="height:100"></canvas>
+                    <script>
+                        const ctxPedidos = document.getElementById('graficoPedidos').getContext('2d');
+                        new Chart(ctxPedidos, {
+                            type: 'pie',
+                            data: {
+                                labels: <?= json_encode($status_pedido) ?>,
+                                datasets: [{
+                                    label: 'Pedidos',
+                                    data: <?= json_encode($total_status) ?>,
+                                    backgroundColor: [
+                                        '#ff6384',
+                                        '#36a2eb',
+                                        '#ffce56',
+                                        '#4bc0c0',
+                                        '#9966ff'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                        });
+                    </script>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="row gap-4 justify-content-center flex-wrap">
+            <div class="col-md-5 col-sm-8 col-lg-5 card shadow-sm border-0 p-3 mt-4">
+                <h4><i class="bi bi-graph-up-arrow me-2"></i> Horario de Picos</h4>
+                <canvas id="graficoHorario" style="height:100"></canvas>
+                <script>
+                    const ctxHorario = document.getElementById('graficoHorario').getContext('2d');
+                    new Chart(ctxHorario, {
+                        type: 'bar',
+                        data: {
+                            labels: <?= json_encode($horario) ?>,
+                            datasets: [{
+                                label: 'Pedidos',
+                                data: <?= json_encode($tota_horario) ?>,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(255, 205, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(255, 159, 64)',
+                                    'rgb(255, 205, 86)',
+                                    'rgb(75, 192, 192)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(153, 102, 255)',
+                                    'rgb(201, 203, 207)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                    });
+                </script>
+            </div>
+            <div class="col-md-5 col-sm-9 col-lg-6 card shadow-sm border-0 p-3 mt-4">
+                <h4><i class="bi bi-graph-up-arrow me-2"></i> Faturamento dos Últimos 7 Dias</h4>
+
+                <canvas id="graficoVendas" style="height:100"></canvas>
+                <script>
+                    const ctx = document.getElementById('graficoVendas').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: <?= json_encode($datas) ?>,
+                            datasets: [{
+                                label: 'R$ Faturamento',
+                                data: <?= json_encode($faturamento) ?>,
+                                borderColor: '#ffc107',
+                                backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                                fill: true,
+                                tension: 0.4
+                            }]
+                        },
+                    });
+                </script>
+            </div>
         </div>
     </div>
+
 
 
 
