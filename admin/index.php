@@ -50,6 +50,9 @@ $pedidos_itens = new Pedido_Itens();
 $produtos_mais_vendidos = $pedidos_itens->listarTop5Vendidos();
 
 
+// Se estiver no localhost, a raiz é a pasta do projeto. No servidor, é a pasta admin.
+$base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/' : '/admin/';
+
 include('./sidebar.php');
 $meta_pedidos = 200;
 
