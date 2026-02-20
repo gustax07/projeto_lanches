@@ -138,24 +138,48 @@ AND id_itens_fk = ?";
 
     public function StatusFinanceiro()
     {
-        $sql = "SELECT * FROM pedido_itens WHERE id_pedidos_fk = ?";
+        $sql = "SELECT DATE(pedidos.data_pedido) dia,
+                SUM(itens.preco) as faturamento
+                FROM pedido_itens
+                JOIN itens ON pedido_itens.id_itens_fk = itens.id
+                JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id
+                WHERE pedidos.data_pedido >=
+                DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+                GROUP BY DATE(pedidos.data_pedido)
+                ORDER BY dia ASC;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
-        $comando->execute([
-            $this->id_pedidos_fk
-        ]);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+    public function StatusPedidos()
+    {
+        $sql = "SELECT status, COUNT(*) as total 
+                FROM pedidos 
+                WHERE data_pedido >= CURRENT_DATE() 
+                GROUP BY status;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
+    public function HorariosDePicos()
+    {
+        $sql = "SELECT HOUR(data_pedido) as hora, COUNT(*) as total 
+                FROM pedidos 
+                WHERE data_pedido >= CURRENT_DATE() 
+                GROUP BY HOUR(data_pedido) 
+                ORDER BY hora ASC;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
         return $arr_resultado;
     }
 }
-
-// SELECT DATE(pedidos.data_pedido) dia,
-// SUM(itens.preco) as faturamento
-// FROM pedido_itens
-// JOIN itens ON pedido_itens.id_itens_fk = itens.id
-// JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id
-// WHERE pedidos.data_pedido <=
-// DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
-// GROUP BY DATE(pedidos.data_pedido)
-// ORDER BY dia ASC;
