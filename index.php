@@ -18,7 +18,6 @@ include_once('./includes/bootstrap_include.php');
             padding: 0px;
             overflow: hidden;
         }
-
     </style>
 </head>
 
@@ -32,10 +31,16 @@ include_once('./includes/bootstrap_include.php');
         </iframe>
     </div>
     <!-- iframe do corpo -->
-    <iframe src="./lanches.php" id="corpoIframe"
+    <iframe src="lanches.php" id="corpoIframe"
         style="width: 100%; height: 100vh; margin: 0; border: none; padding: 0;">
     </iframe>
 
+    <script>
+        function atualizarCorpo() {
+            document.getElementById('corpoIframe').src =
+                document.getElementById('corpoIframe').src;
+        }
+    </script>
 
 </body>
 

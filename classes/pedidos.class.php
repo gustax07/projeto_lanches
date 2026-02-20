@@ -84,18 +84,23 @@ class Pedidos
 
     //adicionar um novo pedido
     public function Cadastrar()
-    {
-        $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?,?);";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
-        $comando->execute([
-            $this->id_usuarios_fk,
-            $this->data_pedido,
-            
-        ]);
-        Banco::desconectar();
-        return $comando->rowCount();
-    }
+{
+    $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?, ?)";
+    
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->execute([
+        $this->id_usuarios_fk,
+        $this->data_pedido
+    ]);
+
+    // pega o ID do pedido recém-criado
+    $idPedido = $banco->lastInsertId();
+
+    Banco::desconectar();
+
+    return $idPedido;
+}
 
     //editar um pedido
     public function Editar()
@@ -215,4 +220,9 @@ class Pedidos
         Banco::desconectar();
         return $arr_resultado;
     }
+    public function UltimoID()
+{
+    $banco = Banco::conectar();
+    return $banco->lastInsertId();
+}
 }
