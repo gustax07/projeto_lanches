@@ -58,6 +58,27 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/' : '/ad
 include('./sidebar.php');
 $meta_pedidos = 200;
 
+$datas = [];
+$faturamento = [];
+$status_pedido = [];
+$total_status = [];
+$horario = [];
+$tota_horario = [];
+
+foreach ($pedidos_status as $status) {
+    $datas[] = $status['dia'];
+    $faturamento[] = $status['faturamento'];
+}
+foreach ($status_dos_pedidos as $status) {
+    $status_pedido[] = $status['status'];
+    $total_status[] = $status['total'];
+}
+
+foreach ($horarios_de_picos as $horarios) {
+    $horario[] = $horarios['hora'] . ':00';
+    $tota_horario[] = $horarios['total'];
+}
+
 
 //criar uma funcao para os cards
 function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
@@ -83,8 +104,7 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
 </div>
 </a>
 </div>';
-}
-?>
+} ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -95,13 +115,10 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo $base_path; ?>admin/css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/index.js"></script>
 </head>
 
 <body>
-
-    <!-- card de apresentacao do dashboard  -->
-
-
 
     <div class="container-fluid flex-nowrap flex-wrap mt-5">
         <div class="row justify-content-start">
@@ -119,7 +136,7 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     </div>
     <hr class="container col-7">
     <h1 class="text-center">Estatisticas em tempo real</h1>
-    <!-- lista o produtos mais vendidos -->
+
     <div class="container-fluid">
         <div class="row gap-4 justify-content-center flex-wrap">
             <div class="col-md-6 col-sm-8 col-lg-5 card shadow-sm border-0 p-3 mt-4">
@@ -145,58 +162,21 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
                     </tbody>
                 </table>
             </div>
-            <?php
-            $datas = [];
-            $faturamento = [];
-            $status_pedido = [];
-            $total_status = [];
-            $horario = [];
-            $tota_horario = [];
-
-            foreach ($pedidos_status as $status) {
-                $datas[] = $status['dia'];
-                $faturamento[] = $status['faturamento'];
-            }
-            foreach ($status_dos_pedidos as $status) {
-                $status_pedido[] = $status['status'];
-                $total_status[] = $status['total'];
-            }
-
-            foreach ($horarios_de_picos as $horarios) {
-                $horario[] = $horarios['hora'] . ':00';
-                $tota_horario[] = $horarios['total'];
-            }
-            ?>
-
-            <div class="col-md-5 col-sm-9 col-lg-6 card shadow-sm border-0 p-3 mt-4">
+            <div class="col-md-5 col-sm-9 col-lg-3 card shadow-sm border-0 p-3 mt-4">
                 <h4><i class="bi bi-graph-up-arrow me-2"></i> Status dos Pedidos</h4>
                 <?php if (count($status_pedido) == 0) {
 
                     echo "<div class='d-flex align-items-center justify-content-center mt-5'>
-        <h3 class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i> Dados Insuficientes</h3>
-        </div>";
+                            <h3 class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i> Dados Insuficientes</h3>
+                        </div>";
                 } else { ?>
-                    <canvas id="graficoPedidos" style="height:100"></canvas>
+                    <canvas id="graficoPedidos"></canvas>
+
                     <script>
-                        const ctxPedidos = document.getElementById('graficoPedidos').getContext('2d');
-                        new Chart(ctxPedidos, {
-                            type: 'pie',
-                            data: {
-                                labels: <?= json_encode($status_pedido) ?>,
-                                datasets: [{
-                                    label: 'Pedidos',
-                                    data: <?= json_encode($total_status) ?>,
-                                    backgroundColor: [
-                                        '#ff6384',
-                                        '#36a2eb',
-                                        '#ffce56',
-                                        '#4bc0c0',
-                                        '#9966ff'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                        });
+                        const JSlabelPedidos = <?= json_encode($status_pedido) ?>;
+                        const JSdataPedidos = <?= json_encode($total_status) ?>;
+
+                        graficoPedidos(JSlabelPedidos, JSdataPedidos);
                     </script>
                 <?php } ?>
             </div>
@@ -204,67 +184,38 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
         <div class="row gap-4 justify-content-center flex-wrap">
             <div class="col-md-5 col-sm-8 col-lg-5 card shadow-sm border-0 p-3 mt-4">
                 <h4><i class="bi bi-graph-up-arrow me-2"></i> Horario de Picos</h4>
-                <canvas id="graficoHorario" style="height:100"></canvas>
-                <script>
-                    const ctxHorario = document.getElementById('graficoHorario').getContext('2d');
-                    new Chart(ctxHorario, {
-                        type: 'bar',
-                        data: {
-                            labels: <?= json_encode($horario) ?>,
-                            datasets: [{
-                                label: 'Pedidos',
-                                data: <?= json_encode($tota_horario) ?>,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)',
-                                    'rgba(255, 205, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(201, 203, 207, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgb(255, 99, 132)',
-                                    'rgb(255, 159, 64)',
-                                    'rgb(255, 205, 86)',
-                                    'rgb(75, 192, 192)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(153, 102, 255)',
-                                    'rgb(201, 203, 207)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                    });
-                </script>
+                <?php if (count($horario) == 0) {
+                    echo "<div class='d-flex align-items-center justify-content-center mt-5'>
+                            <h3 class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i> Dados Insuficientes</h3>
+                        </div>";
+                } else { ?>
+                    <canvas id="graficoHorario" style="height:100"></canvas>
+                    <script>
+                        const JSlabelHorario = <?= json_encode($horario) ?>;
+                        const JSdataHorario = <?= json_encode($tota_horario) ?>;
+
+                        graficoHorarios(JSlabelHorario, JSdataHorario);
+                    </script>
+                <?php } ?>
             </div>
             <div class="col-md-5 col-sm-9 col-lg-6 card shadow-sm border-0 p-3 mt-4">
                 <h4><i class="bi bi-graph-up-arrow me-2"></i> Faturamento dos Últimos 7 Dias</h4>
+                <?php if (count($datas) == 0) {
+                    echo "<div class='d-flex align-items-center justify-content-center mt-5'>
+                            <h3 class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i> Dados Insuficientes</h3>
+                        </div>";
+                } else { ?>
+                    <canvas id="graficoVendas" style="height:100"></canvas>
+                    <script>
+                        const JSlabelVendas = <?= json_encode($datas) ?>;
+                        const JSdataVendas = <?= json_encode($faturamento) ?>;
 
-                <canvas id="graficoVendas" style="height:100"></canvas>
-                <script>
-                    const ctx = document.getElementById('graficoVendas').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: <?= json_encode($datas) ?>,
-                            datasets: [{
-                                label: 'R$ Faturamento',
-                                data: <?= json_encode($faturamento) ?>,
-                                borderColor: '#ffc107',
-                                backgroundColor: 'rgba(255, 193, 7, 0.2)',
-                                fill: true,
-                                tension: 0.4
-                            }]
-                        },
-                    });
-                </script>
+                        graficoFinanceiro(JSlabelVendas, JSdataVendas);
+                    </script>
+                <?php } ?>
             </div>
         </div>
     </div>
-
-
-
 
     <?php include_once("../includes/bootstrap_include.php"); ?>
 </body>
