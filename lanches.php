@@ -221,7 +221,7 @@ if (isset($_SESSION['usuario'])) {
 
                         <?php foreach ($itensCarrinho as $item) { ?>
                             <div class="d-flex align-items-center mb-3 border-bottom pb-2">
-                                
+
 
                                 <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
 
@@ -237,6 +237,8 @@ if (isset($_SESSION['usuario'])) {
                                     </strong>
 
                                     <form action="actions/pedido_itens/remover_predidos_itens.php" method="post">
+                                        <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
+
                                         <input type="hidden" name="id_item" value="<?= $item['id'] ?>">
                                         <button type="submit" class="btn btn-sm btn-danger">Remover</button>
                                     </form>
