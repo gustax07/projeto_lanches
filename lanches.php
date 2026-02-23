@@ -174,13 +174,16 @@ if (isset($_SESSION['usuario'])) {
                 </div>
 
                 <div class="col text-end">
-                    <button
-                        type="button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalCarrinho"
-                        class="btn btn-warning btn-lg">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" class="btn btn-warning btn-lg position-relative">
                         <span class="material-symbols-outlined">shopping_cart_checkout</span>
                         Finalizar
+
+                        <?php if (count($itensCarrinho) > 0): ?>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?= count($itensCarrinho) ?>
+                                <span class="visually-hidden">itens no carrinho</span>
+                            </span>
+                        <?php endif; ?>
                     </button>
                 </div>
             </div>

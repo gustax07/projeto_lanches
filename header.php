@@ -100,8 +100,9 @@ include_once("./includes/bootstrap_include.php");
                         ?>"
                   alt="Foto do usuário"
                   class="rounded-circle"
-                  width="45"
-                  height="45" />
+                  width="75"
+                  height="75"
+                  style="border: 2px solid black;" />
                 <span class="fw-bold">
                 </span>
               </button>
