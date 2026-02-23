@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_SESSION['usuario']['tipo'] != 6) {
+if ($_SESSION['usuario']['id_tipo_fk'] == 0) {
     header('Location: ../index.php');
     exit;
 } 

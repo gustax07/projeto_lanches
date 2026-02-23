@@ -5,7 +5,7 @@ require_once 'header.php';
 require_once '../classes/categorias.class.php';
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
-$categorias->nome = $_GET['pesquisar'];
+$categorias->nome = $_GET['pesquisar'] ?? '';
 $categorias_pesquisa = $categorias->PesquisarPorNome();
 
 function Table($categories) {
