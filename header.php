@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 include_once("./includes/bootstrap_include.php");
 
@@ -56,7 +56,7 @@ include_once("./includes/bootstrap_include.php");
   }
 </style>
 
-<header class="site-header">
+<div class="site-header">
   <div class="container">
     <div class="header-content">
 
@@ -80,15 +80,34 @@ include_once("./includes/bootstrap_include.php");
 
           <!-- Botão menu que abre o offcanvas -->
           <a
-          
+
             data-bs-toggle="offcanvas"
             href="#offcanvasExample"
             role="button"
             aria-controls="offcanvasExample"
             style="text-decoration: none; color: inherit;">
-            <span class="material-symbols-outlined menu-icon">
-              menu
-            </span>
+
+
+            <div class="d-flex justify-content-center align-items-center mt-3 mt-lg-0">
+              <button class="btn d-flex align-items-center border-0 rounded-circle" data-bs-toggle="collapse" data-bs-target="#perfil" aria-expanded="false" aria-controls="collapseOne">
+                <img
+                  src="
+                        <?php
+                        $foto = !empty($_SESSION['usuario']['foto'])
+                          ? 'images/' . $_SESSION['usuario']['foto']
+                          : 'images/foto_perfil_default.png';
+                        echo $foto;
+                        ?>"
+                  alt="Foto do usuário"
+                  class="rounded-circle"
+                  width="45"
+                  height="45" />
+                <span class="fw-bold">
+                </span>
+              </button>
+            </div>
+
+
           </a>
 
 
@@ -197,4 +216,4 @@ include_once("./includes/bootstrap_include.php");
       <?php endif; ?>
     </div>
   </div>
-</header>
+</div>

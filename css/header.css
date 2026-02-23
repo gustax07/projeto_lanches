@@ -18,15 +18,14 @@
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    border-radius: 0 0 30px 30px;
     overflow: hidden;
-    border-radius: 30px;
   }
   
   .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+
   }
   
   .header-content {
@@ -34,7 +33,7 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-    min-height: 80px;
+    min-height: 40px;
   }
   
   .logo-title a {

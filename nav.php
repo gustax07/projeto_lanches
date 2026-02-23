@@ -1,11 +1,40 @@
-<nav class="nav-minimal">
-    <link rel="stylesheet" href="./css/nav.css">
+<?php
+include_once('./includes/bootstrap_include.php');
+?>
 
-    <ul>
-        <li><a href="../index.php">Início</a></li>
-        <li><a href="../lanches.php">Lanches</a></li>
-        <li><a href="#">Promoções</a></li>
-        <li><a href="#">Bebidas</a></li>
-        <li><a href="#">Contato</a></li>
-    </ul>
-</nav>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="./css/nav.css"> 
+    <title>Document</title>
+</head>
+<body> -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+        
+        <a class="navbar-brand" href="#"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuResponsivo">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">item 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">item 2</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+<!-- </nav>
+</body>
+</html> -->

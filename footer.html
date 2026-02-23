@@ -1,78 +1,43 @@
+<link rel="stylesheet" href="./css/footer.css">
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-  <link rel="stylesheet" href="./css/footer.css">
-  <title>Footer</title>
-</head>
-<body>
-
-  <footer>
+<footer>
     <div id="footer_content">
-      <div id="footer_contacts">
-        <h1>Tasty Burguers</h1>
-        <h1 style="color: #f8f8f8;">Os lanches mais suculentos e saborosos.</h1>
+        <div id="footer_contacts">
+            <h1>Tasty Burguers</h1>
+            <h1 style="color: #f8f8f8; font-size: 1.2rem;">Os lanches mais suculentos e saborosos.</h1>
 
-        <div id="footer_social_media">
-          <a href="#" class="footer-link" id="instagram">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="#" class="footer-link" id="facebook">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-          <a href="#" class="footer-link" id="whatsapp">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
+            <div id="footer_social_media">
+                <a href="#" class="footer-link" id="instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="footer-link" id="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="footer-link" id="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
         </div>
-      </div>
 
-      <ul class="footer-list">
-        <li><h3>Blog</h3></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-      </ul>
+        <ul class="footer-list">
+            <li><h3>Blog</h3></li>
+            <li><a href="#" class="footer-link">Lorem</a></li>
+            <li><a href="#" class="footer-link">Lorem</a></li>
+        </ul>
 
-      <ul class="footer-list">
-        <li><h3>Products</h3></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-        <li><a href="#" class="footer-link">Lorem</a></li>
-      </ul>
+        <ul class="footer-list">
+            <li><h3>Products</h3></li>
+            <li><a href="#" class="footer-link">Lorem</a></li>
+            <li><a href="#" class="footer-link">Lorem</a></li>
+        </ul>
 
-      <div id="footer_subscribe">
-        <h3>Subscribe</h3>
-        <p style="color: #f8f8f8;">Digite seu e-mail abaixo para receber nossas notícias e atualizações.</p>
-
-        <div id="input_group">
-          <input type="email" id="email" placeholder="seu@email.com">
-          <button aria-label="Enviar">
-            <i class="fa-regular fa-envelope"></i>
-          </button>
+        <div id="footer_subscribe">
+            <h3>Subscribe</h3>
+            <p style="color: #f8f8f8;">Digite seu e-mail para novidades.</p>
+            <div id="input_group">
+                <input type="email" id="email" placeholder="seu@email.com">
+                <button aria-label="Enviar"><i class="fa-regular fa-envelope"></i></button>
+            </div>
         </div>
-      </div>
     </div>
 
     <div id="footer_copyrigth">
-      © 2025 Tasty Burguers - Todos os direitos reservados.
+        © 2025 Tasty Burguers - Todos os direitos reservados.
     </div>
-  </footer>
-  <script>
-    function enviarAltura() {
-        const height = document.body.scrollHeight;
-        window.parent.postMessage(height, "*");
-    }
+
     
-    window.addEventListener('load', enviarAltura);
-    window.addEventListener('resize', enviarAltura);
-    window.addEventListener('orientationchange', enviarAltura);
-    
-    // Pequeno delay que corrige mudanças de layout por CSS grid
-    setTimeout(enviarAltura, 100);
-    setTimeout(enviarAltura, 300);
-    </script>
-</body>
-</html>
+</footer>

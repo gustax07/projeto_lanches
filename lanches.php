@@ -59,6 +59,8 @@ if (isset($_SESSION['usuario'])) {
 
         body {
             overflow-x: hidden;
+            overflow-y: auto;
+            height: 100vh;
         }
 
         a {
@@ -136,13 +138,10 @@ if (isset($_SESSION['usuario'])) {
 </head>
 
 <body style="margin: 0px; border: none; padding: 0px;">
-    <div class="container-fluid" style="margin: 0px; border: none; padding: 0px;">
-        <div style="background-color: black; height: 100px; width: 100%;"> </div>
-
-
+    <div class="container-fluid" style="margin-top : 0px; border: none; padding: 0px;">
         <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
             <div class="col-12" style="padding: 0px;">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 mt-md-4" data-bs-ride="carousel">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
@@ -260,6 +259,8 @@ if (isset($_SESSION['usuario'])) {
                 </div>
             </div>
         </div>
+
+        <div style="clear: both; margin-bottom: 50px;"></div>
 
         <?php include('./footer.html'); ?>
 
