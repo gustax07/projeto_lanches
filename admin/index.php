@@ -1,7 +1,4 @@
 <?php
-
-
-
 require_once('../classes/pedidos.class.php');
 $pedidos = new Pedidos();
 $pedidos_listar = $pedidos->ListarInnerJoin();
@@ -56,7 +53,7 @@ $status_dos_pedidos = $pedidos_itens->StatusPedidos();
 $horarios_de_picos = $pedidos_itens->HorariosDePicos();
 
 // Se estiver no localhost, a raiz é a pasta do projeto. No servidor, é a pasta admin.
-$base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/' : '/admin/';
+$base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' : '/admin/';
 
 include('./header.php');
 $meta_pedidos = 200;
@@ -117,9 +114,9 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela Inicial</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="<?php echo $base_path; ?>admin/css/index.css">
+    <link rel="stylesheet" href="<?= $base_path ?>../css/index_admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./js/index.js"></script>
+    <script src= "<?= $base_path ?>../js/index.js"></script>
 </head>
 
 <body>
@@ -127,14 +124,14 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <div class="container-fluid flex-nowrap flex-wrap mt-5">
         <div class="row justify-content-start">
             <?php
-            criarCard('Pedidos', $quantidade_pedidos, $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'admin/pedidos.php');
-            criarCard('Funcionarios', $quantidade_funcionarios, 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'admin/gerenciar_funcionarios.php');
-            criarCard('Clientes', $quantidade_clientes, 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'admin/clientes.php');
-            criarCard('Categorias', $quantidade_categorias, 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'admin/categorias.php');
-            criarCard('Cargos', $quantidade_tipos, 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'admin/tipos.php');
-            criarCard('Produtos', $quantidade_itens, 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'admin/produtos.php');
-            criarCard('Enderecos', $quantidade_enderecos, 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'admin/enderecos.php');
-            criarCard('Telefones', $quantidade_telefones, 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'admin/telefones.php');
+            criarCard('Pedidos', $quantidade_pedidos, $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'pedidos.php');
+            criarCard('Funcionarios', $quantidade_funcionarios, 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'gerenciar_funcionarios.php');
+            criarCard('Clientes', $quantidade_clientes, 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'clientes.php');
+            criarCard('Categorias', $quantidade_categorias, 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'categorias.php');
+            criarCard('Cargos', $quantidade_tipos, 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'tipos.php');
+            criarCard('Produtos', $quantidade_itens, 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'produtos.php');
+            criarCard('Enderecos', $quantidade_enderecos, 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'enderecos.php');
+            criarCard('Telefones', $quantidade_telefones, 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'telefones.php');
             ?>
         </div>
     </div>
@@ -157,7 +154,7 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
                     <tbody>
                         <?php foreach ($produtos_mais_vendidos as $produto) { ?>
                             <tr class="text-center">
-                                <td><img src="../images/<?= $produto['imagem'] ?>" width="50px" height="50px"></td>
+                                <td><img src="<?php echo $base_path; ?>../images/<?= $produto['imagem'] ?>" width="50px" height="50px"></td>
                                 <td><?= $produto['nome'] ?></td>
                                 <td><?= $produto['preco'] ?></td>
                                 <td><?= $produto['quantidade'] ?></td>

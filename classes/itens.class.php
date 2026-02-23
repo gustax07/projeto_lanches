@@ -87,15 +87,16 @@ class Itens
     //listar um item por id + innerJoin com a tabela de categoria
     public function ListarInnerJoin()
     {
-        $sql = "SELECT * FROM itens WHERE id = ? INNER JOIN categorias ON itens.id_categoria_fk = categorias.id";
+        $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem 
+                FROM itens i 
+                INNER JOIN categorias c ON i.id_categoria_fk = c.id ORDER BY id ASC";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
-        $comando->execute([
-            $this->id
-        ]);
+        $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
         return $arr_resultado;
     }
+
 }
 ?>

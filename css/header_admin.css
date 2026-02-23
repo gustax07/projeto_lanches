@@ -1,0 +1,28 @@
+ a {
+     text-decoration: none !important;
+     color: black !important;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     transition: all 0.3s ease-in-out !important;
+     font-size: 18px;
+ }
+
+ a:hover {
+
+     transform: translateY(-5px) !important;
+     cursor: pointer;
+
+ }
+
+ navbar-brand {
+     font-weight: bold;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+
+ .tasty {
+     font-size: 48px;
+ }
+
+ img {
+     border: 1px solid black !important;
+     border-radius: 120px !important;
+ }

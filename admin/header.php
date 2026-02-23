@@ -16,40 +16,8 @@ $foto = $_SESSION['usuario']['foto'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/painel.css">
-
+    <link rel="stylesheet" href="../css/header_admin.css">
     <title>Painel Administrador</title>
-    <style>
-        a {
-            text-decoration: none !important;
-            color: black !important;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: all 0.3s ease-in-out !important;
-            font-size: 18px ;
-        }
-
-        a:hover {
-            font-weight: bold !important;
-            transform: translateY(-5px);
-            cursor: pointer;
-            
-        }
-
-        navbar-brand {
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .tasty {
-            font-size: 48px;
-        }
-
-        img {
-            border: 1px solid black !important;
-            border-radius: 120px !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -72,7 +40,7 @@ $foto = $_SESSION['usuario']['foto'];
                     <a class="nav-link" href="index.php"><i class="bi bi-house-door-fill"></i> Inicial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pedidos.php"><i class="bi bi-basket-fill"></i> Pedidos</a>
+                    <a class="nav-link" href="pedidos.php"><i class="bi bi-box-seam-fill"></i> Pedidos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="gerenciar_funcionarios.php"><i class="bi bi-people-fill"></i> Funcionários</a>
