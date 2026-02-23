@@ -205,8 +205,8 @@ if (isset($_SESSION['usuario'])) {
         </div>
 
         <!-- MODAL CARRINHO -->
-        <div class="modal fade" id="modalCarrinho" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal fade " id="modalCarrinho" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog scrollable ">
                 <div class="modal-content">
 
                     <div class="modal-header">
