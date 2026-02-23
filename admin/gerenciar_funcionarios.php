@@ -12,6 +12,7 @@ $tipos = new Tipos();
 $tipos_listar = $tipos->Listar();
 
 unset($tipos_listar[0]);
+include('header.php');
 ?>
 
 <!DOCTYPE html>

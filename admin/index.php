@@ -1,4 +1,7 @@
 <?php
+
+
+
 require_once('../classes/pedidos.class.php');
 $pedidos = new Pedidos();
 $pedidos_listar = $pedidos->ListarInnerJoin();
@@ -55,7 +58,7 @@ $horarios_de_picos = $pedidos_itens->HorariosDePicos();
 // Se estiver no localhost, a raiz é a pasta do projeto. No servidor, é a pasta admin.
 $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/' : '/admin/';
 
-include('./sidebar.php');
+include('./header.php');
 $meta_pedidos = 200;
 
 $datas = [];
@@ -94,7 +97,7 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
             <h2 class="text-right"><span>' . $quantidade . ' / ' . $meta . '</span></h2>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-        <p class="m-b-0">Progresso do Mes</p>
+        <p class="m-b-0 fs-6">Progresso do Mes</p>
         <span class="m-l-5">' . $quantidade / $meta * 100 . '%</span>
         </div>
         <div class="progress" role="progressbar" aria-valuenow="' . $quantidade / $meta * 100 . '" aria-valuemin="0" aria-valuemax="100">
@@ -104,7 +107,8 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
 </div>
 </a>
 </div>';
-} ?>
+
+}?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 

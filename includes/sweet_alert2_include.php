@@ -14,6 +14,10 @@ $msg = [
     "pedido_status_alterado" => "Status do pedido alterado com sucesso!",
     "pedido_cancelado" => "Pedido cancelado com sucesso!",
     "pedido_removido" => "Pedido removido com sucesso!",
+    //categorias
+    "categoria_cadastrada" => "Categoria cadastrada com sucesso!",
+    "categoria_editada" => "Categoria editada com sucesso!",
+    "categoria_excluida" => "Categoria excluída com sucesso!",
 ];
 $err = [
     //Funcionarios
@@ -36,13 +40,11 @@ $err = [
     "pedido_status_falha" => "Falha na alteração do status do pedido!",
     "pedido_cancelar_falha" => "Falha ao cancelar o pedido!",
     "pedido_remover_falha" => "Falha ao remover o pedido!",
+    //categorias
+    "categoria_cadastro_falha" => "Falha ao cadastrar categoria!",
+    "categoria_editar_falha" => "Falha ao editar categoria!",
+    "categoria_excluir_falha" => "Falha ao excluir categoria!",
 ];
-    $warn = [
-    //Avisos
-    "pedido_cancelado" => "O pedido já foi cancelado!",
-    "pedido_preparar" => "O pedido já está sendo preparado!",
-    "pedido_concluido" => "O pedido já foi concluido!",
-    ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -83,22 +85,5 @@ $err = [
         url.searchParams.delete('err');
         window.history.replaceState({}, document.title, url.toString());
     }";
-
-    // Mensagens de aviso:
-    if (isset($_GET['warn']) && array_key_exists($_GET['warn'], $warn)) {
-        $message = $warn[$_GET['warn']];
-        echo "Swal.fire({
-            icon: 'warning',
-            title: 'Aviso',
-            text: '$message',
-            confirmButtonColor: '#f39c12',
-        });";
-    }
-    // Remover a mensagem da URL para evitar reaparecimento:
-    echo "if (history.replaceState) {
-        const url = new URL(window.location);
-        url.searchParams.delete('warn');
-        window.history.replaceState({}, document.title, url.toString());
-        }";
-        ?>
+    ?>
 </script>

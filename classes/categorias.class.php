@@ -53,6 +53,17 @@ class Categorias{
         Banco::desconectar();
         return $comando->rowCount();
     }
+    public function PesquisarPorNome(){
+        $sql = 'SELECT * FROM categorias WHERE nome = ?';
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->nome
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
 
 ?>

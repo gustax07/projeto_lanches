@@ -8,7 +8,7 @@ $pedidos_listar_pelo_nome = $pedidos->ListarPedidosPeloNomeCliente();
 $pedidos->status = $_GET['status'] ?? '';
 $pedidos_listar_status = $pedidos->ListarPedidosInnerJoinPorStatus();
 $tipo_foreach;
-include_once('./sidebar.php');
+include_once('./header.php');
 ?>
 
 <!DOCTYPE html>
