@@ -1,63 +1,17 @@
-
-<?php
-  include('includes/bootstrap_include.php');
-  ?>
+<?php include('./header.php'); ?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="./images/icon_burguer.png">
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    body {
-      background-color: #FFF6E8;
-    }
-
-    .card-cadastro {
-      width: 100vw;
-      max-width: 400px;
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-principal {
-      background-color: #FFC781;
-      border: none;
-      color: #000;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-      padding: 8px 16px;
-    }
-
-    .btn-principal:hover {
-      background-color: #f5b968;
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .titulo {
-      color: #000;
-      font-weight: 700;
-    }
-
-    .form-control:hover {
-      border-color: #FFC781;
-    }
-  </style>
+  <link rel="stylesheet" href="css/cadastro.css">
+  <title>Cadastro</title>
 </head>
-
 <body>
-
   
-
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="d-flex justify-content-center mt-5">
   <div class="container-fluid card card-cadastro mb-5 p-4">
     <h3 class="text-center titulo mb-4">Criar conta</h3>
 
@@ -83,5 +37,4 @@
   </div>
 </div>
 </body>
-
 </html>

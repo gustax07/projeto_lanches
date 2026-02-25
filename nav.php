@@ -1,40 +1,38 @@
-<?php
-include_once('./includes/bootstrap_include.php');
-?>
-
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="./css/nav.css"> 
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/nav.css">
 </head>
-<body> -->
+
+<body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
-        
-        <a class="navbar-brand" href="#"></a>
+        <div class="container-fluid">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <a class="navbar-brand" href="#"></a>
 
-        <div class="collapse navbar-collapse" id="menuResponsivo">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">item 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">item 2</a>
-                </li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuResponsivo">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../projeto_lanches/">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bebidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Lanches</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
-
-    </div>
-<!-- </nav>
+    </nav>
 </body>
-</html> -->
+
+</html>

@@ -33,108 +33,10 @@ if (isset($_SESSION['usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="./css/lanches.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-
     <title>Lanches</title>
-    <style>
-        ::-webkit-scrollbar {
-            width: 2px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(160, 160, 160, 0.9);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(140, 140, 140, 0.6);
-        }
-
-        body {
-            overflow-x: hidden;
-            overflow-y: auto;
-            height: 100vh;
-        }
-
-        a {
-            text-decoration: none;
-            color: #222;
-            transition: 0.3s;
-        }
-
-        a:hover {
-            color: #E9A652;
-        }
-
-        .card {
-            transition: 0.4s;
-            overflow: hidden;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .card:hover {
-            transform: scale(1.03);
-            border: 1px solid #E9A652;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .card:active {
-            transform: scale(0.95);
-        }
-
-
-        .card-img-top {
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            width: 100%;
-            border-bottom: 1px solid #eee;
-        }
-
-
-        .card-description {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal;
-            font-size: 0.85rem;
-            color: #666;
-            height: 2.6em;
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
-        }
-
-        .modal {
-            z-index: 2000 !important;
-        }
-
-        .modal-backdrop {
-            z-index: 1990 !important;
-        }
-
-        .modal-dialog {
-            margin-top: 120px;
-        }
-
-        .card-title-custom {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-    </style>
 </head>
 
 <body style="margin: 0px; border: none; padding: 0px;">
@@ -265,7 +167,7 @@ if (isset($_SESSION['usuario'])) {
 
         <div style="clear: both; margin-bottom: 50px;"></div>
 
-        <?php include('./footer.html'); ?>
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
         </script>

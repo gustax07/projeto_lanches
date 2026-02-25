@@ -1,39 +1,39 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./admin/css/logar.css">
+    <title>Login - Tasty Burger</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-    
-<h1 class="brand-text">Tasty Burger</h1>
-<div class="login-container">
-    <div class="login-card">
-        <h1>Login</h1>
-        <p class="subtitle">Área administrativa</p>
-
-        <form action="actions/funcionarios/logar_funcionarios.php" method="post">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
-
-            <label for="senha">Senha:</label>
-            <input type="password" name="senha" id="senha" placeholder="*********" required>
-
-            <button type="submit">Entrar</button>
-        </form>
-
-        <?php
-            include_once("./includes/sweet_alert2_include.php");
-        ?>
+    <div class="login-wrapper">
+        <h1 class="brand-name">Tasty Burger</h1>
+        
+        <div class="login-box">
+            <h2 class="login-header">Login</h2>
+            
+            <form action="./actions/funcionarios/logar_funcionarios.php" method="POST">
+                <div class="input-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" value="admin@admin" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Senha:</label>
+                    <input type="password" name="senha" value="*****" required>
+                </div>
+                
+                <div class="captcha-box">
+                    <div class="g-recaptcha" data-sitekey="6LfOn3csAAAAAHV9Lm0HQia3ZfqKu4jEuiqKfans"></div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+        </div>
     </div>
-</div>
-
+    <?php include_once('./includes/sweet_alert2_include.php'); ?>
 </body>
-</html>     
+</html>

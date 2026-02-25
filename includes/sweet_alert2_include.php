@@ -44,6 +44,7 @@ $err = [
     "categoria_cadastro_falha" => "Falha ao cadastrar categoria!",
     "categoria_editar_falha" => "Falha ao editar categoria!",
     "categoria_excluir_falha" => "Falha ao excluir categoria!",
+    "captcha_invalido" => "Captcha inválido!",
 ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

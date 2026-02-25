@@ -58,11 +58,12 @@ include_once("./includes/bootstrap_include.php");
 
 <div class="site-header">
   <div class="container">
+
     <div class="header-content">
 
       <!-- Logo/Título centralizado -->
       <h1 class="logo-title">
-        <a href="../projeto_lanches/header.php">Tasty Burguer</a>
+        <a href="../projeto_lanches">Tasty Burguer</a>
       </h1>
 
       <?php if (!isset($_SESSION['usuario'])): ?>
@@ -218,3 +219,4 @@ include_once("./includes/bootstrap_include.php");
     </div>
   </div>
 </div>
+<?php include('nav.php'); ?>

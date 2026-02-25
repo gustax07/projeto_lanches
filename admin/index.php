@@ -1,50 +1,7 @@
 <?php
-require_once('../classes/pedidos.class.php');
-$pedidos = new Pedidos();
-$pedidos_listar = $pedidos->ListarInnerJoin();
-//contar a quantidade de pedidos atraves da quantidade de linhas do array
-$quantidade_pedidos = count($pedidos_listar);
-
-require_once('../classes/itens.class.php');
-$itens = new Itens();
-$itens_listar = $itens->Listar();
-//contar a quantidade de itens atraves da quantidade de linhas do array
-$quantidade_itens = count($itens_listar);
-
-require_once('../classes/categorias.class.php');
-$categorias = new Categorias();
-$categorias_listar = $categorias->Listar();
-//contar a quantidade de categorias atraves da quantidade de linhas do array
-$quantidade_categorias = count($categorias_listar);
-
-require_once('../classes/tipos.class.php');
-$tipos = new Tipos();
-$tipos_listar = $tipos->Listar();
-//contar a quantidade de tipos atraves da quantidade de linhas do array
-$quantidade_tipos = count($tipos_listar);
-
-require_once('../classes/usuarios.class.php');
-$usuarios = new Usuarios();
-$funcionarios_listar = $usuarios->ListarFuncionarios();
-//contar a quantidade de usuarios atraves da quantidade de linhas do array
-$quantidade_funcionarios = count($funcionarios_listar);
-
-//contar a quantidade de clientes atraves da quantidade de linhas do array
-$usuario_cliente = $usuarios->ListarClientes();
-$quantidade_clientes = count($usuario_cliente);
-
-require_once('../classes/enderecos.class.php');
-$enderecos = new Enderecos();
-$enderecos_listar = $enderecos->Listar();
-//contar a quantidade de enderecos atraves da quantidade de linhas do array
-$quantidade_enderecos = count($enderecos_listar);
-
-require_once('../classes/telefones.class.php');
-$telefones = new Telefones();
-$telefones_listar = $telefones->Listar();
-//contar a quantidade de telefones atraves da quantidade de linhas do array
-$quantidade_telefones = count($telefones_listar);
-
+require_once('../classes/dashboard.class.php');
+$dashboard = new Dashboard();
+$dashboard_listar = $dashboard->ListarTodos()[0];
 require_once('../classes/pedidos_itens.class.php');
 $pedidos_itens = new Pedido_Itens();
 $produtos_mais_vendidos = $pedidos_itens->listarTop5Vendidos();
@@ -124,14 +81,14 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
     <div class="container-fluid flex-nowrap flex-wrap mt-5">
         <div class="row justify-content-start">
             <?php
-            criarCard('Pedidos', $quantidade_pedidos, $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'pedidos.php');
-            criarCard('Funcionarios', $quantidade_funcionarios, 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'gerenciar_funcionarios.php');
-            criarCard('Clientes', $quantidade_clientes, 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'clientes.php');
-            criarCard('Categorias', $quantidade_categorias, 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'categorias.php');
-            criarCard('Cargos', $quantidade_tipos, 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'tipos.php');
-            criarCard('Produtos', $quantidade_itens, 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'produtos.php');
-            criarCard('Enderecos', $quantidade_enderecos, 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'enderecos.php');
-            criarCard('Telefones', $quantidade_telefones, 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'telefones.php');
+            criarCard('Pedidos', $dashboard_listar['total_pedidos'], $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'pedidos.php');
+            criarCard('Funcionarios', $dashboard_listar['total_funcionarios'], 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'gerenciar_funcionarios.php');
+            criarCard('Clientes', $dashboard_listar['total_clientes'], 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'clientes.php');
+            criarCard('Categorias', $dashboard_listar['total_categorias'], 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'categorias.php');
+            criarCard('Cargos', $dashboard_listar['total_cargos'], 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'tipos.php');
+            criarCard('Produtos', $dashboard_listar['total_produtos'], 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'produtos.php');
+            criarCard('Enderecos', $dashboard_listar['total_enderecos'], 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'enderecos.php');
+            criarCard('Telefones', $dashboard_listar['total_telefones'], 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'telefones.php');
             ?>
         </div>
     </div>
@@ -217,8 +174,6 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
             </div>
         </div>
     </div>
-
-    <?php include_once("../includes/bootstrap_include.php"); ?>
 </body>
 
 </html>
