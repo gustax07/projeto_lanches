@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+include('header.php');
+
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
 
@@ -30,6 +32,7 @@ if (isset($_SESSION['usuario'])) {
         }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -43,10 +46,6 @@ if (isset($_SESSION['usuario'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            padding-top: 250px;
-        }
-
         body {
             background: #f7f7f7;
         }
@@ -198,6 +197,8 @@ if (isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
+
+<?php include('footer.html'); ?>
 
 </body>
 

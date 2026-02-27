@@ -77,7 +77,7 @@ include_once("./includes/bootstrap_include.php");
 
         <!-- Botões direita (LOGADO) -->
         <div class="header-buttons">
-          <h2 style="font-family: 'Poppins', 'Segoe UI', sans-serif;">Bem-vindo, <?php echo $_SESSION['usuario']['nome']; ?>!</h2>
+          <h3 style="color: #874B00; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Bem-vindo,<strong> <?php echo $_SESSION['usuario']['nome']; ?>!</strong></h3>
 
           <!-- Botão menu que abre o offcanvas -->
           <a
@@ -101,9 +101,9 @@ include_once("./includes/bootstrap_include.php");
                         ?>"
                   alt="Foto do usuário"
                   class="rounded-circle"
-                  width="75"
-                  height="75"
-                  style="border: 2px solid black;" />
+                  width=75px
+                  height=75px
+                  style="border: 2px solid black;object-fit:cover;"/>
                 <span class="fw-bold">
                 </span>
               </button>
@@ -113,7 +113,7 @@ include_once("./includes/bootstrap_include.php");
           </a>
 
 
-          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas offcanvas-start" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title" id="offcanvasExampleLabel">Meu perfil</h5>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>

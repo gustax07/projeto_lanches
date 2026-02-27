@@ -26,9 +26,6 @@ $itens_listar = $item->Listar();
         img {
             max-height: 500px;
             max-width: 500px;
-            min-height: 300px;
-            min-width: 300px;
-
         }
     </style>
 </head>
@@ -48,7 +45,7 @@ $itens_listar = $item->Listar();
                 <div class="d-flex col-12 justify-content-start mt-5">
                     <form action="actions/pedido_itens/cadastrar_pedido_itens.php" target="_parent" method="post">
 
-                        <input type="hidden" name="id_item" value="<?= $i['id'] ?>">
+                        <input type="hidden" name="id_item" value="<?= $id ?>">
                         <div class="d-flex align-items-center gap-2 w-100">
                             <button type="submit" class="btn btn-warning">
                                 <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
@@ -98,6 +95,9 @@ $itens_listar = $item->Listar();
             </div>
         </div>
     </div>
+    <div style="height: 20px;"></div>
+    <?php include("footer.html")?>
+    
 </body>
 
 </html>
