@@ -41,7 +41,7 @@ if (isset($_SESSION['usuario'])) {
 
 <body style="margin: 0px; border: none; padding: 0px;">
     <div class="container-fluid" style="margin-top : 0px; border: none; padding: 0px;">
-        <div class="row"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
+        <div class="w-100 p-0"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
             <div class="col-12" style="padding: 0px;">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -93,7 +93,7 @@ if (isset($_SESSION['usuario'])) {
             <div class="row g-3 justify-content-center">
                 <?php foreach ($itens_listar as $i) { ?>
                     <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                        <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+                        <a style="text-decoration: none;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
                             <div class="card h-100">
                                 <img src="./images/<?= $i['imagem'] ?>" class="card-img-top">
                                 <div class="card-body p-2 p-md-3">
