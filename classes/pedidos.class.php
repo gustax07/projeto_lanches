@@ -225,4 +225,24 @@ class Pedidos
     $banco = Banco::conectar();
     return $banco->lastInsertId();
 }
+public function finalizarPedido()
+{
+    $sql = "UPDATE pedidos 
+            SET id_enderecos_fk = ?, 
+                observacoes = ?
+            WHERE id = ? 
+              AND id_usuarios_fk = ? 
+              AND status = 'pendente'";
+
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->execute([
+        $this->id_enderecos_fk,
+        $this->observacoes,
+        $this->id,
+        $this->id_usuarios_fk
+    ]);
+    Banco::desconectar();
+    return $comando->rowCount();
+}
 }

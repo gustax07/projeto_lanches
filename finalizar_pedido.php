@@ -141,8 +141,8 @@ if (isset($_SESSION['usuario'])) {
             <div class="col-md-5">
                 <h5>Entrega</h5>
 
-                <form action="actions/pedidos/finalizar.php" method="POST">
-
+                <form action="actions/pedidos/finalizar_pedido.php" method="POST">
+                    <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
                     <div class="checkout-container">
 
                         <h4 class="mb-3">📍 Endereço de entrega</h4>
@@ -178,7 +178,7 @@ if (isset($_SESSION['usuario'])) {
                             data-bs-target="#modalEndereco"
                             href="enderecos.php">
                             ➕ Cadastrar novo endereço
-                                </a>
+                        </a>
 
                     </div>
 
@@ -198,7 +198,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
     </div>
 
-<?php include('footer.html'); ?>
+    <?php include('footer.html'); ?>
 
 </body>
 
