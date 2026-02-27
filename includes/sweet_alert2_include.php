@@ -18,6 +18,10 @@ $msg = [
     "categoria_cadastrada" => "Categoria cadastrada com sucesso!",
     "categoria_editada" => "Categoria editada com sucesso!",
     "categoria_excluida" => "Categoria excluída com sucesso!",
+    //itens
+    "itens_cadastrados" => "Itens cadastrados com sucesso!",
+    "itens_editados" => "Itens editados com sucesso!",
+    "itens_excluidos" => "Itens excluídos com sucesso!",
 ];
 $err = [
     //Funcionarios
@@ -45,6 +49,15 @@ $err = [
     "categoria_editar_falha" => "Falha ao editar categoria!",
     "categoria_excluir_falha" => "Falha ao excluir categoria!",
     "captcha_invalido" => "Captcha inválido!",
+    //itens
+    "itens_cadastro_falha" => "Falha ao cadastrar itens!",
+    "itens_editar_falha" => "Falha ao editar itens!",
+    "itens_excluir_falha" => "Falha ao excluir itens!",
+    "itens_imagem_invalida" => "Imagem inválida!",
+    "itens_mover_imagem_falha" => "Falha ao mover imagem!",
+    "itens_imagem_vazia" => "Nenhuma imagem selecionada!",
+    "itens_campos_vazios" => "Preencha todos os campos!",
+    "itens_preco_invalido" => "Preco inválido!",
 ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
