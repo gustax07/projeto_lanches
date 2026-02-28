@@ -87,7 +87,7 @@ class Itens
     //listar um item por id + innerJoin com a tabela de categoria
     public function ListarInnerJoin()
     {
-        $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem 
+        $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem, i.id_categoria_fk
                 FROM itens i 
                 INNER JOIN categorias c ON i.id_categoria_fk = c.id ORDER BY id ASC";
         $banco = Banco::conectar();
@@ -98,5 +98,17 @@ class Itens
         return $arr_resultado;
     }
 
+    public function PesquisarPorNome($termo){
+        $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem, i.id_categoria_fk
+                FROM itens i 
+                INNER JOIN categorias c ON i.id_categoria_fk = c.id WHERE i.nome LIKE :termo or i.descricao LIKE :termo ORDER BY id ASC";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->bindValue(":termo", "%$termo%");
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
 ?>
