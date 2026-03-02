@@ -7,8 +7,20 @@ require_once('./classes/itens.class.php');
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
 
+
+
+$idCategoria = isset($_GET['id']) ? (int) $_GET['id'] : null;
+
 $itens = new Itens();
-$itens_listar = $itens->Listar();
+
+$itens = new Itens();
+
+if ($idCategoria) {
+    $itens->id_categoria_fk = $idCategoria;
+    $itens_listar = $itens->ListarPorCategoria();
+} else {
+    $itens_listar = $itens->Listar();
+}
 
 $itensCarrinho = [];
 

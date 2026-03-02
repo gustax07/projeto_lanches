@@ -110,5 +110,19 @@ class Itens
         Banco::desconectar();
         return $arr_resultado;
     }
+
+    public function ListarPorCategoria()
+    {
+        $sql = "SELECT * FROM itens WHERE id_categoria_fk = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_categoria_fk
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
+
 }
 ?>

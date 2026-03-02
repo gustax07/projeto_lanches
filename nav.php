@@ -1,5 +1,11 @@
+<?php
+include('classes/categorias.class.php');
+$categorias = new Categorias();
+$categorias_listar = $categorias->Listar();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -8,31 +14,22 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container-fluid">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
 
-            <a class="navbar-brand" href="#"></a>
+        <a class="navbar-brand" href="index.php">🍔</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <?php foreach ($categorias_listar as $c) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?id=<?= $c['id'] ?>">
+                        <?= $c['nome'] ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
 
-            <div class="collapse navbar-collapse" id="menuResponsivo">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="../projeto_lanches/">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Bebidas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Lanches</a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </nav>
+    </div>
+</nav>
 </body>
-
 </html>
