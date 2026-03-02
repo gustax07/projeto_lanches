@@ -6,8 +6,12 @@ include('./classes/itens.class.php');
 $item = new Itens;
 $id = $_GET['id'];
 $item->id = $id;
+
 $item_descricao = $item->ListarPorID()[0];
-$itens_listar = $item->Listar();
+
+$item->id_categoria_fk = $item_descricao['id_categoria_fk'];
+
+$itens_listar = $item->ListarPorCategoria();
 ?>
 
 <!DOCTYPE html>

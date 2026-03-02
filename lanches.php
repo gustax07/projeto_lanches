@@ -13,8 +13,6 @@ $idCategoria = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
 $itens = new Itens();
 
-$itens = new Itens();
-
 if ($idCategoria) {
     $itens->id_categoria_fk = $idCategoria;
     $itens_listar = $itens->ListarPorCategoria();
@@ -84,7 +82,7 @@ if (isset($_SESSION['usuario'])) {
 
             <div class="row justify-content-between align-items-center my-5">
                 <div class="col">
-                    <h1>Lanches</h1>
+                    <h1>Cardápio</h1>
                 </div>
 
                 <div class="col text-end">
