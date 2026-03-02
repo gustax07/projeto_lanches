@@ -148,7 +148,11 @@ include('header.php');
                             <td><?= $u['data_cadastro'] ?></td>
                             <td><?= $u['cargo'] ?></td>
                             <td>
-                                <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editar" data-id="<?= $u['id'] ?>"> Editar</button>
+                                <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editar" 
+                                data-id="<?= $u['id'] ?>" 
+                                data-nome="<?= $u['nome'] ?>" 
+                                data-email="<?= $u['email'] ?>" 
+                                data-cargo="<?= $u['id_tipo_fk'] ?>"> Editar</button>
                                 <button class="btn btn-danger" onclick="excluir(<?= $u['id'] ?>, '<?= $u['nome'] ?>')">Excluir</button>
                             </td>
                         </tr>
@@ -165,7 +169,40 @@ include('header.php');
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Funcionario</h1>
                     </div>
                     <div class="modal-body">
-                    <div id="modalBody"></div>
+                    <form action='../actions/funcionarios/editar_funcionarios.php' method='post' class='form-floating was-validated' novalidate>
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Usuario" required>
+                            <label for="nome" class="form-label">Nome</label>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com" required>
+                            <label for="email" class="form-label">Email</label>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha123">
+                            <label for="senha" class="form-label">Senha</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class='form-select' name="id_tipo_fk" id="id_tipo_fk" required>
+                                <option value="" disabled selected>Selecione um cargos</option>
+                                <?php foreach ($tipos_listar as $c) { ?>
+                                    <option value="<?= $c['id'] ?>"> <?= $c['nome_tipo'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <label for="id_cargos" class="form-label">Selecione um cargos</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Editar</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -173,6 +210,24 @@ include('header.php');
         </div>
 
         <script>
+            const modal = document.getElementById('editar')
+            if (modal){
+            modal.addEventListener('show.bs.modal', event => {
+                var button = event.relatedTarget;
+                const inputNome = modal.querySelector('.modal-body #nome');
+                const inputEmail = modal.querySelector('.modal-body #email');
+                const inputCargo = modal.querySelector('.modal-body #id_tipo_fk');
+                const inputId = modal.querySelector('.modal-body #id');
+
+                inputNome.value = button.getAttribute('data-nome');
+                inputEmail.value = button.getAttribute('data-email');
+                inputCargo.value = button.getAttribute('data-cargo');
+                inputId.value = button.getAttribute('data-id');
+
+
+            })
+            }
+
             function excluir(id, nome) {
                 Swal.fire({
                     title: "Aviso!",
@@ -189,25 +244,7 @@ include('header.php');
                     }
                 });
             }
-             $(document).ready(function() {
-            $('.btn-primary').click(function() {
-                var id = $(this).data('id');
-                $('#m_id').text(id);
-                // Fazer uma requisição AJAX para buscar os detalhes do pedido
-                $.ajax({
-                    url: 'editar/editar_funcionarios.php',
-                    type: 'GET',
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        // Preencher o modal com os detalhes do pedido
-                        $('#modalBody').html(response);
-                    }
-                })
-
-            });
-        });
+             
         </script>
         <?php include_once('../includes/sweet_alert2_include.php');
         include_once('../includes/bootstrap_include.php'); ?>

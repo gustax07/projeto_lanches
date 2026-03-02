@@ -18,6 +18,42 @@ $foto = $_SESSION['usuario']['foto'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/header_admin.css">
     <title>Painel Administrador</title>
+    <style>
+.perfil-offcanvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+
+  .perfil-offcanvas img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFC781;
+  }
+
+  .perfil-offcanvas h5 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .perfil-offcanvas small {
+    color: #666;
+  }
+    a:hover {
+        color: #FFC781 !important;
+    }
+
+    .btn-danger:hover, .btn-outline-dark:hover {
+        color: #f1ece6 !important;
+        transform: translateY(0px) !important;
+    }
+    </style>
 </head>
 
 <body>
@@ -54,7 +90,10 @@ $foto = $_SESSION['usuario']['foto'];
             </ul>
            
             <div class="d-flex justify-content-center align-items-center mt-3 mt-lg-0">
-                <button class="btn btn-light d-flex align-items-center gap-2 border-0 shadow-sm rounded-pill px-3 py-2" data-bs-toggle="collapse" data-bs-target="#perfil" aria-expanded="false" aria-controls="collapseOne">
+                <button class="btn btn-light d-flex align-items-center gap-2 border-0 shadow-sm rounded-pill px-3 py-2" data-bs-toggle="offcanvas"
+            href="#offcanvasExample"
+            role="button"
+            aria-controls="offcanvasExample">
                     <img src="../images/<?= $foto ?>" alt="Foto" width="40" height="40" class="rounded-circle object-fit-cover">
                     <span class="fs-6 fw-bold mb-0 text-dark"><?= $_SESSION['usuario']['nome'] ?></span>
                 </button>
@@ -63,18 +102,100 @@ $foto = $_SESSION['usuario']['foto'];
         </div>
     </div>
 </nav>
-    <div class="container-fluid d-flex justify-content-end">
-    <div class="collapse" id="perfil">
-        <div class="card card-body">
-            <a class="mb-1" href="#"><i class="bi bi-gear-fill"></i> Configuracoes</a>
-            <a class="mb-1"href="../actions/funcionarios/sair_funcionarios.php"><i class="bi bi-box-arrow-left"></i> Sair</a>
+              <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Meu perfil</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+
+                <div class="perfil-offcanvas">
+                  <img src="../images/<?= $foto ?>" alt="Foto do usuário">
+
+                  <h3><?= $_SESSION['usuario']['nome'] ?></h3>
+                  <p><?= $_SESSION['usuario']['email'] ?></p>
+                </div>
+                <!-- começo do acordion -->
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                        configurações de conta
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+
+                        <form id="formFoto" action="../actions/clientes/atualizar_foto.php" method="POST" enctype="multipart/form-data">
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+
+                            <!-- input escondido -->
+                            <input
+                              type="file"
+                              name="foto"
+                              id="inputFoto"
+                              accept="image/*"
+                              hidden>
+
+
+                            <div class="d-grid gap-2">
+                              <button type="button" onclick="abrirSeletor()" class="btn btn-outline-dark">Alterar foto de perfil</button>
+                            </div>
+
+
+                            <div class="d-grid gap-2">
+                              <a type="button" href="../seguranca.php" target="_parent" class="btn btn-outline-dark text-dark">Minha Conta</a>
+                            </div>
+
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        endereços
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                          <div class="d-grid gap-2">
+                            <a type="button" href="../enderecos.php" target="_parent" class="btn btn-outline-dark">ver endereços cadastrados</a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- fim do acordion -->
+
+                <div style="display: flex; flex-direction: column; height: 30px;"> </div>
+
+                <a href="../actions/funcionarios/sair_funcionarios.php" class="btn btn-danger text-white"> <i class="bi bi-box-arrow-left"></i> Sair
+                </a>
+
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-    </div>
 
     <?php include_once("../includes/bootstrap_include.php"); 
     include('../includes/sweet_alert2_include.php');?>
-    
+    <script>   function abrirSeletor() {
+            document.getElementById('inputFoto').click();
+          }
+
+          document.getElementById('inputFoto').addEventListener('change', function() {
+            if (this.files.length > 0) {
+              document.getElementById('formFoto').submit();
+            }
+          });</script>
 </body>
 
 </html>

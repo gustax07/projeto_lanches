@@ -59,6 +59,7 @@ u.id,
 u.nome, 
 u.email, 
 u.data_cadastro, 
+u.id_tipo_fk,
 t.nome_tipo AS cargo
 FROM usuarios u
 JOIN tipos t ON u.id_tipo_fk = t.id
