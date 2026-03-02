@@ -1,6 +1,6 @@
 <?php
 include('classes/categorias.class.php');
-include('includes/bootstrap_include.php');
+
 
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
@@ -12,20 +12,14 @@ $categorias_listar = $categorias->Listar();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/nav.css">
 </head>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-lg" style="background-color: #874B00;">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="index.php">🍔</a>
 
-        <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#menuResponsivo"
-            aria-controls="menuResponsivo"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo" aria-controls="menuResponsivo" aria-expanded="false" aria-label="Alternar navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -45,5 +39,5 @@ $categorias_listar = $categorias->Listar();
 
     </div>
 </nav>
-
+</body>
 </html>
