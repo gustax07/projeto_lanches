@@ -103,7 +103,7 @@ include_once("./includes/bootstrap_include.php");
                   class="rounded-circle"
                   width=75px
                   height=75px
-                  style="border: 2px solid black;object-fit:cover;"/>
+                  style="border: 2px solid black;object-fit:cover;" />
                 <span class="fw-bold">
                 </span>
               </button>
@@ -142,7 +142,7 @@ include_once("./includes/bootstrap_include.php");
                         configurações de conta
                       </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
 
                         <form id="formFoto" action="actions/clientes/atualizar_foto.php" method="POST" enctype="multipart/form-data">
@@ -190,6 +190,24 @@ include_once("./includes/bootstrap_include.php");
                     </div>
                   </div>
 
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapsehree">
+                        Pedidos
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                          <div class="d-grid gap-2">
+                            <a type="button" href="meus_pedidos.php" target="_parent" class="btn btn-outline-dark">ver meus pedidos </a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- fim do acordion -->
 
