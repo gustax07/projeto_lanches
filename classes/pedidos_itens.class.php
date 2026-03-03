@@ -182,4 +182,22 @@ AND id_itens_fk = ?";
         Banco::desconectar();
         return $arr_resultado;
     }
+
+    public function calcularTotalPedido($pedidoId)
+    {
+        $sql = "
+        SELECT SUM(pi.quantidade * p.preco) AS total
+FROM pedido_itens pi
+JOIN itens p ON pi.id_itens_fk = p.id
+WHERE pi.id_pedidos_fk = ?
+    ";
+
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([$pedidoId]);
+        $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+
+        return (float) $arr_resultado['total'];
+    }
 }

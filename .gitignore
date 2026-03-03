@@ -1,4 +1,4 @@
 .env
 ca.pem
-/vendor/
+# /vendor/
 *.log

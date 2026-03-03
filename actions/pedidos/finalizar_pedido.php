@@ -18,6 +18,5 @@ $pedido->id_enderecos_fk = $idEndereco;
 $pedido->observacoes = $observacoes;
 
 $pedido->FinalizarPedido();
-//temporariamente manda pro index, dps será mudado pra uma tela de pagamentos
-header('Location:../../index.php');
+header('Location:pagar.php?pedido_id=' . $idPedido);
 exit();

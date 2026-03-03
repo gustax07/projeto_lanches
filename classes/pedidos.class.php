@@ -245,4 +245,17 @@ public function finalizarPedido()
     Banco::desconectar();
     return $comando->rowCount();
 }
+//listar por id
+public function BuscarPedidosPeloID()
+{
+    $sql = "SELECT * FROM pedidos WHERE id = ?;";
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->execute([
+        $this->id
+    ]);
+    $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
+    Banco::desconectar();
+    return $arr_resultado;
+}
 }
