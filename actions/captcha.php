@@ -1,7 +1,7 @@
 <?php
 function validarCaptcha($response) {
     $env = parse_ini_file(__DIR__ . '/../.env');
-    $secretKey = $env['RECAPTCHA_SECRET'];
+    $secretKey = getenv('RECAPTCHA_SECRET') ?: $env['RECAPTCHA_SECRET'] ?? '';
     
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     

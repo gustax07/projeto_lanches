@@ -20,8 +20,8 @@ class Telefones
     }
 
     //listar numeros por id com innerjoin com o usuario
-    public function ListarInnerJoin() {
-        $sql = "SELECT * FROM telefones WHERE id_usuarios_fk = ? INNER JOIN usuarios ON telefones.id_usuarios_fk = usuarios.id";
+    public function ListarPorID() {
+        $sql = "SELECT * FROM telefones WHERE id_usuarios_fk = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
