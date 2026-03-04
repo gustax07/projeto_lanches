@@ -6,7 +6,7 @@ if ($_SESSION['usuario']['id_tipo_fk'] == 0) {
   exit;
 }
 $foto = $_SESSION['usuario']['foto'];
-
+$base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' : '/admin/';
 ?>
 
 <!DOCTYPE html>
@@ -78,16 +78,16 @@ $foto = $_SESSION['usuario']['foto'];
             <a class="nav-link" href="index.php"><i class="bi bi-house-door-fill"></i> Inicial</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pedidos.php"><i class="bi bi-box-seam-fill"></i> Pedidos</a>
+            <a class="nav-link" href= "<?= $base_path ?>pedidos.php"><i class="bi bi-box-seam-fill"></i> Pedidos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gerenciar_funcionarios.php"><i class="bi bi-people-fill"></i> Funcionários</a>
+            <a class="nav-link" href="<?= $base_path ?>gerenciar_funcionarios.php"><i class="bi bi-people-fill"></i> Funcionários</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gerenciar_categorias.php"><i class="bi bi-tags-fill"></i> Categorias</a>
+            <a class="nav-link" href="<?= $base_path ?>gerenciar_categorias.php"><i class="bi bi-tags-fill"></i> Categorias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gerenciar_produtos.php"><i class="bi bi-basket-fill"></i> Produtos</a>
+            <a class="nav-link" href="<?= $base_path ?>gerenciar_produtos.php"><i class="bi bi-basket-fill"></i> Produtos</a>
           </li>
         </ul>
 

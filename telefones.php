@@ -25,7 +25,7 @@ include_once("includes/bootstrap_include.php");
             <div class="card shadow p-3 bg-body rounded w-50">
                 <div class="card-body">
                     <h5 class="card-title text-center fs-4 fw-bold mb-4 mt-3">Telefones Cadastrados</h5>
-                   
+                        <div 
                         <div class="col-12 mt-3" id="telefone"></div>
 
                         <div class="col-12 mb-3" id="novos_telefones">
@@ -92,7 +92,7 @@ include_once("includes/bootstrap_include.php");
             if (count > 4) {
                 document.getElementById('remover_telefone').removeChild(document.getElementById('remover_telefone').lastChild)
                 document.getElementById('Input_telefone').removeChild(document.getElementById('Input_telefone').lastChild)
-                count = 5
+                count = 4
             }
         }
         function RemoveNovosTelefones(){

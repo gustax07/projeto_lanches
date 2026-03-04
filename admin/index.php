@@ -84,9 +84,9 @@ function criarCard($titulo, $quantidade, $meta, $theme, $cor, $icone, $page)
             criarCard('Pedidos', $dashboard_listar['total_pedidos'], $meta_pedidos, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-bag-check-fill"></i>', $base_path . 'pedidos.php');
             criarCard('Funcionarios', $dashboard_listar['total_funcionarios'], 100, "#2ed8b6,#59e0c5", "#4caf81ff", '<i class="bi bi-people-fill"></i>', $base_path . 'gerenciar_funcionarios.php');
             criarCard('Clientes', $dashboard_listar['total_clientes'], 100, '#FF5370,#ff869a', "#ff869aff", '<i class="bi bi-people-fill"></i>', $base_path . 'clientes.php');
-            criarCard('Categorias', $dashboard_listar['total_categorias'], 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'categorias.php');
+            criarCard('Categorias', $dashboard_listar['total_categorias'], 100, '#FFB64D,#ffcb80', "#ffcb80ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'gerenciar_categorias.php');
             criarCard('Cargos', $dashboard_listar['total_cargos'], 100, "#c850c0,#dd6fd6", "#dd6fd6ff", '<i class="bi bi-tags-fill"></i>', $base_path . 'tipos.php');
-            criarCard('Produtos', $dashboard_listar['total_produtos'], 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'produtos.php');
+            criarCard('Produtos', $dashboard_listar['total_produtos'], 100, "#4CAF50,#8BC34A", "#3dbb41ff", '<i class="bi bi-basket-fill"></i>', $base_path . 'gerenciar_produtos.php');
             criarCard('Enderecos', $dashboard_listar['total_enderecos'], 100, "#FFB64D,#ffcb80", "#ffcb80ff", '<i class="bi bi-geo-alt-fill"></i>', $base_path . 'enderecos.php');
             criarCard('Telefones', $dashboard_listar['total_telefones'], 100, "#4099ff,#73b4ff", "#2e8bd8ff", '<i class="bi bi-telephone-fill"></i>', $base_path . 'telefones.php');
             ?>

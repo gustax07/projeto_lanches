@@ -9,11 +9,15 @@ use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Exceptions\MPApiException;
 use MercadoPago\Client\Preference\PreferenceClient;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+if (file_exists(__DIR__ . '/../../.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+    if ($dotenv) {
+        $dotenv->load();
+    }
+}
 
 try {
-    MercadoPagoConfig::setAccessToken($_ENV['MP_ACCESS_TOKEN']);
+    MercadoPagoConfig::setAccessToken($_ENV['MP_ACCESS_TOKEN'] ?? getenv('MP_ACCESS_TOKEN'));
 
     if (!isset($_GET['pedido_id'])) {
         throw new Exception("Pedido não informado.");
