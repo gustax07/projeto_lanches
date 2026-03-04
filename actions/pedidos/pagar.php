@@ -51,11 +51,11 @@ try {
         ],
         "external_reference" => $pedidoId,
         "back_urls" => [
-            "success" => "http://localhost/projects/projeto_lanches/actions/pedidos/sucesso.php",
-            "failure" => "http://localhost/projects/projeto_lanches/actions/pedidos/falha.php",
-            "pending" => "http://localhost/projects/projeto_lanches/actions/pedidos/pendente.php"
+            "success" => "https://tasty.squareweb.app/sucesso.php",
+            "failure" => "https://tasty.squareweb.app/falha.php",
+            "pending" => "https://tasty.squareweb.app/pendente.php"
         ],
-        // "auto_return" => "approved"
+        "auto_return" => "approved"
     ]);
 
     

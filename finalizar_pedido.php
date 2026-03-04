@@ -179,8 +179,6 @@ if (isset($_SESSION['usuario'])) {
 
                         <a
                             class="btn btn-outline-warning mt-3"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalEndereco"
                             href="enderecos.php">
                             ➕ Cadastrar novo endereço
                         </a>

@@ -24,43 +24,43 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
 <body>
     <style>
         body {
-            background-color: #f5f5f5;
+            background-color: #f5f5f5 !important;
         }
 
         .card-padrao {
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border-radius: 20px !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
         }
 
         .btn-principal {
-            background-color: #FFC781;
-            border: none;
-            font-weight: bold;
+            background-color: #FFC781 !important; 
+            border: none !important;
+            font-weight: bold !important;
         }
 
         .btn-principal:hover {
-            background-color: #e9b56f;
+            background-color: #e9b56f !important;
         }
 
         /* endereço listado */
         .endereco-item {
-            border: 2px solid transparent;
-            border-radius: 15px;
-            padding: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            background-color: #fff;
+            border: 2px solid transparent !important;
+            border-radius: 15px !important;
+            padding: 15px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            background-color: #fff !important;
         }
 
         .endereco-item:hover {
-            border-color: #FFC781;
-            background-color: #fff8ec;
+            border-color: #FFC781 !important;
+            background-color: #fff8ec !important;
         }
 
 
         .endereco-item.ativo {
-            border-color: #FFC781;
-            background-color: #fff4e1;
+            border-color: #FFC781 !important;
+            background-color: #fff4e1 !important;
         }
     </style>
     </head>
