@@ -3,12 +3,17 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 require_once ('../../classes/pedidos.class.php');     
 require_once ('../../classes/pedidos_itens.class.php');
 
+
+use Dotenv\Dotenv;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Exceptions\MPApiException;
 use MercadoPago\Client\Preference\PreferenceClient;
 
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 try {
-    MercadoPagoConfig::setAccessToken('acess_token_aqui'); // Coloque aqui o token de acesso do mercado pago
+    MercadoPagoConfig::setAccessToken($_ENV['MP_ACCESS_TOKEN']);
 
     if (!isset($_GET['pedido_id'])) {
         throw new Exception("Pedido não informado.");
