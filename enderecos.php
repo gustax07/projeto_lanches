@@ -2,6 +2,7 @@
 session_start();
 include('header.php');
 include('includes/bootstrap_include.php');
+include('includes/sweet_alert2_include.php');
 require_once('classes/enderecos.class.php');
 
 
@@ -145,7 +146,7 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
 
                                             <a href="actions/enderecos/remover_enderecos.php?id=<?= $e['id'] ?>"
                                                 class="btn btn-outline-danger btn-sm"
-                                                onclick="return confirm('Tem certeza que deseja excluir este endereço?');">
+                                                >
                                                 🗑 Excluir
                                             </a>
                                         </div>

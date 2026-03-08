@@ -22,6 +22,12 @@ $msg = [
     "itens_cadastrados" => "Itens cadastrados com sucesso!",
     "itens_editados" => "Itens editados com sucesso!",
     "itens_excluidos" => "Itens excluídos com sucesso!",
+    //editor de conta
+    "conta_editada" => "Conta editada com sucesso!",
+    //endereços
+    "endereco_cadastrado" => "Endereço cadastrado com sucesso!",
+    "endereco_editado" => "Endereço editado com sucesso!",
+    "endereco_excluido" => "Endereço excluído com sucesso!",
 ];
 $err = [
     //Funcionarios
@@ -58,6 +64,17 @@ $err = [
     "itens_imagem_vazia" => "Nenhuma imagem selecionada!",
     "itens_campos_vazios" => "Preencha todos os campos!",
     "itens_preco_invalido" => "Preco inválido!",
+    //editor de conta
+    "senha_nao_confere" => "Senhas nao conferem!",
+    //endereços
+    "rua_vazia" => "Rua nao pode estar vazia!",
+    "numero_vazio" => "Numero nao pode estar vazio!",
+    "bairro_vazio" => "Bairro nao pode estar vazio!",
+    "cidade_vazio" => "Cidade nao pode estar vazia!",
+    "estado_vazio" => "Estado nao pode estar vazio!",
+    "cep_vazio" => "CEP nao pode estar vazio!",
+    "metodo_invalido" => "selecione um endereço valido!",
+
 ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

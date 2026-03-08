@@ -15,7 +15,12 @@ if (!isset($_GET['id'])) {
 
 $enderecos = new Enderecos();
 $enderecos ->id = $_GET['id'];
-$enderecos->Excluir();
+
+if($enderecos->Excluir())
+    {
+        header('Location: ../../enderecos.php?msg=endereco_excluido');
+        exit;
+    };
 
 header('Location: ../../enderecos.php');
 exit;

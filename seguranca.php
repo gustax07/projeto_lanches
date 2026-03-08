@@ -1,4 +1,5 @@
 <?php include('header.php');
+include('includes/sweet_alert2_include.php');
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');

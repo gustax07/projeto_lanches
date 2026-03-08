@@ -12,17 +12,28 @@ $senhaAtual     = $_POST['senhaAtual'] ?? '';
 $novaSenha      = $_POST['senha'] ?? '';
 $confirmarSenha = $_POST['confirmarSenha'] ?? '';
 
+if($usuario->nome == ''){
+        header('Location: ../../seguranca.php?err=nome_vazio');
+        exit;
+    }
+
+    else if($usuario->email == ''){
+        header('Location: ../../seguranca.php?err=email_vazio');
+        exit;
+    }
 
 if (!empty($novaSenha)) {
 
     
     if (hash('sha256', $senhaAtual) != $_SESSION['usuario']['senha']) {
-        die('Senha atual incorreta');
+        header('Location: ../../seguranca.php?err=senha_nao_confere');
+        exit;
     }
 
     
     if ($novaSenha != $confirmarSenha) {
-        die('As senhas não coincidem');
+        header('Location: ../../seguranca.php?err=senha_nao_confere');
+        exit;
     }
 
     $usuario->senha = $novaSenha;
@@ -38,7 +49,7 @@ if (!empty($novaSenha)) {
     $_SESSION['usuario']['senha'] = hash('sha256', $novaSenha);
 }
 
-header('Location: ../../seguranca.php');
+header('Location: ../../seguranca.php?msg=conta_editada');
 exit;
 
 ?>

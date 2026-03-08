@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../enderecos.php');
+    header('Location: ../../enderecos.php?err=metodo_invalido');
     exit;
 }
 
@@ -17,7 +17,7 @@ $idUsuario  = $_SESSION['usuario']['id'];
 $idEndereco = $_POST['id'] ?? null;
 
 if (!$idEndereco) {
-    header('Location: ../../enderecos.php');
+    header('Location: ../../enderecos.php?err=metodo_invalido');
     exit;
 }
 
@@ -31,17 +31,41 @@ $enderecos->cidade = trim($_POST['cidade'] ?? '');
 $enderecos->estado = trim($_POST['estado'] ?? '');
 $enderecos->cep    = trim($_POST['cep'] ?? '');
 
-if (
-    empty($enderecos->rua) ||
-    empty($enderecos->numero) ||
-    empty($enderecos->bairro) ||
-    empty($enderecos->cidade) ||
-    empty($enderecos->estado) ||
-    empty($enderecos->cep)
-) {
-    header("Location: ../../editar_endereco.php?id=$idEndereco");
-    exit;
-}
+if($enderecos->rua == '')
+    {
+        header('Location: ../../enderecos.php?err=rua_vazia');
+        exit;
+    }
+
+    if($enderecos->numero == '')
+    {
+        header('Location: ../../enderecos.php?err=numero_vazio');
+        exit;
+    }
+
+    if($enderecos->bairro == '')
+    {
+        header('Location: ../../enderecos.php?err=bairro_vazio');
+        exit;
+    }
+
+    if($enderecos->cidade == '')
+    {
+        header('Location: ../../enderecos.php?err=cidade_vazio');
+        exit;
+    }
+
+    if($enderecos->estado == '')
+    {
+        header('Location: ../../enderecos.php?err=estado_vazio');
+        exit;
+    }
+
+    if($enderecos->cep == '')
+    {
+        header('Location: ../../enderecos.php?err=cep_vazio');
+        exit;
+    }
 
 $endereco = $enderecos->BuscarPorId($idEndereco, $idUsuario);
 if (!$endereco || count($endereco) === 0) {
@@ -51,5 +75,5 @@ if (!$endereco || count($endereco) === 0) {
 
 $enderecos->Editar();
 
-header('Location: ../../enderecos.php?sucesso=editado');
+header('Location: ../../enderecos.php?msg=endereco_editado');
 exit;

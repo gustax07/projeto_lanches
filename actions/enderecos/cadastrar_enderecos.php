@@ -3,6 +3,7 @@ session_start();
 
 include('../../classes/enderecos.class.php');
 
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../../index.php');
     exit;
@@ -17,19 +18,26 @@ if (!isset($_SESSION['usuario'])) {
     $enderecos->estado = $_POST['estado'];
     $enderecos->cep = $_POST['cep'];
     if ($enderecos->rua == '') {
-        echo "rua não pode estar vazia";
+        header("location: ../../enderecos.php?err=rua_vazia");
+        exit();
     } elseif ($enderecos->numero == '') {
-        echo "numero nao pode estar vazio";
+        header("location: ../../enderecos.php?err=numero_vazio");
+        exit();
     } elseif ($enderecos->bairro == '') {
-        echo "bairro nao pode estar vazio";
+        header("location: ../../enderecos.php?err=bairro_vazio");
+        exit();
     } elseif ($enderecos->cidade == '') {
-        echo "cidade nao pode estar vazio";
+        header("location: ../../enderecos.php?err=cidade_vazio");
+        exit();
     } elseif ($enderecos->estado == '') {
-        echo "estado nao pode estar vazio";
+        header("location: ../../enderecos.php?err=estado_vazio");
+        exit();
     } elseif ($enderecos->cep == '') {
-        echo "cep nao pode estar vazio";
+        header("location: ../../enderecos.php?err=cep_vazio");
+        exit();
     } else {
         $enderecos->Cadastrar();
-        header('Location: ../../enderecos.php');
+        header('Location: ../../enderecos.php?msg=endereco_cadastrado');
+        exit();
     }
 }
