@@ -7,7 +7,7 @@ class Telefones
     public $id;
     public $id_usuarios_fk;
     public $numero;
-
+    public $ddi;
     //listar numeros
     public function Listar() {
         $sql = "SELECT * FROM telefones";
@@ -34,12 +34,13 @@ class Telefones
 
     //cadastrar o numero
     public function Cadastrar() {
-        $sql = "INSERT INTO telefones (id_usuarios_fk, numero) VALUES (?, ?)";
+        $sql = "INSERT INTO telefones (id_usuarios_fk, numero, ddi) VALUES (?, ?, ?)";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk,
-            $this->numero
+            $this->numero,
+            $this->ddi
         ]);
         Banco::desconectar();
         return $comando->rowCount();
