@@ -6,11 +6,11 @@ require_once('../../classes/usuarios.class.php');
 $usuario = new Usuarios();
 
 $usuario->id    = $_SESSION['usuario']['id'];
-$usuario->nome  = $_POST['nome'];
-$usuario->email = $_POST['email'];
-$senhaAtual     = $_POST['senhaAtual'] ?? '';
-$novaSenha      = $_POST['senha'] ?? '';
-$confirmarSenha = $_POST['confirmarSenha'] ?? '';
+$usuario->nome  = strip_tags($_POST['nome']);
+$usuario->email = strip_tags($_POST['email']);
+$senhaAtual     = strip_tags($_POST['senhaAtual']) ?? '';
+$novaSenha      = strip_tags($_POST['senha']) ?? '';
+$confirmarSenha = strip_tags($_POST['confirmarSenha']) ?? '';
 
 if($usuario->nome == ''){
         header('Location: ../../seguranca.php?err=nome_vazio');

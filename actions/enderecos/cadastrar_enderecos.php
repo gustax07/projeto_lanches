@@ -11,12 +11,12 @@ if (!isset($_SESSION['usuario'])) {
     $idUsuario = $_SESSION['usuario']['id'];
     $enderecos = new Enderecos();
     $enderecos->id_usuarios_fk = $idUsuario;
-    $enderecos->rua = $_POST['rua'];
-    $enderecos->numero = $_POST['numero'];
-    $enderecos->bairro = $_POST['bairro'];
-    $enderecos->cidade = $_POST['cidade'];
-    $enderecos->estado = $_POST['estado'];
-    $enderecos->cep = $_POST['cep'];
+    $enderecos->rua = strip_tags($_POST['rua']);
+    $enderecos->numero = strip_tags($_POST['numero']);
+    $enderecos->bairro = strip_tags($_POST['bairro']);
+    $enderecos->cidade = strip_tags($_POST['cidade']);
+    $enderecos->estado = strip_tags($_POST['estado']);
+    $enderecos->cep = strip_tags($_POST['cep']);
     if ($enderecos->rua == '') {
         header("location: ../../enderecos.php?err=rua_vazia");
         exit();

@@ -3,10 +3,10 @@
 require_once('../../classes/usuarios.class.php');
 print_r($_POST);
 $clientes = new Usuarios();
-$clientes->nome = $_POST['nome'];
-$clientes->email = $_POST['email'];
-$clientes->senha = $_POST['senha'];
-$clientes->data_cadastro = date('Y-m-d');
+$clientes->nome = strip_tags($_POST['nome']);
+$clientes->email = strip_tags($_POST['email']);
+$clientes->senha = strip_tags($_POST['senha']);
+$clientes->data_cadastro = strip_tags(date('Y-m-d'));
 $clientes->id_tipo_fk = 0;
 
 if ($clientes->nome == ''){

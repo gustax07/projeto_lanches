@@ -5,7 +5,7 @@ require_once '../../classes/pedidos.class.php';
 $idUsuario   = $_SESSION['usuario']['id'];
 $idPedido    = $_POST['id_pedido'];
 $idEndereco  = $_POST['id_endereco'];
-$observacoes = $_POST['observacoes'] ?? null;
+$observacoes = strip_tags($_POST['observacoes']) ?? null;
 
 if (!is_numeric($idPedido) || !is_numeric($idEndereco)) {
     die('Dados inválidos');

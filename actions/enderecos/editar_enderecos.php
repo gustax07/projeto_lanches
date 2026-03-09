@@ -24,12 +24,12 @@ if (!$idEndereco) {
 $enderecos = new Enderecos();
 
 $enderecos->id     = $idEndereco;
-$enderecos->rua    = trim($_POST['rua'] ?? '');
-$enderecos->numero = trim($_POST['numero'] ?? '');
-$enderecos->bairro = trim($_POST['bairro'] ?? '');
-$enderecos->cidade = trim($_POST['cidade'] ?? '');
-$enderecos->estado = trim($_POST['estado'] ?? '');
-$enderecos->cep    = trim($_POST['cep'] ?? '');
+$enderecos->rua    = strip_tags(trim($_POST['rua']) ?? '');
+$enderecos->numero = strip_tags(trim($_POST['numero']) ?? '');
+$enderecos->bairro = strip_tags(trim($_POST['bairro']) ?? '');
+$enderecos->cidade = strip_tags(trim($_POST['cidade']) ?? '');
+$enderecos->estado = strip_tags(trim($_POST['estado']) ?? '');
+$enderecos->cep    = strip_tags(trim($_POST['cep']) ?? '');
 
 if($enderecos->rua == '')
     {
