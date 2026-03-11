@@ -1,5 +1,7 @@
 <?php
 
+echo "WEBHOOK FUNCIONANDO";
+
 file_put_contents(__DIR__.'/debug.txt', "WEBHOOK EXECUTOU\n", FILE_APPEND);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
