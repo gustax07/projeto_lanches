@@ -30,7 +30,7 @@ $statusPedido = $detalhePedido['status'];
 $etapaAtual = match($statusPedido){
     'pendente' => 1,
     'preparando' => 2,
-    'saiu_entrega' => 3,
+    'saiu para entrega' => 3,
     'entregue' => 4,
     'concluido' => 5,
     default => 1
@@ -43,7 +43,7 @@ $etapaAtual = match($statusPedido){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/meus_pedidos.css">
+<link rel="stylesheet" href="css/meus_pedidos.css">
 <title>Meus Pedidos</title>
 </head>
 
@@ -65,7 +65,7 @@ $status = $pedido['status'];
 $statusCor = match($status){
     'pendente' => 'secondary',
     'preparando' => 'primary',
-    'saiu_entrega' => 'warning',
+    'saiu para entrega' => 'warning',
     'entregue' => 'info',
     'concluido' => 'success',
     default => 'dark'
