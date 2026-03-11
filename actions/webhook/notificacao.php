@@ -40,6 +40,12 @@ try {
 
 if ($payment->status === 'approved') {
 
+    file_put_contents(
+    __DIR__.'/debug.txt',
+    "STATUS: ".$payment->status." | REF: ".$payment->external_reference.PHP_EOL,
+    FILE_APPEND
+);
+
     $pedidoId = $payment->external_reference;
 
     if (!$pedidoId) {
