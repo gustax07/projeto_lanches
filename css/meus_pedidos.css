@@ -1,79 +1,123 @@
-
 .pedidos-container {
     min-height: 70vh;
+    padding: 20px;
 }
+
 .lista-pedidos {
     background-color: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
 .lista-pedidos h5 {
     font-weight: 700;
+    margin-bottom: 15px;
 }
 
 .lista-pedidos .list-group-item {
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    padding: 12px 15px;
 }
 
 .lista-pedidos .list-group-item:hover {
-    background-color: #f8f9fa;
+    background-color: #fff8e1;
+    transform: translateX(4px);
 }
 
 .lista-pedidos .list-group-item.active {
     background-color: #ffc107;
     border-color: #ffc107;
     color: #000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+.lista-pedidos small {
+    font-size: 0.8rem;
+}
+
+.lista-pedidos .badge {
+    font-size: 0.75rem;
+    padding: 6px 8px;
+}
 
 .detalhes-pedido {
     background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
+.detalhes-pedido h4 {
+    font-weight: 700;
+}
 
 .status-atual {
     font-size: 1.1rem;
+    margin-bottom: 15px;
 }
 
 .status-atual strong {
     color: #ff9800;
 }
 
-
-.progresso-pedido {
-    margin-top: 25px;
+.progresso-container{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
 }
 
-.progresso-pedido ul {
-    padding: 0;
-    margin: 0;
+.progresso-linha{
+    position: absolute;
+    top: 16px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e9ecef;
+    z-index: 0;
 }
 
-.progresso-pedido li {
+.progresso-etapa{
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    flex: 1;
+}
+
+.bolinha{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e9ecef;
+    margin: auto;
+    margin-bottom: 6px;
+    border: 3px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.progresso-etapa span{
     font-size: 0.85rem;
-    border-radius: 0 !important;
 }
 
-.progresso-ok {
-    background-color: #198754;
-    color: #fff;
+.progresso-etapa.ok .bolinha{
+    background: #198754;
+    border-color: #198754;
 }
 
-
-.progresso-atual {
-    background-color: #ffc107;
-    color: #000;
-    font-weight: 600;
+.progresso-etapa.atual .bolinha{
+    background: #ffc107;
+    border-color: #ffc107;
 }
 
-
-.progresso-pendente {
-    background-color: #e9ecef;
-    color: #6c757d;
+.progresso-etapa.pendente .bolinha{
+    background: #e9ecef;
 }
-
 
 @media (max-width: 768px) {
 
@@ -82,12 +126,25 @@
         margin-bottom: 20px;
     }
 
-    .progresso-pedido ul {
+    .progresso-container{
         flex-direction: column;
+        align-items: flex-start;
     }
 
-    .progresso-pedido li {
-        border-radius: 4px !important;
-        margin-bottom: 5px;
+    .progresso-linha{
+        display:none;
     }
+
+    .progresso-etapa{
+        display:flex;
+        align-items:center;
+        margin-bottom:10px;
+    }
+
+    .bolinha{
+        margin-right:10px;
+        margin-bottom:0;
+    }
+
 }
+

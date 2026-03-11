@@ -258,4 +258,18 @@ public function BuscarPedidosPeloID()
     Banco::desconectar();
     return $arr_resultado;
 }
+
+//buscar pedidos por usuário
+public function BuscarPedidosPeloIDUsuario()
+{
+    $sql = "SELECT * FROM pedidos WHERE id_usuarios_fk = ?;";
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->execute([
+        $this->id_usuarios_fk
+    ]);
+    $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+    Banco::desconectar();
+    return $arr_resultado;
+}
 }
