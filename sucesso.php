@@ -1,4 +1,5 @@
 <?php
-echo "Sucesso!";
+
+header('location: index.php?msg=pagamento_realizado');
 
 ?>

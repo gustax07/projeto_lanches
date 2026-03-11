@@ -28,6 +28,8 @@ $msg = [
     "endereco_cadastrado" => "Endereço cadastrado com sucesso!",
     "endereco_editado" => "Endereço editado com sucesso!",
     "endereco_excluido" => "Endereço excluído com sucesso!",
+    //pagamento
+    "pagamento_realizado" => "Pagamento realizado com sucesso! veja a situação do seu pedido na aba de pedidos!",
 ];
 $err = [
     //Funcionarios

@@ -2,17 +2,15 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once('../../classes/pedidos.class.php');
-$pedidos = new Pedidos();
 
 use Dotenv\Dotenv;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Client\Payment\PaymentClient;
 
+$pedidos = new Pedidos();
 
-$envPath = __DIR__ . '/../../.env';
-
-if (file_exists($envPath)) {
-    $dotenv = Dotenv::createImmutable(dirname($envPath));
+if (file_exists(__DIR__ . '/../../.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
     $dotenv->load();
 }
 
@@ -25,11 +23,11 @@ $data = json_decode($body, true);
 
 http_response_code(200);
 
-if (!isset($data['data']['id'])) {
+$paymentId = $data['data']['id'] ?? $_GET['data_id'] ?? $_GET['id'] ?? null;
+
+if (!$paymentId) {
     exit;
 }
-
-$paymentId = $data['data']['id'];
 
 $client = new PaymentClient();
 
@@ -40,9 +38,14 @@ try {
     exit;
 }
 
-if ($payment->status === 'approved' && $pedido->status !== 'preparando') {
+if ($payment->status === 'approved') {
 
     $pedidoId = $payment->external_reference;
+
+    if (!$pedidoId) {
+        exit;
+    }
+
     $pedidos->id = $pedidoId;
     $pedidos->PrepararPedido();
 }
