@@ -50,6 +50,8 @@ try {
             ]
         ],
         "external_reference" => $pedidoId,
+        "notification_url" => "https://tasty.squareweb.app/actions/webhook/notificacao.php",
+
         "back_urls" => [
             "success" => "https://tasty.squareweb.app/sucesso.php",
             "failure" => "https://tasty.squareweb.app/falha.php",
