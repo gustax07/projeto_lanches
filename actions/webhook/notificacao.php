@@ -1,8 +1,8 @@
 <?php
 
-echo "WEBHOOK FUNCIONANDO";
+error_log("WEBHOOK EXECUTOU");
 
-file_put_contents(__DIR__.'/debug.txt', "WEBHOOK EXECUTOU\n", FILE_APPEND);
+file_put_contents(__DIR__ . '/debug.txt', "WEBHOOK EXECUTOU\n", FILE_APPEND);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once('../../classes/pedidos.class.php');
@@ -23,11 +23,14 @@ MercadoPagoConfig::setAccessToken(
 );
 
 $body = file_get_contents('php://input');
+error_log("BODY: " . $body);
+file_put_contents(__DIR__ . '/debug.txt', "BODY: " . $body . "\n", FILE_APPEND);
 $data = json_decode($body, true);
 
 http_response_code(200);
 
 $paymentId = $data['data']['id'] ?? $_GET['data_id'] ?? $_GET['id'] ?? null;
+error_log("PAYMENT ID: " . $paymentId);
 
 if (!$paymentId) {
     exit;
@@ -37,6 +40,8 @@ $client = new PaymentClient();
 
 try {
     $payment = $client->get($paymentId);
+    error_log("STATUS: " . $payment->status);
+    error_log("REF: " . $payment->external_reference);
 } catch (Throwable $e) {
     error_log($e->getMessage());
     exit;
@@ -45,10 +50,10 @@ try {
 if ($payment->status === 'approved') {
 
     file_put_contents(
-    __DIR__.'/debug.txt',
-    "STATUS: ".$payment->status." | REF: ".$payment->external_reference.PHP_EOL,
-    FILE_APPEND
-);
+        __DIR__ . '/debug.txt',
+        "STATUS: " . $payment->status . " | REF: " . $payment->external_reference . PHP_EOL,
+        FILE_APPEND
+    );
 
     $pedidoId = $payment->external_reference;
 
