@@ -13,11 +13,16 @@ $idCategoria = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
 $itens = new Itens();
 
+$pagina = max(1, (int)($_GET['pagina'] ?? 1));
+$itensPorPagina = 24;
+
 if ($idCategoria) {
     $itens->id_categoria_fk = $idCategoria;
-    $itens_listar = $itens->ListarPorCategoria();
+    $itens_listar = $itens->ListarPorCategoria($pagina, $itensPorPagina);
+    $totalPaginas = $itens->QuantidadePaginas($itensPorPagina);
 } else {
-    $itens_listar = $itens->Listar();
+    $itens_listar = $itens->Listar($pagina, $itensPorPagina);
+    $totalPaginas = $itens->QuantidadePaginas($itensPorPagina);
 }
 
 $itensCarrinho = [];
@@ -47,6 +52,17 @@ if (isset($_SESSION['usuario'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <title>Lanches</title>
+
+    <style>
+        .pagination .page-link {
+            color: #ff7b00;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #ff7b00;
+            border-color: #ff7b00;
+        }
+    </style>
 </head>
 
 <body style="margin: 0px; border: none; padding: 0px;">
@@ -174,6 +190,60 @@ if (isset($_SESSION['usuario'])) {
                 </div>
             </div>
         </div>
+
+        <div style="clear: both; margin-bottom: 50px;"></div>
+
+
+        <!-- paginador -->
+        <nav style="display:flex; justify-content:center;">
+            <ul class="pagination">
+
+                <?php if ($pagina > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                    </li>
+                <?php endif; ?>
+
+                <?php
+                $inicio = max(1, $pagina - 2);
+                $fim = min($totalPaginas, $pagina + 2);
+
+                if ($inicio > 1) {
+                    echo '<li class="page-item"><a class="page-link" href="?pagina=1">1</a></li>';
+                    if ($inicio > 2) {
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                }
+
+                for ($i = $inicio; $i <= $fim; $i++):
+                ?>
+
+                    <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
+                        <a class="page-link" href="?pagina=<?= $i ?>">
+                            <?= $i ?>
+                        </a>
+                    </li>
+
+                <?php endfor; ?>
+
+                <?php
+                if ($fim < $totalPaginas) {
+                    if ($fim < $totalPaginas - 1) {
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                    echo '<li class="page-item"><a class="page-link" href="?pagina=' . $totalPaginas . '">' . $totalPaginas . '</a></li>';
+                }
+                ?>
+
+                <?php if ($pagina < $totalPaginas): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?pagina=<?= $pagina + 1 ?>">Próximo</a>
+                    </li>
+                <?php endif; ?>
+
+            </ul>
+        </nav>
+
 
         <div style="clear: both; margin-bottom: 50px;"></div>
 
