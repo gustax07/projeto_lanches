@@ -32,6 +32,9 @@ $itens_listar = $item->ListarPorCategoria();
             max-height: 500px;
             max-width: 500px;
         }
+        a{
+            text-decoration: none !important; 
+        }
     </style>
 </head>
 
@@ -55,7 +58,7 @@ $itens_listar = $item->ListarPorCategoria();
                             <button type="submit" class="btn btn-warning">
                                 <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
                             </button>
-                            <button type="button" class="btn btn-warning"><i class="bi bi-cart-check"></i>Comprar agora</button>
+                            <!-- <button type="button" class="btn btn-warning"><i class="bi bi-cart-check"></i>Comprar agora</button> -->
 
                         </div>
                     </form>

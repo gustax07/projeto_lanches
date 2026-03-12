@@ -8,6 +8,7 @@ $usuario = new Usuarios();
 $usuario->id    = $_SESSION['usuario']['id'];
 $usuario->nome  = strip_tags($_POST['nome']);
 $usuario->email = strip_tags($_POST['email']);
+$usuario->id_tipo_fk = 0;
 $senhaAtual     = strip_tags($_POST['senhaAtual']) ?? '';
 $novaSenha      = strip_tags($_POST['senha']) ?? '';
 $confirmarSenha = strip_tags($_POST['confirmarSenha']) ?? '';
