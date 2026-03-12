@@ -16,6 +16,7 @@ $qtdTelefones = count($listar);
 include_once("header.php");
 include_once("includes/bootstrap_include.php");
 include_once("includes/sweet_alert2_include.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -71,7 +72,7 @@ include_once("includes/sweet_alert2_include.php");
     }
 
     .btnn {
-      margin-left: 20px;
+      
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
@@ -96,6 +97,10 @@ include_once("includes/sweet_alert2_include.php");
       color: #333;
       font-size: 16px;
     }
+    .card-footerr{
+      display: flex;
+      justify-content: space-between;
+    }
   </style>
 </head>
 
@@ -105,17 +110,15 @@ include_once("includes/sweet_alert2_include.php");
 
   <!-- sessao de adicionar telefones -->
   <div class="card">
-    <form id="form-telefones-form" action="actions/telefones/cadastrar_telefone.php" method="post">
-      <div class="card-body">
-        <div id="form-telefones"></div>
-      </div>
-      <div class="footerr d-flex" style="gap:10px;">
-        <button type="button" class="btnn" onclick="AdicionarNovosTelefones()" id="criar">Adicionar Telefones</button>
-        <button type="submit" class="btnn" style="background-color:#007bff">Salvar</button>
-      </div>
-    </form>
+    <div class="card-body">
+      <div id="form-telefones"></div>
+    </div>
+    <hr>
+    <div class="card-footerr">
+      <button type="button" class="btnn" onclick="AdicionarNovosTelefones()" id="criar"><i class="bi bi-plus-circle"></i> Adicionar Telefones</button>
+      <button type="button" class="btnn" onclick="CadastrarTelefone(<?= $qtdTelefones ?>)" style="background-color:#007bff"><i class="bi bi-save"></i> Salvar</button>
+    </div>
   </div>
-
   <script>
     var el = document.getElementById("form-telefones")
 
@@ -160,36 +163,40 @@ include_once("includes/sweet_alert2_include.php");
   `
 
       el.insertAdjacentHTML("beforeend", html);
+      if (document.querySelectorAll(".form-group").length >= 4) {
+        document.getElementById("criar").style.display = "none";
+      }
     }
 
     function mask(o, f) {
-  setTimeout(function() {
-    var v = mphone(o.value);
-    if (v != o.value) {
-      o.value = v;
+      setTimeout(function() {
+        var v = mphone(o.value);
+        if (v != o.value) {
+          o.value = v;
+        }
+      }, 1);
     }
-  }, 1);
-}
 
-function mphone(v) {
-  var r = v.replace(/\D/g, "");
-  r = r.replace(/^0/, "");
-  if (r.length > 10) {
-    r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
-  } else if (r.length > 5) {
-    r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-  } else if (r.length > 2) {
-    r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
-  } else {
-    r = r.replace(/^(\d*)/, "($1");
-  }
-  return r;
-}
+    function mphone(v) {
+      var r = v.replace(/\D/g, "");
+      r = r.replace(/^0/, "");
+      if (r.length > 10) {
+        r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+      } else if (r.length > 5) {
+        r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+      } else if (r.length > 2) {
+        r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+      } else {
+        r = r.replace(/^(\d*)/, "($1");
+      }
+      return r;
+    }
 
     function TelCadastrados() {
       qtdTelefones.forEach(element => {
         Render(element.id, element.numero, element.DDI, true, true)
       })
+       
     }
 
     TelCadastrados();
@@ -204,14 +211,14 @@ function mphone(v) {
 
     }
 
-    function DeletarTelefone(id) {
+    async function DeletarTelefone(id) {
 
       //verificar se o input esta com leitura vazio ou nao para mudar o metodo de deletar
       const tel = document.getElementById(`telefone${id}`)
 
       if (tel.value != "" && tel.disabled == true) {
 
-        Swal.fire({
+        await Swal.fire({
           title: "Aviso!",
           text: "Você tem certeza que deseja excluir esse item?",
           icon: "warning",
@@ -220,12 +227,34 @@ function mphone(v) {
           cancelButtonColor: "#d33",
           confirmButtonText: "Sim, excluir!",
           cancelButtonText: "Não, cancelar!"
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            let telefone = document.getElementById(`telefone${id}`);
-            telefone.value = "";
-            let ddi = document.getElementById(`ddi${id}`);
-            ddi.value = "";
+            try {
+              const response = await fetch('./actions/telefones/excluir_telefone.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id: id
+                })
+              });
+
+              const data = await response.json();
+              if (data.status == "sucesso") {
+                let grupo = document.getElementById(`grupo${id}`);
+                grupo.remove();
+
+                if (document.querySelectorAll(".form-group").length < 4) {
+                  document.getElementById("criar").style.display = "block";
+                }
+              } else {
+                console.log(data.msg);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+
           }
         });
       } else {
@@ -236,6 +265,48 @@ function mphone(v) {
         if (document.querySelectorAll(".form-group").length < 4) {
           document.getElementById("criar").style.display = "block";
         }
+      }
+    }
+
+    async function CadastrarTelefone(id) {
+      id++
+      let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
+      let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
+
+      if (telefone == "" || ddi == "" || id == "" ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Preencha todos os campos!',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        })
+        return
+      }
+      try {
+        const response = await fetch('./actions/telefones/cadastrar_telefones.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            telefone: telefone,
+            ddi: ddi
+          })
+        });
+
+        const resultado = await response.json();
+
+        if (resultado.status == "sucesso") {
+          let telefone1 = document.getElementById(`telefone${id}`);
+          let ddi1 = document.getElementById(`ddi${id}`);
+          ddi1.setAttribute("disabled", true);
+          telefone1.setAttribute("disabled", true);
+        } else {
+          console.log(resultado.msg);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
 
@@ -250,37 +321,65 @@ function mphone(v) {
       salvar.removeAttribute("hidden");
     }
 
-   async function SalvarTelefone(id){
+    async function SalvarTelefone(id) {
 
-  const telefone = document.getElementById(`telefone${id}`).value;
-  const ddi = document.getElementById(`ddi${id}`).value;
+      const telefone = document.getElementById(`telefone${id}`)?.value ?? "";
+      const ddi = document.getElementById(`ddi${id}`)?.value ?? "";
 
-  try {
+      if (telefone == "" || ddi == "" || empty(id)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Preencha todos os campos!',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        })
+        return
+      }
 
-    const response = await fetch('./actions/telefones/editar_telefones.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id,
-        idUsuario: <?= $idUsuario ?>,
-        telefone: telefone,
-        ddi: ddi
-      })
-    });
+      try {
+        const response = await fetch('./actions/telefones/editar_telefones.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            telefone: telefone,
+            ddi: ddi
+          })
+        });
 
-    const resultado = await response.json();
+        const resultado = await response.json();
 
-    console.log(resultado);
+        if (resultado.status == "sucesso") {
+          let telefone = document.getElementById(`telefone${id}`);
+          telefone.setAttribute("disabled", true);
+          let ddi = document.getElementById(`ddi${id}`);
+          ddi.setAttribute("disabled", true);
+          let editar = document.getElementById(`editar${id}`);
+          editar.removeAttribute("hidden");
+          let salvar = document.getElementById(`salvar${id}`);
+          salvar.setAttribute("hidden", true);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Algo deu errado!',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          })
+        }
 
-  } catch (erro) {
-    console.error("Erro ao salvar:", erro);
-  }
+      } catch (erro) {
+        console.error("Erro ao salvar:", erro);
+      }
 
-}
-   
+    }
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 
 </html>

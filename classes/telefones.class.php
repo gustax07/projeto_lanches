@@ -48,11 +48,11 @@ class Telefones
 
     //editar o numero
     public function Editar() {
-        $sql = "UPDATE telefones SET id_usuarios_fk = ?, numero = ? WHERE id = ?";
+        $sql = "UPDATE telefones SET DDI = ?, numero = ? WHERE id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([
-            $this->id_usuarios_fk,
+            $this->ddi,
             $this->numero,
             $this->id
         ]);
