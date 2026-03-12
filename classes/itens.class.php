@@ -11,11 +11,14 @@ class Itens
     public $id_categoria_fk;
 
     //listar os itens
-    public function Listar()
+    public function Listar($pagina = 1, $itensPorPagina = 5)
     {
-        $sql = "SELECT * FROM itens";
+        $offset = ($pagina - 1) * $itensPorPagina;
+        $sql = "SELECT * FROM itens LIMIT :limit OFFSET :offset";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
+        $comando->bindValue(':limit', $itensPorPagina, PDO::PARAM_INT);
+        $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         Banco::desconectar();
@@ -98,7 +101,8 @@ class Itens
         return $arr_resultado;
     }
 
-    public function PesquisarPorNome($termo){
+    public function PesquisarPorNome($termo)
+    {
         $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem, i.id_categoria_fk
                 FROM itens i 
                 INNER JOIN categorias c ON i.id_categoria_fk = c.id WHERE i.nome LIKE :termo or i.descricao LIKE :termo ORDER BY id ASC";
@@ -124,5 +128,16 @@ class Itens
         return $arr_resultado;
     }
 
+    //descobrir quantas páginas existem para os itens
+    public function QuantidadePaginas($itensPorPagina = 24)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM itens";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+
+        return ceil((int)$arr_resultado['total'] / $itensPorPagina);
+    }
 }
-?>
