@@ -1,7 +1,7 @@
 <?php
 
 include('./header.php');
-
+include("./nav.php");
 include('./classes/itens.class.php');
 $item = new Itens;
 $id = $_GET['id'];
@@ -12,6 +12,7 @@ $item_descricao = $item->ListarPorID()[0];
 $item->id_categoria_fk = $item_descricao['id_categoria_fk'];
 
 $itens_listar = $item->ListarPorCategoria();
+$limit = 7;
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +35,12 @@ $itens_listar = $item->ListarPorCategoria();
         }
         a{
             text-decoration: none !important; 
+        }
+        @media (max-width: 768px) {
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
         }
     </style>
 </head>
@@ -74,34 +81,43 @@ $itens_listar = $item->ListarPorCategoria();
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <hr>
-                <h3 class="fs-3 fw-bold">Avaliações</h3>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-12">
                 <hr>
                 <h3 class="fs-3 fw-bold mb-5">Sugestões</h3>
             </div>
-            <div class="row g-3 justify-content-center">
-                <?php foreach ($itens_listar as $i) { ?>
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                        <a href="./lanches_descricao.php?id=<?= $i['id'] ?>">
-                            <div class="card h-90">
-                                <img src="./images/<?= $i['imagem'] ?>" class="card-img-top">
-                                <div class="card-body p-2 p-md-3">
-                                    <span class="card-title-custom"><?= $i['nome'] ?></span>
-                                    <p class="text-muted small mb-1">R$ <?= number_format($i['preco'], 2, ',', '.') ?></p>
-                                    <p class="card-description"><?= $i['descricao'] ?></p>
-                                </div>
-                            </div>
-                        </a>
+            <div class="row g-4 justify-content-center"> 
+               </div>
+            <?php foreach ($itens_listar as $i) {
+                $limit--;
+                if ($limit == 0) break; //para o loop quando o limite for atingido (6) ?>
+                
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2"> 
+            
+            <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+                
+                <div class="card h-100 produto-card">
+                    
+                    <div class="produto-img-container">
+                        <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
                     </div>
-                <?php } ?>
-            </div>
+                    
+                    <div class="card-body p-3 d-flex flex-column ">
+                        <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
+                        <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
+                        
+                        <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
+                    </div>
+                    
+                </div>
+                
+            </a>
+            
         </div>
+        
+    <?php } ?>
+</div>
     </div>
     <div style="height: 20px;"></div>
     <?php include("footer.html")?>
