@@ -144,7 +144,7 @@ if (isset($_SESSION['usuario'])) {
                         <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
                         <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
                         
-                        <p class="produto-descricao mt-auto"><?= $i['descricao'] ?></p>
+                        <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
                     </div>
                     
                 </div>
