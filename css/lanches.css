@@ -105,7 +105,6 @@
     
     /* Combo obrigatório para o line-clamp funcionar */
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Pode dar aviso no VS Code, mas funciona */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; /* Coloca os 3 pontinhos (...) */

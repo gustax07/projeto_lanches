@@ -19,7 +19,8 @@
 <body>
    
         <?php include('./header.php'); ?>
-
+        <?php include('./nav.php'); ?>
+        
     <?php include('./lanches.php'); ?>
     <?php include('./footer.html'); ?>
 </body>
