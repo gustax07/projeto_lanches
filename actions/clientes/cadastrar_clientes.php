@@ -27,7 +27,8 @@ if ($clientes->nome == '') {
     header('Location: ../../cadastrar.php?err=email_ja_cadastrado');
     exit;
 } elseif ($clientes->Cadastrar()) {
-    
+    header('Location: ../../logar.php');
+    exit;
 } else {
     header('Location: ../../cadastrar.php');
 }
