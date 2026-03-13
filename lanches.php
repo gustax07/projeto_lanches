@@ -49,8 +49,6 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./css/lanches.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <title>Lanches</title>
 
     <style>
@@ -176,7 +174,7 @@ if (isset($_SESSION['usuario'])) {
                         <div class="d-flex align-items-center mb-3 border-bottom pb-2">
 
 
-                            <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
+                            <img src="./images/<?= $item['imagem'] ?>" width="80" class="zrounded">
 
                             <div class="flex-grow-1">
                                 <strong><?= $item['nome'] ?></strong><br>
@@ -269,14 +267,6 @@ if (isset($_SESSION['usuario'])) {
 
 
     <div style="clear: both; margin-bottom: 50px;"></div>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
-    </script>
-
-
-
 </body>
 
 </html>

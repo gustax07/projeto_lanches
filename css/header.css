@@ -16,26 +16,26 @@ body {
 
 /* ================= HEADER ================= */
 .site-header {
-  background: var(--color-white);
-  padding: 12px 0; /* Mais fino e elegante */
-  position: sticky; /* Fica fixo no topo ao rolar */
-  top: 0;
-  z-index: 1050;
-  box-shadow: var(--shadow-sm);
-  border-bottom: 3px solid var(--color-accent);
+  background: var(--color-white) !important;
+  padding: 12px 0 !important; /* Mais fino e elegante */
+  position: sticky !important; /* Fica fixo no topo ao rolar */
+  top: 0 !important;
+  z-index: 1050 !important;
+  box-shadow: var(--shadow-sm) !important;
+  border-bottom: 3px solid var(--color-accent) !important;
 }
 
 .site-header .container {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 1300px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
 }
 
 .header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
 }
 
 /* ================= LOGO ================= */
@@ -44,21 +44,21 @@ body {
 }
 
 .logo-title a {
-  font-size: 32px;
-  font-weight: 900;
-  color: var(--color-primary-dark);
-  text-decoration: none;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  letter-spacing: -1px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: var(--transition);
+  font-size: 32px !important;
+  font-weight: 900 !important;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+  font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+  letter-spacing: -1px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  transition: var(--transition) !important;
 }
 
 .logo-title a:hover {
-  color: var(--color-primary);
-  transform: scale(1.02);
+  color: var(--color-primary) !important;
+  transform: scale(1.02) !important;
 }
 
 /* ================= BOTÕES / PERFIL ================= */
@@ -78,11 +78,12 @@ body {
 
 /* Foto de Perfil no Header */
 .profile-btn-header {
-  padding: 0;
+  padding: 0 !important;
   border: 3px solid var(--color-accent) !important;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
-  background: transparent;
+  transition: var(--transition) !important;
+  box-shadow: var(--shadow-sm) !important;
+  background: transparent !important;
+  object-fit: cover !important;
 }
 
 .profile-btn-header:hover {
