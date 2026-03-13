@@ -26,24 +26,40 @@ include('header.php');
             border: 0px !important;
             border-radius: 0px !important;
         }
+
+        .file-input {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 8px;
+            background-color: #ff9800;
+            /* laranja, por exemplo */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .file-input:hover {
+            background-color: #e68900;
+        }
     </style>
 </head>
 
 <body>
-     <?php function Table($listar)
+    <?php function Table($listar)
     { ?>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-responsive text-center">
-            <thead>
-                <tr class="table-dark">
-                    <th scope="col">Imagem</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Preco</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-responsive text-center">
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">Imagem</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Preco</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
                 <?php foreach ($listar as $item): ?>
                     <tr>
                         <td><img src="../images/<?= $item['imagem'] ?>" width="40px" height="40px"></td>
@@ -53,19 +69,19 @@ include('header.php');
                         <td>R$<?= $item['preco'] ?></td>
                         <td>
                             <button data-bs-toggle="modal" data-bs-target="#modal" data-titulo="Editar <?= $item['nome'] ?>"
-                                data-id="<?= $item['id'] ?>" 
-                                data-nome="<?= $item['nome'] ?>" 
-                                data-descricao="<?= $item['descricao'] ?>" 
-                                data-categoria="<?= $item['id_categoria_fk'] ?>" 
-                                data-preco="<?= $item['preco'] ?>" 
+                                data-id="<?= $item['id'] ?>"
+                                data-nome="<?= $item['nome'] ?>"
+                                data-descricao="<?= $item['descricao'] ?>"
+                                data-categoria="<?= $item['id_categoria_fk'] ?>"
+                                data-preco="<?= $item['preco'] ?>"
                                 data-foto="<?= $item['imagem'] ?>"
                                 class="btn btn-primary"> Editar </button>
                             <button onclick="excluir(<?= $item['id'] ?>, '<?= $item['nome'] ?>')" class="btn btn-danger"> Excluir </button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-        </table>
-    </div>
+            </table>
+        </div>
     <?php } ?>
 
     <div class="container-fluid col-sm-12 col-md-8 shadow p-3 mt-5 bg-body-white rounded">
@@ -85,16 +101,15 @@ include('header.php');
                 echo "<div class='alert alert-danger' role='alert'>
                             Nenhum item encontrado
                     </div>";
-            }else {
+            } else {
                 Table($itens_listar);
-
             }
         } else {
             if (empty($listar_por_nome)) {
-                 echo "<div class='alert alert-danger' role='alert'>
+                echo "<div class='alert alert-danger' role='alert'>
                             Nenhum item encontrado
                     </div>";
-            }else{
+            } else {
 
                 Table($listar_por_nome);
             }
@@ -105,49 +120,51 @@ include('header.php');
 
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="forms" action="../actions/itens/cadastrar_itens.php" method="post" enctype="multipart/form-data">
-                        <div class="col d-flex justify-content-center mb-1">
-                            <img id="previewImg" src="../images/foto_perfil_default.png" alt="" width="100px" height="100px" class="border ">
-                            <input type="file" name="foto" id="inputFoto" accept="image/*" class="d-none" aria-hidden>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="abrirSeletor()">Alterar Foto</button>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nome" class="col-form-label">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome">
-                        </div>
-                        <div class="mb-3">
-                            <label for="descricao" class="col-form-label">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_categoria_fk" class="col-form-label">Categoria</label>
-                            <select class='form-select' name="id_categoria_fk" id="id_categoria_fk">
-                                <option value="">Selecione uma categoria</option>
-                                <?php foreach ($categorias_listar as $categoria): ?>
-                                    <option value="<?= $categoria['id'] ?>"><?= $categoria['nome'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="preco" class="col-form-label">Preço</label>
-                            <input type="text" class="form-control" id="preco" name="preco">
-                        </div>
+            <form id="forms" action="../actions/itens/cadastrar_itens.php" method="post" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col d-flex justify-content-center mb-1" style="flex-direction: column; align-items: center;">
+    <img id="previewImg" src="../images/foto_perfil_default.png" alt="" width="100px" height="100px" class="border mb-2">
+
+    <input type="file" name="foto" id="inputFoto" accept="image/*" 
+           style="padding:6px 12px; border-radius:8px; border:none; background-color:#ff9800; color:white; cursor:pointer;">
+</div>
+                    <div class="d-flex align-items-center justify-content-center">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="nome" class="col-form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao" class="col-form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_categoria_fk" class="col-form-label">Categoria</label>
+                        <select class='form-select' name="id_categoria_fk" id="id_categoria_fk">
+                            <option value="">Selecione uma categoria</option>
+                            <?php foreach ($categorias_listar as $categoria): ?>
+                                <option value="<?= $categoria['id'] ?>"><?= $categoria['nome'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preco" class="col-form-label">Preço</label>
+                        <input type="text" class="form-control" id="preco" name="preco">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
+    </div>
     </div>
 
     <script>
@@ -190,9 +207,7 @@ include('header.php');
             });
         }
 
-        function abrirSeletor() {
-            document.getElementById('inputFoto').click();
-        }
+
 
         document.getElementById('inputFoto').addEventListener('change', function() {
             const file = this.files[0];
@@ -223,7 +238,7 @@ include('header.php');
 
         }
     </script>
-   
+
 </body>
 
 </html>

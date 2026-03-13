@@ -257,17 +257,7 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' 
 
   <?php include_once("../includes/bootstrap_include.php");
   include('../includes/sweet_alert2_include.php'); ?>
-  <script>
-    function abrirSeletor() {
-      document.getElementById('inputFoto').click();
-    }
 
-    document.getElementById('inputFoto').addEventListener('change', function() {
-      if (this.files.length > 0) {
-        document.getElementById('formFoto').submit();
-      }
-    });
-  </script>
 </body>
 
 </html>
