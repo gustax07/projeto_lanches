@@ -14,6 +14,7 @@ $listar = $telefones->ListarPorID();
 $qtdTelefones = count($listar);
 
 include_once("header.php");
+include_once("nav.php");
 include_once("includes/bootstrap_include.php");
 include_once("includes/sweet_alert2_include.php");
 
@@ -28,42 +29,60 @@ include_once("includes/sweet_alert2_include.php");
   <style>
     .card {
       margin: auto;
-      width: 23vw;
+      width: 30vw;
       margin-bottom: 10px;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       background-color: #fff;
       color: #333;
-
     }
 
     @media (max-width: 768px) {
       .card {
-        width: 90%;
+        width: 100%;
+      }
+
+      .card input {
+        width: 50%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        width: 100%;
+      }
+
+      .card input {
+        width: 50%;
+      }
+
+      .btnn {
+        font-size: 6px;
+        padding: 3px 5px;
       }
     }
 
     .card-body {
-      display: flex;
-      align-items: center;
-
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
 
     h2 {
-      text-align: center;
-      margin-top: 30px;
-      margin-bottom: 30px;
+      text-align: center !important;
+      margin-top: 30px !important;
+      margin-bottom: 30px !important;
     }
 
     .card input {
-      margin: 5px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      color: #333;
-      font-size: 16px;
+      margin: 5px !important;
+      padding: 6px !important;
+      border: 1px solid #ccc !important;
+      border-radius: 5px !important;
+      background-color: #f2f2f2 !important;
+      color: #333 !important;
+      font-size: 16px !important;
     }
 
     .card select:disabled,
@@ -72,7 +91,6 @@ include_once("includes/sweet_alert2_include.php");
     }
 
     .btnn {
-      
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
@@ -97,14 +115,16 @@ include_once("includes/sweet_alert2_include.php");
       color: #333;
       font-size: 16px;
     }
-    .card-footerr{
+
+    .card-footerr {
       display: flex;
       justify-content: space-between;
+      margin-top: 10px;
     }
   </style>
 </head>
 
-<body>
+<body style="background-color: #ffffff;">
   <h2>Lista de Telefones registrados</h2>
 
 
@@ -113,7 +133,7 @@ include_once("includes/sweet_alert2_include.php");
     <div class="card-body">
       <div id="form-telefones"></div>
     </div>
-    <hr>
+    <hr style="width: 100%;">
     <div class="card-footerr">
       <button type="button" class="btnn" onclick="AdicionarNovosTelefones()" id="criar"><i class="bi bi-plus-circle"></i> Adicionar Telefones</button>
       <button type="button" class="btnn" onclick="CadastrarTelefone(<?= $qtdTelefones ?>)" style="background-color:#007bff"><i class="bi bi-save"></i> Salvar</button>
@@ -196,7 +216,7 @@ include_once("includes/sweet_alert2_include.php");
       qtdTelefones.forEach(element => {
         Render(element.id, element.numero, element.DDI, true, true)
       })
-       
+
     }
 
     TelCadastrados();
@@ -273,7 +293,7 @@ include_once("includes/sweet_alert2_include.php");
       let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
       let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
 
-      if (telefone == "" || ddi == "" || id == "" ) {
+      if (telefone == "" || ddi == "" || id == "") {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -323,10 +343,10 @@ include_once("includes/sweet_alert2_include.php");
 
     async function SalvarTelefone(id) {
 
-      const telefone = document.getElementById(`telefone${id}`)?.value ?? "";
-      const ddi = document.getElementById(`ddi${id}`)?.value ?? "";
+      const telefone1 = document.getElementById(`telefone${id}`)?.value ?? "";
+      const ddi1 = document.getElementById(`ddi${id}`)?.value ?? "";
 
-      if (telefone == "" || ddi == "" || empty(id)) {
+      if (telefone1 == "" || ddi1 == "" || id == "") {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -336,7 +356,10 @@ include_once("includes/sweet_alert2_include.php");
         })
         return
       }
-
+      let telefone = document.getElementById(`telefone${id}`);
+      let ddi = document.getElementById(`ddi${id}`);
+      let editar = document.getElementById(`editar${id}`);
+      let salvar = document.getElementById(`salvar${id}`);
       try {
         const response = await fetch('./actions/telefones/editar_telefones.php', {
           method: 'POST',
@@ -345,35 +368,34 @@ include_once("includes/sweet_alert2_include.php");
           },
           body: JSON.stringify({
             id: id,
-            telefone: telefone,
-            ddi: ddi
+            telefone: telefone1,
+            ddi: ddi1
           })
         });
 
         const resultado = await response.json();
 
+
+
         if (resultado.status == "sucesso") {
-          let telefone = document.getElementById(`telefone${id}`);
           telefone.setAttribute("disabled", true);
-          let ddi = document.getElementById(`ddi${id}`);
           ddi.setAttribute("disabled", true);
-          let editar = document.getElementById(`editar${id}`);
           editar.removeAttribute("hidden");
-          let salvar = document.getElementById(`salvar${id}`);
           salvar.setAttribute("hidden", true);
         } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Algo deu errado!',
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ok'
-          })
+          telefone.setAttribute("disabled", true);
+          ddi.setAttribute("disabled", true);
+          editar.removeAttribute("hidden");
+          salvar.setAttribute("hidden", true);
+          console.log(resultado.msg);
         }
 
       } catch (erro) {
-        console.error("Erro ao salvar:", erro);
+        console.log(erro);;
+        telefone.setAttribute("disabled", true);
+        ddi.setAttribute("disabled", true);
+        editar.removeAttribute("hidden");
+        salvar.setAttribute("hidden", true);
       }
 
     }

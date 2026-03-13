@@ -18,12 +18,12 @@
             <form action="./actions/funcionarios/logar_funcionarios.php" method="POST">
                 <div class="input-group">
                     <label>Email:</label>
-                    <input type="email" name="email" value="admin@admin" required>
+                    <input type="email" name="email" required>
                 </div>
                 
                 <div class="input-group">
                     <label>Senha:</label>
-                    <input type="password" name="senha" value="*****" required>
+                    <input type="password" name="senha" required>
                 </div>
                 
                 <div class="captcha-box">

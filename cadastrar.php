@@ -1,4 +1,3 @@
-<?php include('./header.php'); ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,35 +5,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="./images/icon_burguer.png">
-  <link rel="stylesheet" href="css/cadastro.css">
-  <title>Cadastro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/login.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <title>Cadastro - Tasty Burger</title>
 </head>
+
 <body>
-  
-<div class="d-flex justify-content-center mt-5">
-  <div class="container-fluid card card-cadastro mb-5 p-4">
-    <h3 class="text-center titulo mb-4">Criar conta</h3>
 
-    <form method="post" action="./actions/clientes/cadastrar_clientes.php" target="conteudo">
+  <div class="login-wrapper">
+    <h1 class="brand-name">Tasty Burger</h1>
 
-      <div class="mb-3">
-        <label class="form-label">Nome completo</label>
-        <input type="text" name="nome" id="nome" class="form-control focus-ring focus-ring-warning border-warning" placeholder="Seu nome completo" required>
-      </div>
+    <div class="login-box">
+      <h2 class="login-header">Criar Conta</h2>
 
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" id="email" class="form-control focus-ring focus-ring-warning border-warning" placeholder="seu@email.com" required>
-      </div>
+      <form method="post" action="./actions/clientes/cadastrar_clientes.php">
 
-      <div class="mb-4">
-        <label class="form-label">Senha</label>
-        <input type="password" name="senha" id="senha" class="form-control focus-ring focus-ring-warning border-warning" placeholder="••••••••" required>
-      </div>
+        <div class="input-group">
+          <label>Nome completo</label>
+          <input type="text" name="nome" id="nome" placeholder="Seu nome completo" required>
+        </div>
 
-      <button type="submit" class="btn-principal w-100">Entrar</button>
-    </form>
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" name="email" id="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="input-group">
+          <label>Senha</label>
+          <input type="password" name="senha" id="senha" placeholder="••••••••" required>
+        </div>
+
+        <div class="captcha-box">
+                    <div class="g-recaptcha" data-sitekey="6LfOn3csAAAAAHV9Lm0HQia3ZfqKu4jEuiqKfans"></div>
+                </div>
+
+        <button type="submit" class="btn-submit">Cadastrar</button>
+      </form>
+    </div>
   </div>
-</div>
 </body>
+
 </html>

@@ -62,195 +62,218 @@ if (isset($_SESSION['usuario'])) {
             background-color: #ff7b00;
             border-color: #ff7b00;
         }
+
+        .banner-img {
+            height: 250px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        @media (min-width: 768px) {
+            .banner-img {
+                height: 1000px;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body style="margin: 0px; border: none; padding: 0px;">
-    <div class="container-fluid" style="margin-top : 0px; border: none; padding: 0px;">
-        <div class="w-100 p-0"> <!-- Linha 1 || começo --> <!-- carrossel de imagens -->
-            <div class="col-12" style="padding: 0px;">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="./images/banner_1_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./images/banner_2_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./images/banner_3_burguer.png" class="d-block w-100" alt="..." style="width: 100%; max-height: 1000px; border-radius: 0 0 25% 25%;">
-                        </div>
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 0px; margin: 0px;">
+        <div class="col p-0">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./images/banner_1_burguer.png" class="d-block w-100 banner-img" alt="...">
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div> <!-- Linha 1 || final -->
-
-
-        <div class="container-fluid">
-
-            <div class="row justify-content-between align-items-center my-5">
-                <div class="col">
-                    <h1>Cardápio</h1>
-                </div>
-
-                <div class="col text-end">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" class="btn btn-warning btn-lg position-relative">
-                        <span class="material-symbols-outlined">shopping_cart_checkout</span>
-                        Finalizar
-
-                        <?php if (count($itensCarrinho) > 0): ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?= count($itensCarrinho) ?>
-                                <span class="visually-hidden">itens no carrinho</span>
-                            </span>
-                        <?php endif; ?>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row g-3 justify-content-center">
-                <?php foreach ($itens_listar as $i) { ?>
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                        <a style="text-decoration: none;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
-                            <div class="card h-100">
-                                <img src="./images/<?= $i['imagem'] ?>" class="card-img-top">
-                                <div class="card-body p-2 p-md-3">
-                                    <span class="card-title-custom"><?= $i['nome'] ?></span>
-                                    <p class="text-muted small mb-1">R$ <?= number_format($i['preco'], 2, ',', '.') ?></p>
-                                    <p class="card-description"><?= $i['descricao'] ?></p>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="carousel-item">
+                        <img src="./images/banner_2_burguer.png" class="d-block w-100 banner-img" alt="...">
                     </div>
-                <?php } ?>
+                    <div class="carousel-item">
+                        <img src="./images/banner_3_burguer.png" class="d-block w-100 banner-img" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-
         </div>
+    </div>
 
-        <!-- MODAL CARRINHO -->
-        <div class="modal fade " id="modalCarrinho" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog scrollable ">
-                <div class="modal-content">
+    <div class="container-fluid">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title">🛒 Meu Carrinho</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
+        <div class="row justify-content-between align-items-center my-5">
+            <div class="col">
+                <h1>Cardápio</h1>
+            </div>
 
-                    <div class="modal-body">
+            <div class="col text-end">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" class="btn btn-warning btn-lg position-relative">
+                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                    Finalizar
 
-
-
-                        <?php foreach ($itensCarrinho as $item) { ?>
-                            <div class="d-flex align-items-center mb-3 border-bottom pb-2">
-
-
-                                <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
-
-                                <div class="flex-grow-1">
-                                    <strong><?= $item['nome'] ?></strong><br>
-                                    Quantidade: <?= $item['quantidade'] ?><br>
-                                    Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
-                                </div>
-
-                                <div>
-                                    <strong>
-                                        R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
-                                    </strong>
-
-                                    <form action="actions/pedido_itens/remover_predidos_itens.php" method="post">
-                                        <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
-
-                                        <input type="hidden" name="id_item" value="<?= $item['id'] ?>">
-                                        <button type="submit" class="btn btn-sm btn-danger">Remover</button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        <?php } ?>
-
-
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <a href="finalizar_pedido.php" class="btn btn-success w-100">
-                            Finalizar Pedido
-                        </a>
-                    </div>
-
-                </div>
+                    <?php if (count($itensCarrinho) > 0): ?>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <?= count($itensCarrinho) ?>
+                            <span class="visually-hidden">itens no carrinho</span>
+                        </span>
+                    <?php endif; ?>
+                </button>
             </div>
         </div>
 
-        <div style="clear: both; margin-bottom: 50px;"></div>
+        <div class="row g-4 justify-content-center"> 
+            <?php foreach ($itens_listar as $i) { ?>
+        
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2"> 
+            
+            <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+                
+                <div class="card h-100 produto-card">
+                    
+                    <div class="produto-img-container">
+                        <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
+                    </div>
+                    
+                    <div class="card-body p-3 d-flex flex-column">
+                        <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
+                        <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
+                        
+                        <p class="produto-descricao mt-auto"><?= $i['descricao'] ?></p>
+                    </div>
+                    
+                </div>
+                
+            </a>
+            
+        </div>
+        
+    <?php } ?>
+</div>
+
+    </div>
+
+    <!-- MODAL CARRINHO -->
+    <div class="modal fade " id="modalCarrinho" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog scrollable ">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">🛒 Meu Carrinho</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
 
 
-        <!-- paginador -->
-        <nav style="display:flex; justify-content:center;">
-            <ul class="pagination">
 
-                <?php if ($pagina > 1): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
-                    </li>
-                <?php endif; ?>
+                    <?php foreach ($itensCarrinho as $item) { ?>
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-2">
 
-                <?php
-                $inicio = max(1, $pagina - 2);
-                $fim = min($totalPaginas, $pagina + 2);
 
-                if ($inicio > 1) {
-                    echo '<li class="page-item"><a class="page-link" href="?pagina=1">1</a></li>';
-                    if ($inicio > 2) {
-                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                    }
+                            <img src="./images/<?= $item['imagem'] ?>" width="80" class="me-3 rounded">
+
+                            <div class="flex-grow-1">
+                                <strong><?= $item['nome'] ?></strong><br>
+                                Quantidade: <?= $item['quantidade'] ?><br>
+                                Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                            </div>
+
+                            <div>
+                                <strong>
+                                    R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
+                                </strong>
+
+                                <form action="actions/pedido_itens/remover_predidos_itens.php" method="post">
+                                    <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
+
+                                    <input type="hidden" name="id_item" value="<?= $item['id'] ?>">
+                                    <button type="submit" class="btn btn-sm btn-danger">Remover</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    <?php } ?>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="finalizar_pedido.php" class="btn btn-success w-100">
+                        Finalizar Pedido
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="clear: both; margin-bottom: 50px;"></div>
+
+
+    <!-- paginador -->
+    <nav style="display:flex; justify-content:center;">
+        <ul class="pagination">
+
+            <?php if ($pagina > 1): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                </li>
+            <?php endif; ?>
+
+            <?php
+            $inicio = max(1, $pagina - 2);
+            $fim = min($totalPaginas, $pagina + 2);
+
+            if ($inicio > 1) {
+                echo '<li class="page-item"><a class="page-link" href="?pagina=1">1</a></li>';
+                if ($inicio > 2) {
+                    echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                 }
+            }
 
-                for ($i = $inicio; $i <= $fim; $i++):
-                ?>
+            for ($i = $inicio; $i <= $fim; $i++):
+            ?>
 
-                    <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
-                        <a class="page-link" href="?pagina=<?= $i ?>">
-                            <?= $i ?>
-                        </a>
-                    </li>
+                <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
+                    <a class="page-link" href="?pagina=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
 
-                <?php endfor; ?>
+            <?php endfor; ?>
 
-                <?php
-                if ($fim < $totalPaginas) {
-                    if ($fim < $totalPaginas - 1) {
-                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                    }
-                    echo '<li class="page-item"><a class="page-link" href="?pagina=' . $totalPaginas . '">' . $totalPaginas . '</a></li>';
+            <?php
+            if ($fim < $totalPaginas) {
+                if ($fim < $totalPaginas - 1) {
+                    echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                 }
-                ?>
+                echo '<li class="page-item"><a class="page-link" href="?pagina=' . $totalPaginas . '">' . $totalPaginas . '</a></li>';
+            }
+            ?>
 
-                <?php if ($pagina < $totalPaginas): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?pagina=<?= $pagina + 1 ?>">Próximo</a>
-                    </li>
-                <?php endif; ?>
+            <?php if ($pagina < $totalPaginas): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?pagina=<?= $pagina + 1 ?>">Próximo</a>
+                </li>
+            <?php endif; ?>
 
-            </ul>
-        </nav>
-
-
-        <div style="clear: both; margin-bottom: 50px;"></div>
-
+        </ul>
+    </nav>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
-        </script>
+    <div style="clear: both; margin-bottom: 50px;"></div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
 
 
 

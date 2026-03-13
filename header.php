@@ -10,50 +10,7 @@ include_once("./includes/bootstrap_include.php");
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
 
 <style>
-  .material-symbols-outlined {
-    font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
-  }
-
-  .btn-menu {
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .menu-icon {
-    font-size: 42px;
-    cursor: pointer;
-  }
-
-  .perfil-offcanvas {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-
-  .perfil-offcanvas img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #FFC781;
-  }
-
-  .perfil-offcanvas h5 {
-    margin: 0;
-    font-weight: 600;
-  }
-
-  .perfil-offcanvas small {
-    color: #666;
-  }
+ 
 </style>
 
 <div class="site-header">
@@ -77,39 +34,19 @@ include_once("./includes/bootstrap_include.php");
 
         <!-- Botões direita (LOGADO) -->
         <div class="header-buttons">
-          <h3 style="color: #874B00; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Bem-vindo,<strong> <?php echo $_SESSION['usuario']['nome']; ?>!</strong></h3>
+          <h3 class="user-greeting">Bem-vindo, <strong><?= $_SESSION['usuario']['nome']; ?>!</strong></h3>
 
-          <!-- Botão menu que abre o offcanvas -->
-          <a
+          <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="text-decoration: none;">
 
-            data-bs-toggle="offcanvas"
-            href="#offcanvasExample"
-            role="button"
-            aria-controls="offcanvasExample"
-            style="text-decoration: none; color: inherit;">
+            <?php
+            $foto = !empty($_SESSION['usuario']['foto'])
+              ? 'images/' . $_SESSION['usuario']['foto']
+              : 'images/foto_perfil_default.png';
+            ?>
 
-
-            <div class="d-flex justify-content-center align-items-center mt-3 mt-lg-0">
-              <button class="btn d-flex align-items-center border-0 rounded-circle" data-bs-toggle="collapse" data-bs-target="#perfil" aria-expanded="false" aria-controls="collapseOne">
-                <img
-                  src="
-                        <?php
-                        $foto = !empty($_SESSION['usuario']['foto'])
-                          ? 'images/' . $_SESSION['usuario']['foto']
-                          : 'images/foto_perfil_default.png';
-                        echo $foto;
-                        ?>"
-                  alt="Foto do usuário"
-                  class="rounded-circle"
-                  width=75px
-                  height=75px
-                  style="border: 2px solid black;object-fit:cover;" />
-                <span class="fw-bold">
-                </span>
-              </button>
-            </div>
-
-
+            <button class="btn rounded-circle profile-btn-header" type="button">
+              <img src="<?= $foto ?>" alt="Foto do usuário" class="rounded-circle" />
+            </button>
           </a>
 
 
@@ -237,4 +174,3 @@ include_once("./includes/bootstrap_include.php");
     </div>
   </div>
 </div>
-<?php include('nav.php'); ?>

@@ -17,9 +17,9 @@
 </head>
 
 <body>
-    <div class="sticky-top">
+   
         <?php include('./header.php'); ?>
-    </div>
+
     <?php include('./lanches.php'); ?>
     <?php include('./footer.html'); ?>
 </body>

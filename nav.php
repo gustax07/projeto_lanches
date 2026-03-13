@@ -1,34 +1,33 @@
 <?php
-include('classes/categorias.class.php');
-
+// Usar include_once evita erros caso o arquivo já tenha sido chamado antes
+include_once('classes/categorias.class.php');
 
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
+
+// Verifica qual categoria está selecionada na URL (Ex: index.php?id=2)
+$categoria_atual = isset($_GET['id']) ? $_GET['id'] : '';
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark shadow-lg" style="background-color: #874B00;">
-    <div class="container-fluid">
-
-        <a class="navbar-brand" href="index.php">🍔</a>
+<nav class="navbar navbar-expand-lg categoria-nav sticky-top">
+    <div class="container"> <a class="navbar-brand" href="index.php" title="Ver todo o cardápio">🍔 Cardápio</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuResponsivo" aria-controls="menuResponsivo" aria-expanded="false" aria-label="Alternar navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="menuResponsivo">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link <?= empty($categoria_atual) ? 'active' : '' ?>" href="index.php">
+                        Todos
+                    </a>
+                </li>
 
                 <?php foreach ($categorias_listar as $c) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?id=<?= $c['id'] ?>">
+                        <a class="nav-link <?= ($categoria_atual == $c['id']) ? 'active' : '' ?>" href="index.php?id=<?= $c['id'] ?>">
                             <?= $c['nome'] ?>
                         </a>
                     </li>
@@ -39,5 +38,3 @@ $categorias_listar = $categorias->Listar();
 
     </div>
 </nav>
-</body>
-</html>
