@@ -44,14 +44,86 @@ $limit = 7;
                 max-height: 100%;
             }
         }
+
+
+
+        .img-destaque {
+            width: 100%;
+            max-width: 420px;
+            height: 420px;
+
+            border-radius: 25px;
+            overflow: hidden;
+
+            position: relative;
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            background: #000;
+        }
+
+        .img-destaque img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            transition: transform 0.5s ease;
+        }
+
+        .img-destaque:hover img {
+            transform: scale(1.08);
+        }
+
+        .img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+
+            padding: 20px;
+
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        }
+
+        .badge-img {
+            background: #ff7b00;
+            color: white;
+
+            padding: 6px 12px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .img-destaque::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+
+            background: linear-gradient(135deg, rgba(255, 123, 0, 0.3), transparent);
+            z-index: 1;
+        }
+
+        .img-overlay {
+            z-index: 2;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid mt-5">
         <div class="row">
-            <div class="d-flex col-md-6 col-sm-12 justify-content-center">
-                <img src="./images/<?= $item_descricao['imagem']; ?>">
+            <div class="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+
+                <div class="img-destaque">
+                    <img src="./images/<?= $item_descricao['imagem']; ?>" alt="<?= $item_descricao['nome'] ?>">
+
+                    <div class="img-overlay">
+                        <span class="badge-img">🔥 Destaque</span>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-6 col-sm-12">
                 <h1 class="fs-1 fw-bold"><?= $item_descricao['nome'] ?></h1>
