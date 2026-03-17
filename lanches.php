@@ -59,6 +59,7 @@ if (isset($_SESSION['usuario'])) {
         .pagination .page-item.active .page-link {
             background-color: #ff7b00;
             border-color: #ff7b00;
+            color: white;
         }
 
         .banner-img {

@@ -22,7 +22,7 @@ include_once("./includes/bootstrap_include.php");
       <h1 class="logo-title">
         <a href="../projeto_lanches">Tasty Burguer</a>
       </h1>
-
+      <div class="header-center"></div>
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->
         <div class="header-buttons">

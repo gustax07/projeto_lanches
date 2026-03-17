@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;900&display=swap');
 
 :root {
-  --color-primary-dark: #874B00;
-  --color-primary: #AE6914;
-  --color-accent: #E9A652;
-  --color-light: #FFC781;
-  --text-dark: #333;
+  --footer-primary-dark: #874B00;
+  --footer-accent: #E9A652;
+  --footer-light1: #FFC781;
+  --footer-text-dark: #333;
 }
 
 footer {
-  background: var(--color-light);
+  background: var(--footer-light1);
   border-radius: 30px 30px 0 0;
   box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
   overflow: hidden;
@@ -17,13 +16,13 @@ footer {
 
 #footer_content {
   padding: 60px 20px 40px 20px;
-  color: var(--text-dark);
+  color: var(--footer-text-dark);
 }
 
 #footer_contacts h1 {
   font-size: 42px;
   font-weight: 900;
-  color: var(--color-primary-dark);
+  color: var(--footer-primary-dark);
   margin: 0 0 16px 0;
   letter-spacing: -1px;
 }
@@ -49,7 +48,7 @@ footer {
   height: 46px;
   background: white;
   border-radius: 50%;
-  color: var(--color-primary);
+  color: var(--footer-primary-dark);
   font-size: 22px;
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(174, 105, 20, 0.2);
@@ -57,7 +56,7 @@ footer {
 }
 
 #footer_social_media a:hover {
-  background: var(--color-primary);
+  background: var(--footer-primary-dark);
   color: white;
   transform: translateY(-4px);
 }
@@ -71,7 +70,7 @@ footer {
 .footer-list h3 {
   font-size: 20px;
   font-weight: 750;
-  color: var(--color-primary-dark);
+  color: var(--footer-primary-dark);
   margin-bottom: 10px;
 
 }
@@ -88,7 +87,7 @@ footer {
 }
 
 .footer-list a:hover {
-  color: var(--color-primary);
+  color: var(--footer-primary-dark);
   transform: translateY(2px);
   text-shadow: 2px 2px 0px #874a0044;
 }
@@ -97,7 +96,7 @@ footer {
   text-align: center;
   padding: 25px 20px;
   background: rgba(135, 75, 0, 0.1);
-  color: var(--color-primary-dark);
+  color: var(--footer-primary-dark);
   font-size: 14px;
   font-weight: 500;
 }

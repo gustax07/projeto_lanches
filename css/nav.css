@@ -1,16 +1,17 @@
 /* ================= NAVEGAÇÃO DE CATEGORIAS ================= */
 .categoria-nav {
-    background-color: var(--color-light, #FFF6EB); /* Aquele creme suave do fundo */
-    border-bottom: 1px solid rgba(217, 122, 0, 0.2);
-    padding: 10px 0;
-    box-shadow: 0 4px 15px rgba(135, 75, 0, 0.05);
+    background-color: #FFF6EB !important; /* Aquele creme suave do fundo */
+    border-bottom: 1px solid rgba(217, 122, 0, 0.2) !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 4px 15px rgba(135, 75, 0, 0.05) !important; /* Sombra leve para dar profundidade */
 }
 
 .categoria-nav .navbar-brand {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #874B00;
-    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    color: #874B00 !important;
+    font-family: 'Poppins', sans-serif !important;
+    
 }
 
 /* Estilo das "Pílulas" de categoria */

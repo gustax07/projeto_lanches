@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <?php include("includes/sweet_alert2_include.php"); ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,12 +18,13 @@
 </head>
 
 <body>
-   
-        <?php include('./header.php'); ?>
-        <?php include('./nav.php'); ?>
-        
+
+    <div style="position: sticky; top: 0; z-index: 1050;">
+    <?php include('./header.php'); ?>
+    <?php include('./nav.php'); ?>
+    
     <?php include('./lanches.php'); ?>
-    <?php include('./footer.html'); ?>
+    <?php include('./footer.php'); ?>
 </body>
 
 </html>
