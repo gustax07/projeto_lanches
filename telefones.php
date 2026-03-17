@@ -269,45 +269,46 @@ include_once("includes/sweet_alert2_include.php");
     }
 
     async function CadastrarTelefone(id) {
-      id++
-      let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
-      let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
 
-      if (telefone == "" || ddi == "" || id == "" ) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Preencha todos os campos!',
-          confirmButtonColor: '#d33',
-          confirmButtonText: 'Ok'
-        })
-        return
-      }
-      try {
-        const response = await fetch('./actions/telefones/cadastrar_telefones.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            telefone: telefone,
-            ddi: ddi
-          })
-        });
+      // id++
+      // let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
+      // let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
 
-        const resultado = await response.json();
+      // if (telefone == "" || ddi == "" || id == "" ) {
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Oops...',
+      //     text: 'Preencha todos os campos!',
+      //     confirmButtonColor: '#d33',
+      //     confirmButtonText: 'Ok'
+      //   })
+      //   return
+      // }
+      // try {
+      //   const response = await fetch('./actions/telefones/cadastrar_telefones.php', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify({
+      //       telefone: telefone,
+      //       ddi: ddi
+      //     })
+      //   });
 
-        if (resultado.status == "sucesso") {
-          let telefone1 = document.getElementById(`telefone${id}`);
-          let ddi1 = document.getElementById(`ddi${id}`);
-          ddi1.setAttribute("disabled", true);
-          telefone1.setAttribute("disabled", true);
-        } else {
-          console.log(resultado.msg);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      //   const resultado = await response.json();
+
+      //   if (resultado.status == "sucesso") {
+      //     let telefone1 = document.getElementById(`telefone${id}`);
+      //     let ddi1 = document.getElementById(`ddi${id}`);
+      //     ddi1.setAttribute("disabled", true);
+      //     telefone1.setAttribute("disabled", true);
+      //   } else {
+      //     console.log(resultado.msg);
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
 
     function EditarTelefone(id) {

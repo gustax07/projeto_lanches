@@ -1,13 +1,11 @@
 <?php
-
-require_once 'header.php';
-
-require_once '../classes/categorias.class.php';
+include('../classes/categorias.class.php');
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
 $categorias->nome = $_GET['pesquisar'] ?? '';
 $categorias_pesquisa = $categorias->PesquisarPorNome();
 
+include('header.php');
 function Table($categories) {
     echo "<table class='table table-striped table-hover responsive'>";
     echo "<thead>";
@@ -18,7 +16,7 @@ function Table($categories) {
     echo "</tr>";
     echo "</thead>";
     echo "<tbody>";
-
+    
     foreach ($categories as $category) {
         echo "<tr class='text-center'>";
         echo "<td>{$category['id']}</td>";
@@ -29,10 +27,11 @@ function Table($categories) {
         echo "</td>";
         echo "</tr>";
     }
-
+    
     echo "</tbody>";
     echo "</table>";
 }
+include('../includes/bootstrap_include.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
