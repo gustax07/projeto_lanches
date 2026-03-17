@@ -73,6 +73,65 @@ if (isset($_SESSION['usuario'])) {
                 width: 100%;
             }
         }
+
+        /* css do botão do carrinho */
+
+        .btn-carrinho {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+
+            background: #ff7b00;
+            color: white;
+            border: none;
+
+            padding: 14px 22px;
+            border-radius: 50px;
+            /* formato pílula */
+
+            font-weight: 600;
+            font-size: 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+        }
+
+        .btn-carrinho:hover {
+            background: #e96b00;
+            transform: scale(1.05);
+        }
+
+        .badge-carrinho {
+            background: red;
+            color: white;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            padding: 4px 8px;
+            border-radius: 50%;
+
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translate(30%, -30%);
+        }
+
+        @media (max-width: 768px) {
+            .btn-float {
+                border-radius: 12px;
+                width: auto;
+                height: auto;
+                padding: 12px 20px;
+            }
+        }
     </style>
 </head>
 
@@ -109,50 +168,36 @@ if (isset($_SESSION['usuario'])) {
             <div class="col">
                 <h1>Cardápio</h1>
             </div>
-
-            <div class="col text-end">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho" class="btn btn-warning btn-lg position-relative">
-                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
-                    Finalizar
-
-                    <?php if (count($itensCarrinho) > 0): ?>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            <?= count($itensCarrinho) ?>
-                            <span class="visually-hidden">itens no carrinho</span>
-                        </span>
-                    <?php endif; ?>
-                </button>
-            </div>
         </div>
 
-        <div class="row g-4 justify-content-center"> 
+        <div class="row g-4 justify-content-center">
             <?php foreach ($itens_listar as $i) { ?>
-        
-        <div class="col-6 col-md-4 col-lg-3 col-xl-2"> 
-            
-            <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
-                
-                <div class="card h-100 produto-card">
-                    
-                    <div class="produto-img-container">
-                        <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
-                    </div>
-                    
-                    <div class="card-body p-3 d-flex flex-column">
-                        <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
-                        <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
-                        
-                        <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
-                    </div>
-                    
+
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+
+                    <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+
+                        <div class="card h-100 produto-card">
+
+                            <div class="produto-img-container">
+                                <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
+                            </div>
+
+                            <div class="card-body p-3 d-flex flex-column">
+                                <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
+                                <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
+
+                                <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
+                            </div>
+
+                        </div>
+
+                    </a>
+
                 </div>
-                
-            </a>
-            
+
+            <?php } ?>
         </div>
-        
-    <?php } ?>
-</div>
 
     </div>
 
@@ -267,6 +312,23 @@ if (isset($_SESSION['usuario'])) {
 
 
     <div style="clear: both; margin-bottom: 50px;"></div>
+
+    <button
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#modalCarrinho"
+        class="btn-carrinho">
+
+        🛒 <span>Meu carrinho</span>
+
+        <?php if (count($itensCarrinho) > 0): ?>
+            <span class="badge-carrinho">
+                <?= count($itensCarrinho) ?>
+            </span>
+        <?php endif; ?>
+
+    </button>
+
 </body>
 
 </html>
