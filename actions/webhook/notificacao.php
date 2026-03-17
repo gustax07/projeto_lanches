@@ -33,7 +33,7 @@ $paymentId = $data['data']['id'] ?? $_GET['data_id'] ?? $_GET['id'] ?? null;
 error_log("PAYMENT ID: " . $paymentId);
 
 if (!$paymentId) {
-    exit;
+    header('location: ../../index.php');
 }
 
 $client = new PaymentClient();
