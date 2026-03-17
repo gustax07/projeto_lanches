@@ -19,7 +19,14 @@ if (!isset($_POST['id_item'])) {
 $idUsuario = $_SESSION['usuario']['id'];
 $idItem    = $_POST['id_item'];
 
-//buscar pedido pendente
+$quantidade = $_POST['quantidade'] ?? 1;
+$quantidade = (int) $quantidade;
+if ($quantidade < 1) {
+    $quantidade = 1;
+} elseif ($quantidade > 99) {
+    $quantidade = 99;
+}
+
 $pedido = new Pedidos();
 $pedido->id_usuarios_fk = $idUsuario;
 
@@ -36,14 +43,12 @@ if (empty($pedidoAberto)) {
     $idPedido = $pedidoAberto[0]['id'];
 }
 
-//  Salvar pedido aberto na sessão
 $_SESSION['pedido_aberto'] = $idPedido;
 
-//  Adicionar item ao pedido
 $itemPedido = new Pedido_Itens();
 $itemPedido->id_pedidos_fk = $idPedido;
 $itemPedido->id_itens_fk   = $idItem;
-$itemPedido->quantidade    = 1;
+$itemPedido->quantidade    = $quantidade;
 
 $itemPedido->Cadastrar();
 

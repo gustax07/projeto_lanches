@@ -33,9 +33,11 @@ $limit = 7;
             max-height: 500px;
             max-width: 500px;
         }
-        a{
-            text-decoration: none !important; 
+
+        a {
+            text-decoration: none !important;
         }
+
         @media (max-width: 768px) {
             img {
                 max-width: 100%;
@@ -59,7 +61,9 @@ $limit = 7;
 
                 <div class="d-flex col-12 justify-content-start mt-5">
                     <form action="actions/pedido_itens/cadastrar_pedido_itens.php" target="_parent" method="post">
-
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <input type="number" name="quantidade" value="1" min="1" max="99" class="form-control text-center" style="width: 80px;">
+                        </div>
                         <input type="hidden" name="id_item" value="<?= $id ?>">
                         <div class="d-flex align-items-center gap-2 w-100">
                             <button type="submit" class="btn btn-warning">
@@ -81,47 +85,48 @@ $limit = 7;
 
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-12">
                 <hr>
                 <h3 class="fs-3 fw-bold mb-5">Sugestões</h3>
             </div>
-            <div class="row g-4 justify-content-center"> 
-               </div>
+            <div class="row g-4 justify-content-center">
+            </div>
             <?php foreach ($itens_listar as $i) {
                 $limit--;
-                if ($limit == 0) break; //para o loop quando o limite for atingido (6) ?>
-                
-        <div class="col-6 col-md-4 col-lg-3 col-xl-2"> 
-            
-            <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
-                
-                <div class="card h-100 produto-card">
-                    
-                    <div class="produto-img-container">
-                        <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
-                    </div>
-                    
-                    <div class="card-body p-3 d-flex flex-column ">
-                        <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
-                        <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
-                        
-                        <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
-                    </div>
-                    
+                if ($limit == 0) break; //para o loop quando o limite for atingido (6) 
+            ?>
+
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+
+                    <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+
+                        <div class="card h-100 produto-card">
+
+                            <div class="produto-img-container">
+                                <img src="./images/<?= $i['imagem'] ?>" class="produto-img" alt="<?= $i['nome'] ?>">
+                            </div>
+
+                            <div class="card-body p-3 d-flex flex-column ">
+                                <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
+                                <span class="produto-preco">R$ <?= number_format($i['preco'], 2, ',', '.') ?></span>
+
+                                <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
+                            </div>
+
+                        </div>
+
+                    </a>
+
                 </div>
-                
-            </a>
-            
+
+            <?php } ?>
         </div>
-        
-    <?php } ?>
-</div>
     </div>
     <div style="height: 20px;"></div>
-    <?php include("footer.html")?>
-    
+    <?php include("footer.html") ?>
+
 </body>
 
 </html>
