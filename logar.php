@@ -32,6 +32,7 @@
                 
                 <button type="submit" class="btn-submit">Entrar</button>
             </form>
+            <a class="link" href="cadastrar.php">não tem uma conta? crie uma</a>
         </div>
     </div>
     <?php include_once('./includes/sweet_alert2_include.php'); ?>

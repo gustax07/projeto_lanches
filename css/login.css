@@ -86,9 +86,21 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    
 }
 
 .btn-submit:hover {
     background-color: #d19a5a;
     transform: translateY(-2px);
+}
+.link
+{
+    color: lightskyblue;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 10px;
+}
+.link:hover
+{
+    color: black;
 }
