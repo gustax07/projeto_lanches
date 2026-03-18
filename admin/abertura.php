@@ -17,23 +17,45 @@ require('header.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status do Sistema</title>
+    <style>
+        .alert {
+            padding: 3px 10px !important;
+        }
+
+        h2 {
+            text-align: center !important;
+            margin: 30px auto !important;
+        }
+
+        .label {
+            font-weight: bold !important;
+            margin-right: 10px !important;
+            font-size: 18px !important;
+            display: flex;
+            justify-content: center;
+        }
+
+        .status {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 !important;
+        }
+    </style>
 </head>
 
 <body>
     <h2> Gerenciamento de Abertura do Sistema</h2>
-    <form action="processa_abertura.php" method="post">
-        <label for="status">Status do Sistema:</label>
-        <select name="status" id="status">
-            <?php foreach ($status_sistema_listar as $status): ?>
-                <option value="<?php echo $status['id']; ?>" <?php echo ($status['id'] == 1) ? 'selected' : ''; ?>>
-                    <?php echo $status['status']; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
-        <input type="submit" value="Atualizar Status">
-    </form>
-    <br><br>
+
+    <div class="status">
+        <label class="label" for="status">Status do Sistema:
+        </label>
+        <span id="status">
+            <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </span>
+    </div>
+
     <h3>Horários de Funcionamento:</h3>
     <br><br>
     <table class="table">
@@ -45,8 +67,8 @@ require('header.php');
         </tr>
         <tr>
             <?php foreach ($horarios_dias_listar as $horario):
-            $botaoFechar = '<button type="button" onclick="fechar_horario(' . $horario['id'] . ')">Fechar</button>';
-            // remover os segundos do horário e verificar se é null para mostrar como fechado
+                $botaoFechar = '<button type="button" onclick="fechar_horario(' . $horario['id'] . ')">Fechar</button>';
+                // remover os segundos do horário e verificar se é null para mostrar como fechado
                 $horario['horario_inicio'] = substr($horario['horario_inicio'], 0, 5);
                 $horario['horario_fim'] = substr($horario['horario_fim'], 0, 5);
                 $horario['horario_inicio'] == null ? $horario['horario_inicio'] = 'Fechado' : $horario['horario_inicio'] = $horario['horario_inicio'];
@@ -60,7 +82,7 @@ require('header.php');
                         echo $botaoFechar;
                     } ?>
                 </td>
-            
+
         </tr>
     <?php endforeach; ?>
     </table>
@@ -117,44 +139,76 @@ require('header.php');
             <button type="button" onclick="fechar_horario(${id})">Fechar</button>`;
         }
 
-       async function fechar_horario(id) {
+        async function fechar_horario(id) {
             const horario_inicio = 'null';
             const horario_fim = 'null';
-                try {
-                    const response = await fetch('../actions/horario_dias/editar_horario.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            id: id,
-                            horario_inicio: horario_inicio,
-                            horario_fim: horario_fim
-                        })
+            try {
+                const response = await fetch('../actions/horario_dias/editar_horario.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        horario_inicio: horario_inicio,
+                        horario_fim: horario_fim
                     })
-                    const data = await response.json();
+                })
+                const data = await response.json();
 
-                    if (data.status === 'sucesso') {
-                        alert('Horário fechado com sucesso!');
-                        //atualiza a tabela
-                        document.querySelectorAll(`td[id="${id}"]`)[1].innerText = 'Fechado';
-                        document.querySelectorAll(`td[id="${id}"]`)[2].innerText = 'Fechado';
-                        document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="editar_horario(${id})">Alterar</button>`;
-                    } else {
-                        alert('Ocorreu um erro ao fechar o horário.');
-                    }
-                } catch (error) {
-                    console.error('Erro:', error);
+                if (data.status === 'sucesso') {
+                    //atualiza a tabela
+                    document.querySelectorAll(`td[id="${id}"]`)[1].innerText = 'Fechado';
+                    document.querySelectorAll(`td[id="${id}"]`)[2].innerText = 'Fechado';
+                    document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="editar_horario(${id})">Alterar</button>`;
+                } else {
+                    alert('Ocorreu um erro ao fechar o horário.');
                 }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
         }
-    
-                //parte infernal para atualizar o status de abertura do sistema usando ajax fetch via post
-        const form = document.querySelector('form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const status = document.getElementById('status').value;
 
-        });
+
+
+        let diassemana = [];
+        async function BuscarDadosDoBanco() {
+            try {
+
+                const resposta = await fetch('../actions/horario_dias/buscar_horarios.php');
+                diassemana = await resposta.json();
+
+                AtualizarStatus();
+            } catch (erro) {
+                console.error("Erro ao atualizar dados do banco:", erro);
+            }
+        }
+
+        function AtualizarStatus() {
+            if (diassemana.length == 0) return;
+            const data = new Date();
+            const dia = data.getDay();
+
+            const hora_atual = data.getHours();
+            const minuto_atual = data.getMinutes();
+            const hora_minuto = hora_atual + ':' + minuto_atual + ':00';
+
+            const horario_inicio = diassemana[dia].horario_inicio;
+            const horario_fim = diassemana[dia].horario_fim;
+
+            const status = document.getElementById('status');
+            if (hora_minuto >= horario_inicio && hora_minuto <= horario_fim) {
+                status.innerText = 'Aberto';
+                status.setAttribute('class', 'alert alert-success');
+            } else {
+                status.innerText = 'Fechado';
+                status.setAttribute('class', 'alert alert-danger');
+            }
+        }
+
+        setInterval(BuscarDadosDoBanco, 60000);
+
+        BuscarDadosDoBanco();
     </script>
 
 
