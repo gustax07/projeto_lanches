@@ -165,7 +165,7 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
 
             </div>
         </div>
-        <?php include('footer.html'); ?>
+        <?php include('footer.php'); ?>
 
         <script>
             async function BuscarEndereco() {

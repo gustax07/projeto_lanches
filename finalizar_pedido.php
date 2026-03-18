@@ -201,7 +201,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
     </div>
 
-    <?php include('footer.html'); ?>
+    <?php include('footer.php'); ?>
 
 </body>
 
