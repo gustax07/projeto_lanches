@@ -76,6 +76,12 @@ $err = [
     "estado_vazio" => "Estado nao pode estar vazio!",
     "cep_vazio" => "CEP nao pode estar vazio!",
     "metodo_invalido" => "selecione um endereço valido!",
+    //campos vazios para actions
+    "campos_vazios" => "Preencha todos os campos!",
+    //redirecionamentos nao auterizados
+    "acesso_nao_autorizado" => "Acesso nao autorizado!",
+    //foto enviada vazia
+    "foto_vazia" => "Foto nao pode estar vazia!",
 
 ];
 ?>

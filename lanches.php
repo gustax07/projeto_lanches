@@ -7,6 +7,7 @@ require_once('./classes/itens.class.php');
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
 
+include('./includes/sweet_alert2_include.php');
 
 
 $idCategoria = isset($_GET['id']) ? (int) $_GET['id'] : null;

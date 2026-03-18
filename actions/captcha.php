@@ -1,4 +1,10 @@
 <?php
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../index.php?err=acesso_nao_autorizado');
+    exit;
+}
+
 function validarCaptcha($response) {
     $env = parse_ini_file(__DIR__ . '/../.env');
     $secretKey = getenv('RECAPTCHA_SECRET') ?: $env['RECAPTCHA_SECRET'] ?? '';

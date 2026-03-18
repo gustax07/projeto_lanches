@@ -1,14 +1,26 @@
 <?php
-session_start();
-require_once('../../classes/usuarios.class.php');
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: /login.php');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../../index.php?err=acesso_nao_autorizado');
     exit;
 }
 
-$foto = $_FILES['foto'];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: /logar.php');
+    exit;
+}
+
+require_once('../../classes/usuarios.class.php');
+$foto = $_FILES['foto'];
+if (empty($foto['name'])) {
+    header('Location: ../../index.php?err=foto_vazia');
+    exit;
+}
 /* Pega a extensão da imagem */
 $extensao = pathinfo($foto['name'], PATHINFO_EXTENSION);
 
@@ -21,12 +33,14 @@ move_uploaded_file($foto['tmp_name'], $pasta . $nomeFoto);
 
 $usuarios = new Usuarios();
 $usuarios->id = $_SESSION['usuario']['id'];
-$usuarios->foto = $nomeFoto;
-$usuarios->MudarFoto();
+$usuarios->foto = $nomeFoto ?? 'foto_perfil_default.png';
 
-/* Atualiza a sessão */
-$_SESSION['usuario']['foto'] = $nomeFoto;
-
-/* Volta para o site */
-header('Location: ../../index.php');
-exit;
+if ($usuarios->MudarFoto()) {
+    header('Location: ../../index.php?err=foto_atualizada');
+    $_SESSION['usuario']['foto'] = $nomeFoto;
+    exit;
+}else {
+    header('Location: ../../index.php?err=falha_atualizar_foto');
+    exit;
+}
+?>

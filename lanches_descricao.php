@@ -197,7 +197,7 @@ $limit = 7;
         </div>
     </div>
     <div style="height: 20px;"></div>
-    <?php include("footer.html") ?>
+    <?php include("footer.php") ?>
 
 </body>
 
