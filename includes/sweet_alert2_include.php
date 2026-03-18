@@ -82,6 +82,9 @@ $err = [
     "acesso_nao_autorizado" => "Acesso nao autorizado!",
     //foto enviada vazia
     "foto_vazia" => "Foto nao pode estar vazia!",
+    //pagamento
+    "pagamento_falha" => "Falha ao realizar o pagamento!",
+    "pagamento_pendente" => "Pagamento pendente, aguarde e veja a situação do seu pedido na aba de pedidos!",
 
 ];
 ?>
