@@ -15,36 +15,13 @@ require('header.php');
 
 <head>
     <meta charset="UTF-8">
+    <script src="../js/abertura.js" defer></script>
+    <link rel="stylesheet" href="../css/abertura_admin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status do Sistema</title>
-    <style>
-        .alert {
-            padding: 3px 10px !important;
-        }
-
-        h2 {
-            text-align: center !important;
-            margin: 30px auto !important;
-        }
-
-        .label {
-            font-weight: bold !important;
-            margin-right: 10px !important;
-            font-size: 18px !important;
-            display: flex;
-            justify-content: center;
-        }
-
-        .status {
-            display: flex;
-            justify-content: center;
-            margin: 10px 0 !important;
-        }
-    </style>
 </head>
 
 <body>
-    <h2> Gerenciamento de Abertura do Sistema</h2>
 
     <div class="status">
         <label class="label" for="status">Status do Sistema:
@@ -57,7 +34,6 @@ require('header.php');
     </div>
 
     <h3>Horários de Funcionamento:</h3>
-    <br><br>
     <table class="table">
         <tr>
             <th>Dia da Semana</th>
@@ -67,7 +43,10 @@ require('header.php');
         </tr>
         <tr>
             <?php foreach ($horarios_dias_listar as $horario):
-                $botaoFechar = '<button type="button" onclick="fechar_horario(' . $horario['id'] . ')">Fechar</button>';
+                $botaoFechar = '<button type="button" class="Btn" style="background-color: #6c757d;" onclick="fechar_horario(' . $horario['id'] . ')">Fechar <svg class="svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                <path 
+                d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/>
+                </svg></button>';
                 // remover os segundos do horário e verificar se é null para mostrar como fechado
                 $horario['horario_inicio'] = substr($horario['horario_inicio'], 0, 5);
                 $horario['horario_fim'] = substr($horario['horario_fim'], 0, 5);
@@ -77,10 +56,15 @@ require('header.php');
                 <td id=<?= $horario['id'] ?>><?php echo $horario['horario_inicio']; ?></td>
                 <td id=<?= $horario['id'] ?>><?php echo $horario['horario_fim']; ?></td>
                 <td id=<?= $horario['id'] ?>>
-                    <button type="button" onclick="editar_horario(<?php echo $horario['id']; ?>)">Alterar</button>
-                    <?php if ($horario['horario_inicio'] !== 'Fechado' && $horario['horario_fim'] !== 'Fechado') {
-                        echo $botaoFechar;
-                    } ?>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="Btn" style="background-color: #17a2b8;" onclick="editar_horario(<?php echo $horario['id']; ?>)">Alterar <svg viewBox="0 0 512 512" class="svg">
+                                <path
+                                    d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                            </svg></button>
+                        <?php if ($horario['horario_inicio'] !== 'Fechado' && $horario['horario_fim'] !== 'Fechado') {
+                            echo $botaoFechar;
+                        } ?>
+                    </div>
                 </td>
 
         </tr>
@@ -88,127 +72,8 @@ require('header.php');
     </table>
 
     <script>
-        function editar_horario(id) {
-            id_semana = document.querySelectorAll(`td[id="${id}"]`)[0].innerText;
-            horario_inicio = document.querySelectorAll(`td[id="${id}"]`)[1].innerText;
-            horario_fim = document.querySelectorAll(`td[id="${id}"]`)[2].innerText;
-            //tranforma em input
-            document.querySelectorAll(`td[id="${id}"]`)[1].innerHTML = `<input type="time" id="horario_inicio_${id}" value="${horario_inicio}">`;
-            document.querySelectorAll(`td[id="${id}"]`)[2].innerHTML = `<input type="time" id="horario_fim_${id}" value="${horario_fim}">`;
-            document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="salvar_horario(${id})">Salvar</button>
-            <button type="button" onclick="cancelar_edicao(${id})">Cancelar</button>`;
-        }
-        //funcao para salvar o horario usando ajax fetch via post
-        async function salvar_horario(id) {
-            const horario_inicio = document.getElementById(`horario_inicio_${id}`).value;
-            const horario_fim = document.getElementById(`horario_fim_${id}`).value;
+       
 
-            try {
-                const response = await fetch('../actions/horario_dias/editar_horario.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: id,
-                        horario_inicio: horario_inicio,
-                        horario_fim: horario_fim
-                    })
-                })
-                const data = await response.json();
-
-                if (data.status === 'sucesso') {
-                    document.querySelectorAll(`td[id="${id}"]`)[1].innerText = horario_inicio;
-                    document.querySelectorAll(`td[id="${id}"]`)[2].innerText = horario_fim;
-                    document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="editar_horario(${id})">Alterar</button> 
-                    <button type="button" onclick="fechar_horario(${id})">Fechar</button>`;
-                } else {
-                    alert('Ocorreu um erro ao atualizar o horário.');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-            };
-        }
-
-        function cancelar_edicao(id) {
-            const horario_inicio = document.getElementById(`horario_inicio_${id}`).value;
-            const horario_fim = document.getElementById(`horario_fim_${id}`).value;
-            document.querySelectorAll(`td[id="${id}"]`)[1].innerText = horario_inicio;
-            document.querySelectorAll(`td[id="${id}"]`)[2].innerText = horario_fim;
-            document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="editar_horario(${id})">Alterar</button> 
-            <button type="button" onclick="fechar_horario(${id})">Fechar</button>`;
-        }
-
-        async function fechar_horario(id) {
-            const horario_inicio = 'null';
-            const horario_fim = 'null';
-            try {
-                const response = await fetch('../actions/horario_dias/editar_horario.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: id,
-                        horario_inicio: horario_inicio,
-                        horario_fim: horario_fim
-                    })
-                })
-                const data = await response.json();
-
-                if (data.status === 'sucesso') {
-                    //atualiza a tabela
-                    document.querySelectorAll(`td[id="${id}"]`)[1].innerText = 'Fechado';
-                    document.querySelectorAll(`td[id="${id}"]`)[2].innerText = 'Fechado';
-                    document.querySelectorAll(`td[id="${id}"]`)[3].innerHTML = `<button type="button" onclick="editar_horario(${id})">Alterar</button>`;
-                } else {
-                    alert('Ocorreu um erro ao fechar o horário.');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-            }
-        }
-
-
-
-        let diassemana = [];
-        async function BuscarDadosDoBanco() {
-            try {
-
-                const resposta = await fetch('../actions/horario_dias/buscar_horarios.php');
-                diassemana = await resposta.json();
-
-                AtualizarStatus();
-            } catch (erro) {
-                console.error("Erro ao atualizar dados do banco:", erro);
-            }
-        }
-
-        function AtualizarStatus() {
-            if (diassemana.length == 0) return;
-            const data = new Date();
-            const dia = data.getDay();
-
-            const hora_atual = data.getHours();
-            const minuto_atual = data.getMinutes();
-            const hora_minuto = hora_atual + ':' + minuto_atual + ':00';
-
-            const horario_inicio = diassemana[dia].horario_inicio;
-            const horario_fim = diassemana[dia].horario_fim;
-
-            const status = document.getElementById('status');
-            if (hora_minuto >= horario_inicio && hora_minuto <= horario_fim) {
-                status.innerText = 'Aberto';
-                status.setAttribute('class', 'alert alert-success');
-            } else {
-                status.innerText = 'Fechado';
-                status.setAttribute('class', 'alert alert-danger');
-            }
-        }
-
-        setInterval(BuscarDadosDoBanco, 60000);
-
-        BuscarDadosDoBanco();
     </script>
 
 
