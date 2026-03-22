@@ -1,151 +1,174 @@
-  .alert {
-      padding: 3px 10px !important;
-  }
+:root {
+    --primary-color: #D97A00;
+    --bg-light: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-dark: #1f1f1f;
+}
 
-  h2 {
-      text-align: center !important;
-      margin: 30px auto !important;
-  }
+.alert {
+    padding: 0 6px !important;
+}
 
-  h3 {
-      text-align: center !important;
-      margin: 20px auto !important;
-  }
+body {
+    background-color: var(--bg-light);
+    font-family: 'Poppins', sans-serif;
+}
 
-  .label {
-      font-weight: bold !important;
-      margin-right: 10px !important;
-      font-size: 18px !important;
-      display: flex;
-      justify-content: center;
-  }
+.status {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
 
-  .status {
-      display: flex;
-      justify-content: center;
-      margin: 30px 0 !important;
-  }
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 
-  table {
-      width: 80% !important;
-      margin: 0 auto !important;
-      border-collapse: collapse !important;
-      border: 1px solid #ddd !important;
-      border-radius: 5px !important;
-      overflow: hidden !important;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1)
-  }
+/* Tabela Flexbox */
+.table {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
 
+/* Linhas */
+.row {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+}
 
-  td {
-      padding: 8px !important;
-      text-align: left !important;
-      border-bottom: 1px solid #ddd !important;
-  }
+.row:last-child {
+    border-bottom: none;
+}
 
-  th {
-      background-color: #f2f2f2 !important;
-      text-align: left !important;
-      padding: 8px !important;
-      border-bottom: 1px solid #ddd !important;
-      font-weight: bold !important;
-      font-size: 16px !important;
-  }
+/* Cabeçalho */
+.row.header {
+    background-color: #343a40;
+    color: #fff ;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
 
-  .table tr:hover {
-      background-color: rgba(23, 162, 184, 0.05) !important;
-      transition: 0.2s;
-  }
+/* Células */
+.cell {
+    flex: 1;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
 
-  .spinner-border {
-      width: 20px !important;
-      height: 20px !important;
-  }
+.col-dia { font-weight: 600; color: var(--text-dark); }
+.col-botoes { flex: 1.5; } /* Mais espaço para a coluna de ações */
+.col-inicio, .col-fim { font-weight: 600; color: var(--text-dark);}
+/* Botões */
+.btn-wrapper {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Permite quebrar linha no desktop se apertar */
+}
 
-  .visually-hidden {
-      border: 0 !important;
-      clip: rect(0 0 0 0) !important;
-      height: 1px !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      padding: 0 !important;
-      position: absolute !important;
-      width: 1px !important;
-  }
+.Btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Impede que o texto quebre dentro do botão */
+    text-decoration: none;
+}
 
-  .Btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 120px;
-      height: 40px;
-      border: none;
-      padding: 0px 20px;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 10px;
-      transition-duration: 0.3s;
-  }
+.btn-cancel {
+    background-color: #931717;
+}
+.btn-save {
+    background-color: var(--primary-color);
+}
+input {
+    border-radius: 5px;
+    border: 1px solid #434242;
+}
+.Btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
 
-  .svg {
-      width: 13px;
-      position: absolute;
-      right: 0;
-      margin-right: 10px;
-      fill: white;
-      transition-duration: 0.3s;
-  }
+.svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
 
-  .Btn:hover {
-      color: transparent;
-  }
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+    .row.header { display: none; }
 
-  .Btn:hover svg {
-      right: 43%;
-      margin: 0;
-      padding: 0;
-      border: none;
-      transition-duration: 0.3s;
-  }
+    .row {
+        flex-direction: column;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: #fff;
+    }
 
-  .btn-cancel {
-      width: 140px;
-  }
+    .cell {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; /* Texto alinhado nas extremidades */
+        align-items: center;
+        text-align: right;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 10px 0;
+    }
 
-  @media (max-width: 768px) {
+    .cell:last-child {
+        border-bottom: none;
+        flex-direction: column; /* Botões empilhados */
+        gap: 10px;
+        margin-top: 10px;
+    }
 
-      .Btn {
-          font-size: 10px;
-          width: 60px;
-          height: 30px;
-          padding: 0px 5px;
-          border-radius: 5px;
-      }
+    /* Rótulos para Mobile (usando data-title do HTML) */
+    .cell::before {
+        content: attr(data-title);
+        font-weight: 700;
+        color: var(--text-dark);
+        text-align: left;
+    }
 
-      .svg {
-          width: 10px;
-          margin-right: 6px !important;
-      }
+    /* Esconde o label "Ações" para dar espaço aos botões */
+    .col-botoes::before { display: none; }
 
-      td {
+    .btn-wrapper {
+        width: 100%;
+        flex-direction: column; /* Empilha um botão sobre o outro */
+    }
 
-          font-size: 12px;
-      }
-
-      th {
-          font-size: 14px !important;
-      }
-
-      table {
-          width: 90% !important;
-          margin: 0 auto !important;
-          border-collapse: collapse !important
-      }
-
-      .btn-cancel {
-          width: 70px;
-      }
-
-  }
+    .Btn {
+        width: 100%; /* Botões ocupam largura total */
+        padding: 12px;
+    }
+}
