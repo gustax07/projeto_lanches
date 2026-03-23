@@ -1,9 +1,13 @@
-/* ================= NAVEGAÇÃO DE CATEGORIAS ================= */
+
 .categoria-nav {
-    background-color: #FFF6EB !important; /* Aquele creme suave do fundo */
+    background-color: #FFF6EB !important; 
     border-bottom: 1px solid rgba(217, 122, 0, 0.2) !important;
     padding: 10px 20px !important;
-    box-shadow: 0 4px 15px rgba(135, 75, 0, 0.05) !important; /* Sombra leve para dar profundidade */
+    box-shadow: 0 4px 15px rgba(135, 75, 0, 0.05) !important; 
+}
+
+.categoria-nav .navbar-nav {
+    transition: all 0.3s ease;
 }
 
 .categoria-nav .navbar-brand {
@@ -14,14 +18,13 @@
     
 }
 
-/* Estilo das "Pílulas" de categoria */
 .categoria-nav .nav-link {
     color: #874B00;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     padding: 8px 20px !important;
     margin: 0 6px;
-    border-radius: 30px; /* Deixa bem redondinho */
+    border-radius: 30px; 
     transition: all 0.3s ease;
 }
 
@@ -31,14 +34,12 @@
     transform: translateY(-2px);
 }
 
-/* O "Pulo do Gato": Destaca a categoria selecionada */
 .categoria-nav .nav-link.active {
     background-color: #D97A00;
     color: #FFF !important;
     box-shadow: 0 4px 12px rgba(217, 122, 0, 0.3);
 }
 
-/* Personalizando o botão de Menu (Hamburguer) do celular para ficar Laranja */
 .categoria-nav .navbar-toggler {
     border-color: #D97A00;
 }
@@ -46,9 +47,9 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28217, 122, 0, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Centralizando os itens no PC */
+
 @media (min-width: 992px) {
     .categoria-nav .navbar-nav {
-        margin: 0 auto; /* Força o menu ir para o centro */
+        margin: 0 auto;
     }
 }

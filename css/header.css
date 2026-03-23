@@ -18,9 +18,6 @@ body {
 .site-header {
   background: var(--header-white) !important;
   padding: 12px 0 !important; /* Mais fino e elegante */
-  position: sticky !important; /* Fica fixo no topo ao rolar */
-  top: 0 !important;
-  z-index: 1050 !important;
   box-shadow: var(--header-shadow-sm) !important;
   border-bottom: 3px solid var(--header-accent) !important;
 }
@@ -38,7 +35,6 @@ body {
 
 /* ================= LOGO ================= */
 .logo-title {
-  flex: 2 !important;
   display: flex !important;
   align-items: center !important;
 }
@@ -52,7 +48,6 @@ body {
   letter-spacing: -1px !important;
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
   transition: var(--header-transition) !important;
 }
 

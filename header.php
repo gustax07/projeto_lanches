@@ -4,14 +4,21 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include_once("./includes/bootstrap_include.php");
 
+
 ?>
 
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
-
+<script src="./js/header.js" defer></script>
 <style>
- 
+.alert {
+  font-size: 14px !important;
+  padding: 2px 4px !important;
+}
+
 </style>
+
+
 
 <div class="site-header">
   <div class="container">
@@ -22,6 +29,9 @@ include_once("./includes/bootstrap_include.php");
       <h1 class="logo-title">
         <a href="../projeto_lanches">Tasty Burguer</a>
       </h1>
+      <div class="col d-flex align-items-end mx-3 mt-2">
+      <div id="status"></div>
+      </div>
       <div class="header-center"></div>
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->

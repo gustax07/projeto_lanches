@@ -18,13 +18,14 @@
 </head>
 
 <body>
-
-    <div style="position: sticky; top: 0; z-index: 1050;">
-    <?php include('./header.php'); ?>
-    <?php include('./nav.php'); ?>
-    
-    <?php include('./lanches.php'); ?>
-    <?php include('./footer.php'); ?>
+        
+    <div style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1050;">
+    <?php include('./header.php');  include('./nav.php'); ?>
+</div>
+      
+<div style="padding-top: 100px;">
+    <?php include('./lanches.php'); include('./footer.php'); ?>
+</div>
 </body>
 
 </html>

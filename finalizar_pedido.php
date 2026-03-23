@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if(!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['usuario'])) {
     header('Location: logar.php');
     exit;
 }
@@ -46,89 +46,37 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <title>Finalizar Pedido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #f7f7f7;
-        }
-
-        .checkout-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-        }
-
-        .titulo {
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
-
-        .lista-item {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .lista-item:last-child {
-            border-bottom: none;
-        }
-
-        .preco {
-            font-weight: 600;
-        }
-
-        .resumo {
-            border-top: 2px solid #000;
-            margin-top: 20px;
-            padding-top: 15px;
-            font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        @media (max-width: 768px) {
-            .checkout-container {
-                padding: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/finalizar_pedido.css">
+    <script src="./js/finalizar_pedido.js" defer></script>
 </head>
 
 <body>
+    <div class="container bg-light p-5 rounded-3 mb-5 shadow-lg mt-5 w-100">
+        <h2 class="titulo"><i class="bi bi-bag-check-fill"></i> Finalizar Pedido</h2>
 
-    <div class="checkout-container">
-        <h2 class="titulo">🧾 Finalizar Pedido</h2>
-
-        <div class="row g-4">
+        <div class="row">
             <!-- itens do pedido -->
-            <div class="col-md-7">
-                <h5>Itens do pedido</h5>
+            <div class="col-lg col-md-8">
+                <h5>Itens do carrinho</h5>
+
+                <hr>
 
                 <?php if (empty($itensCarrinho)) { ?>
                     <p class="text-muted">Seu carrinho está vazio.</p>
                 <?php } else { ?>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>Itens do pedido</p>
+                        <p>Quantidade</p>
+                        <p>Preço U.</p>
+                        <p>Total U.</p>
+                    </div>
                     <?php foreach ($itensCarrinho as $item) { ?>
-                        <div class="lista-item">
-                            <div>
-                                <strong><?= $item['nome'] ?></strong><br>
-                                <small>Qtd: <?= $item['quantidade'] ?></small>
-                            </div>
-
-                            <div>
-                                R$ <?= number_format($item['preco'], 2, ',', '.') ?>
-                            </div>
-
+                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                            <div class="col-3 text-truncate">
+                            <strong><?= $item['nome'] ?></strong>
+                        </div>
+                            <strong><?= $item['quantidade'] ?></strong>
+                            R$ <?= number_format($item['preco'], 2, ',', '.') ?>
                             <div class="preco">
                                 R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
                             </div>
@@ -136,21 +84,26 @@ if (isset($_SESSION['usuario'])) {
                     <?php } ?>
 
                     <div class="resumo">
-                        <span>Total</span>
+                        <span>Total:</span>
                         <strong>R$ <?= number_format($total, 2, ',', '.') ?></strong>
                     </div>
                 <?php } ?>
             </div>
 
             <!-- ver endereços -->
-            <div class="col-md-5">
-                <h5>Entrega</h5>
+            <div class="d-flex align-items-center justify-content-center vr-style" style="width: 100px; height: 500px;">
+                <div class="vr"></div>
+            </div>
+            <div class="col entregas">
+                <h5>Rota de entrega</h5>
+                <hr>
 
+                <h4 class="mb-3"><i class="bi bi-geo-fill"></i> Endereço de entrega</h4>
                 <form action="actions/pedidos/finalizar_pedido.php" method="POST">
                     <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
-                    <div class="checkout-container">
+                    <div class="container-fluid">
 
-                        <h4 class="mb-3">📍 Endereço de entrega</h4>
+
 
                         <?php if (empty($enderecos_listar)) { ?>
                             <p class="text-muted">Você ainda não tem endereços cadastrados.</p>
@@ -177,23 +130,19 @@ if (isset($_SESSION['usuario'])) {
 
                         <?php } ?>
 
-                        <a
-                            class="btn btn-outline-warning mt-3"
-                            href="enderecos.php">
-                            ➕ Cadastrar novo endereço
-                        </a>
+                        <a class="btn btn-warning mt-3 text-white" href="enderecos.php"><i class="bi bi-plus-lg"></i> Adicionar novo endereço</a>
 
                     </div>
 
 
                     <!-- observações -->
-                    <div class="mb-3">
+                    <div class="mt-4">
                         <label class="form-label">Observações</label>
                         <textarea name="observacoes" class="form-control" rows="4"
                             placeholder="Ex: sem cebola, entregar na portaria..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100 btn-lg">
+                    <button type="submit" class="btn btn-success w-100 btn-lg mt-3">
                         Confirmar Pedido
                     </button>
                 </form>
