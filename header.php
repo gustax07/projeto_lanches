@@ -10,12 +10,12 @@ include_once("./includes/bootstrap_include.php");
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
 <script src="./js/header.js" defer></script>
+<script src="./js/spa.js defer"></script>
 <style>
-.alert {
-  font-size: 14px !important;
-  padding: 2px 4px !important;
-}
-
+  .alert {
+    font-size: 14px !important;
+    padding: 2px 4px !important;
+  }
 </style>
 
 
@@ -30,14 +30,18 @@ include_once("./includes/bootstrap_include.php");
         <a href="../projeto_lanches">Tasty Burguer</a>
       </h1>
       <div class="col d-flex align-items-end mx-3 mt-2">
-      <div id="status"></div>
+        <div id="status">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
       <div class="header-center"></div>
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->
         <div class="header-buttons">
-          <a href="./logar.php" target="_parent" class="btn-login">Logar</a>
-          <a href="./cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
+          <a href="./logar.php" target="_parent" class="btn-login link-spa">Logar</a>
+          <a href="./cadastrar.php" target="_parent" class="btn-register link-spa">Cadastre-se</a>
         </div>
 
       <?php else: ?>
@@ -60,7 +64,7 @@ include_once("./includes/bootstrap_include.php");
           </a>
 
 
-          <div class="offcanvas offcanvas-start" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title" id="offcanvasExampleLabel">Meu perfil</h5>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>

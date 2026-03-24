@@ -1,191 +1,190 @@
    ::-webkit-scrollbar {
-            width: 2px;
-        }
+       width: 2px;
+   }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
+   ::-webkit-scrollbar-track {
+       background: transparent;
+   }
 
-        ::-webkit-scrollbar-thumb {
-            background: rgba(160, 160, 160, 0.9);
-            border-radius: 10px;
-        }
+   ::-webkit-scrollbar-thumb {
+       background: rgba(160, 160, 160, 0.9);
+       border-radius: 10px;
+   }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(140, 140, 140, 0.6);
-        }
+   ::-webkit-scrollbar-thumb:hover {
+       background: rgba(140, 140, 140, 0.6);
+   }
 
-        body {
-            overflow-x: hidden;
-            overflow-y: auto;
-            height: 100vh;
-        }
+   body {
+       overflow-x: hidden;
+       overflow-y: auto;
+       height: 100vh;
+   }
 
-        a {
-            text-decoration: none;
-            color: #222;
-            transition: 0.3s;
-        }
+   a {
+       text-decoration: none;
+       color: #222;
+       transition: 0.3s;
+   }
 
-        a:hover {
-            color: #E9A652;
-        }
+   a:hover {
+       color: #E9A652;
+   }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
-        }
+   .material-symbols-outlined {
+       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
+   }
 
-        .modal {
-            z-index: 2000 !important;
-        }
+   .modal {
+       z-index: 2000 !important;
+   }
 
-        .modal-backdrop {
-            z-index: 1990 !important;
-        }
+   .modal-backdrop {
+       z-index: 1990 !important;
+   }
 
-        .modal-dialog {
-            margin-top: 120px;
-        }
-        /* ================= CARDS DE PRODUTOS ================= */
-.produto-card {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(135, 75, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    background-color: #fff;
-    overflow: hidden; 
-}
+   .modal-dialog {
+       margin-top: 120px;
+   }
 
-.produto-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(217, 122, 0, 0.15);
-}
+   /* ================= CARDS DE PRODUTOS ================= */
+   .produto-card {
+       border: none;
+       border-radius: 12px;
+       box-shadow: 0 4px 10px rgba(135, 75, 0, 0.08);
+       transition: transform 0.2s ease, box-shadow 0.2s ease;
+       background-color: #fff;
+       overflow: hidden;
+   }
 
-/* O Cofre da Imagem: Daqui a foto não passa! */
-.produto-img-container {
-    width: 100%;
-    height: 180px !important; /* O !important obriga a manter 180px */
-    min-height: 180px; 
-    padding: 0;
-    max-height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f9f9f9;
-    overflow: hidden; /* Se a imagem tentar crescer, ela é cortada */
-}
+   .produto-card:hover {
+       transform: translateY(-5px);
+       box-shadow: 0 8px 20px rgba(217, 122, 0, 0.15);
+   }
 
-/* A foto dentro do cofre */
-.produto-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover !important; /* Força o encaixe perfeito sem esticar */
-    object-position: center !important;
-}
+   /* O Cofre da Imagem: Daqui a foto não passa! */
+   .produto-img-container {
+       width: 100%;
+       height: 180px !important;
+       /* O !important obriga a manter 180px */
+       min-height: 180px;
+       padding: 0;
+       max-height: 180px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       background-color: #f9f9f9;
+       overflow: hidden;
+       /* Se a imagem tentar crescer, ela é cortada */
+   }
 
-/* Textos */
-.produto-titulo {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 4px;
-}
+   /* A foto dentro do cofre */
+   .produto-img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover !important;
+       /* Força o encaixe perfeito sem esticar */
+       object-position: center !important;
+   }
 
-.produto-preco {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #D97A00;
-    display: block;
-}
+   /* Textos */
+   .produto-titulo {
+       font-size: 1.1rem;
+       font-weight: 700;
+       color: #333;
+       margin-bottom: 4px;
+   }
 
-/* Descrição com o corte corrigido */
-.produto-descricao {
-    font-size: 0.85rem;
-    color: #777;
-    margin-bottom: 0;
-    
-    /* Combo obrigatório para o line-clamp funcionar */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Coloca os 3 pontinhos (...) */
-}
-      .pagination .page-link {
-            color: #ff7b00;
-        }
+   .produto-preco {
+       font-size: 1.2rem;
+       font-weight: 800;
+       color: #D97A00;
+       display: block;
+   }
 
-        .pagination .page-item.active .page-link {
-            background-color: #ff7b00;
-            border-color: #ff7b00;
-            color: white;
-        }
+   /* Descrição com o corte corrigido */
+   .produto-descricao {
+       font-size: 0.85rem;
+       color: #777;
+       margin-bottom: 0;
+   }
 
-        .banner-img {
-            height: 250px;
-            object-fit: cover;
-            object-position: center;
-        }
+   .pagination .page-link {
+       color: #ff7b00;
+   }
 
-        @media (min-width: 768px) {
-            .banner-img {
-                height: 1000px;
-                width: 100%;
-            }
-        }
+   .pagination .page-item.active .page-link {
+       background-color: #ff7b00;
+       border-color: #ff7b00;
+       color: white;
+   }
 
-        .btn-carrinho {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
+   .banner-img {
+       height: 250px;
+       object-fit: cover;
+       object-position: center;
+   }
 
-            background: #ff7b00;
-            color: white;
-            border: none;
+   @media (min-width: 768px) {
+       .banner-img {
+           height: 1000px;
+           width: 100%;
+       }
+   }
 
-            padding: 14px 22px;
-            border-radius: 50px;
-            /* formato pílula */
+   .btn-carrinho {
+       position: fixed;
+       bottom: 20px;
+       right: 20px;
+       z-index: 9999;
 
-            font-weight: 600;
-            font-size: 16px;
+       background: #ff7b00;
+       color: white;
+       border: none;
 
-            display: flex;
-            align-items: center;
-            gap: 10px;
+       padding: 14px 22px;
+       border-radius: 50px;
+       /* formato pílula */
 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-            cursor: pointer;
+       font-weight: 600;
+       font-size: 16px;
 
-            transition: all 0.3s ease;
-        }
+       display: flex;
+       align-items: center;
+       gap: 10px;
 
-        .btn-carrinho:hover {
-            background: #e96b00;
-            transform: scale(1.05);
-        }
+       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+       cursor: pointer;
 
-        .badge-carrinho {
-            background: red;
-            color: white;
+       transition: all 0.3s ease;
+   }
 
-            font-size: 12px;
-            font-weight: bold;
+   .btn-carrinho:hover {
+       background: #e96b00;
+       transform: scale(1.05);
+   }
 
-            padding: 4px 8px;
-            border-radius: 50%;
+   .badge-carrinho {
+       background: red;
+       color: white;
 
-            position: absolute;
-            right: 0;
-            top: 0;
-            transform: translate(30%, -30%);
-        }
+       font-size: 12px;
+       font-weight: bold;
 
-        @media (max-width: 768px) {
-            .btn-float {
-                border-radius: 12px;
-                width: auto;
-                height: auto;
-                padding: 12px 20px;
-            }
-        }
+       padding: 4px 8px;
+       border-radius: 50%;
+
+       position: absolute;
+       right: 0;
+       top: 0;
+       transform: translate(30%, -30%);
+   }
+
+   @media (max-width: 768px) {
+       .btn-float {
+           border-radius: 12px;
+           width: auto;
+           height: auto;
+           padding: 12px 20px;
+       }
+   }

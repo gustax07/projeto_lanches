@@ -24,12 +24,17 @@ function AtualizarStatus() {
     const horario_fim = diassemana[dia].horario_fim;
 
     const status = document.getElementById('status');
+    const btnFinalizar = document.getElementById('btnFinalizar');
     if (hora_minuto >= horario_inicio && hora_minuto <= horario_fim) {
         status.innerText = 'Aberto';
         status.setAttribute('class', 'alert alert-success');
+        btnFinalizar.removeAttribute('disabled');
+        btnFinalizar.textContent = 'Finalizar Pedido';
     } else {
         status.innerText = 'Fechado';
         status.setAttribute('class', 'alert alert-danger');
+        btnFinalizar.setAttribute('disabled', 'true');
+        btnFinalizar.textContent = 'Lanchonete Fechado';
     }
 }
 

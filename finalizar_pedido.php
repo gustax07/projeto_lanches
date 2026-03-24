@@ -47,7 +47,6 @@ if (isset($_SESSION['usuario'])) {
     <title>Finalizar Pedido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./css/finalizar_pedido.css">
-    <script src="./js/finalizar_pedido.js" defer></script>
 </head>
 
 <body>
@@ -56,30 +55,40 @@ if (isset($_SESSION['usuario'])) {
 
         <div class="row">
             <!-- itens do pedido -->
-            <div class="col-lg col-md-8">
+            <div class="col-lg-7 col-md-8">
                 <h5>Itens do carrinho</h5>
 
                 <hr>
 
                 <?php if (empty($itensCarrinho)) { ?>
-                    <p class="text-muted">Seu carrinho está vazio.</p>
+                    <p class="text-muted text-center py-4">Seu carrinho está vazio.</p>
                 <?php } else { ?>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p>Itens do pedido</p>
-                        <p>Quantidade</p>
-                        <p>Preço U.</p>
-                        <p>Total U.</p>
+                    <div class="row fw-bold border-bottom pb-2 mb-2">
+                        <div class="col-5">Item</div>
+                        <div class="col-2 text-center">Qtd</div>
+                        <div class="col-2 text-end">Preço</div>
+                        <div class="col-3 text-end">Total</div>
                     </div>
+
                     <?php foreach ($itensCarrinho as $item) { ?>
-                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-                            <div class="col-3 text-truncate">
-                            <strong><?= $item['nome'] ?></strong>
-                        </div>
-                            <strong><?= $item['quantidade'] ?></strong>
-                            R$ <?= number_format($item['preco'], 2, ',', '.') ?>
-                            <div class="preco">
+                        <div class="row align-items-center border-bottom py-3">
+
+                            <div class="col-5">
+                                <strong class="d-block text-truncate"><?= $item['nome'] ?></strong>
+                            </div>
+
+                            <div class="col-2 text-center">
+                                <span class="badge bg-light text-dark border"><?= $item['quantidade'] ?>x</span>
+                            </div>
+
+                            <div class="col-2 text-end text-muted" style="font-size: 0.9rem;">
+                                <?= number_format($item['preco'], 2, ',', '.') ?>
+                            </div>
+
+                            <div class="col-3 text-end fw-bold text-success">
                                 R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
                             </div>
+
                         </div>
                     <?php } ?>
 
@@ -102,9 +111,6 @@ if (isset($_SESSION['usuario'])) {
                 <form action="actions/pedidos/finalizar_pedido.php" method="POST">
                     <input type="hidden" name="id_pedido" value="<?= $pedidoAberto[0]['id'] ?>">
                     <div class="container-fluid">
-
-
-
                         <?php if (empty($enderecos_listar)) { ?>
                             <p class="text-muted">Você ainda não tem endereços cadastrados.</p>
                         <?php } else { ?>
@@ -142,8 +148,10 @@ if (isset($_SESSION['usuario'])) {
                             placeholder="Ex: sem cebola, entregar na portaria..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100 btn-lg mt-3">
-                        Confirmar Pedido
+                    <button id="btnFinalizar" disabled type="submit" class="btn btn-success w-100 btn-lg mt-3">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </button>
                 </form>
             </div>

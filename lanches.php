@@ -1,10 +1,10 @@
 <?php
 
-use const Dom\NOT_FOUND_ERR;
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+
 
 require_once('./classes/itens.class.php');
 require_once('./classes/pedidos.class.php');
@@ -123,20 +123,22 @@ if (isset($_SESSION['usuario'])) {
     </div>
 
     <!-- MODAL CARRINHO -->
-    <div class="modal fade " data-bs-backdrop="false" id="modalCarrinho" tabindex="-1">
+    <div class="modal fade" id="modalCarrinho" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog scrollable ">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">🛒 Meu Carrinho</h5>
+                    <h5 class="modal-title"><i class="bi bi-bag-plus-fill"></i> Meu Carrinho</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
 
-
-
-                    <?php foreach ($itensCarrinho as $item) { ?>
+                    <?php foreach ($itensCarrinho as $item) {
+                        if (empty($item)) { ?>
+                            <p>Seu carrinho está vazio.</p>
+                        <?php break;
+                        } ?>
                         <div class="d-flex align-items-center mb-3 border-bottom pb-2">
 
 
@@ -168,15 +170,37 @@ if (isset($_SESSION['usuario'])) {
 
                 </div>
 
-                <div class="modal-footer">
-                    <a href="finalizar_pedido.php" class="btn btn-success w-100">
-                        Finalizar Pedido
-                    </a>
+                <div class="p-2">
+                    <button class="btn btn-success w-100 text-white" id="btnCarrinho"> 
+                        <a href="finalizar_pedido.php" style="color: white; text-decoration: none;">
+                            Finalizar Pedido
+                        </a></button>
                 </div>
 
             </div>
         </div>
     </div>
+    <script>
+        const itens = <?php echo json_encode($itensCarrinho) ?>;
+        let btnCarrinho = document.getElementById('btnCarrinho');
+
+        function verificarCarrinho() {
+
+            if (itens === 0) {
+                btnCarrinho.disabled = true;
+            } else {
+                btnCarrinho.disabled = false;
+            }
+        }
+
+        <?php if (!isset($_SESSION['usuario'])) { ?>
+        window.addEventListener('load', function()  {
+            let btnAbrirCarrinho = document.querySelector('.btn-carrinho');
+            btnAbrirCarrinho.remove();
+        });
+        <?php } ?>
+        
+    </script>
 
     <div style="clear: both; margin-bottom: 50px;"></div>
 
@@ -234,13 +258,15 @@ if (isset($_SESSION['usuario'])) {
 
     <div style="clear: both; margin-bottom: 50px;"></div>
 
+    <!-- botao carrinho -->
     <button
         type="button"
         data-bs-toggle="modal"
         data-bs-target="#modalCarrinho"
-        class="btn-carrinho">
+        class="btn-carrinho"
+        onclick="verificarCarrinho()">
 
-        🛒 <span>Meu carrinho</span>
+        <i class="bi bi-bag-plus-fill"></i> <span>Meu carrinho</span>
 
         <?php if (count($itensCarrinho) > 0): ?>
             <span class="badge-carrinho">
