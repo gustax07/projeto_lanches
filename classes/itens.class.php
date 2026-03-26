@@ -140,4 +140,13 @@ class Itens
 
         return ceil((int)$arr_resultado['total'] / $itensPorPagina);
     }
+    public function ListarPromocoes(){
+        $sql = "SELECT id, nome FROM itens;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
