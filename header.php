@@ -10,7 +10,6 @@ include_once("./includes/bootstrap_include.php");
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
 <script src="./js/header.js" defer></script>
-<script src="./js/spa.js defer"></script>
 <style>
   .alert {
     font-size: 14px !important;
@@ -40,8 +39,8 @@ include_once("./includes/bootstrap_include.php");
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->
         <div class="header-buttons">
-          <a href="./logar.php" target="_parent" class="btn-login link-spa">Logar</a>
-          <a href="./cadastrar.php" target="_parent" class="btn-register link-spa">Cadastre-se</a>
+          <a href="./logar.php" target="_parent" class="btn-login">Logar</a>
+          <a href="./cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
         </div>
 
       <?php else: ?>

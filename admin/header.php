@@ -174,7 +174,7 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' 
                   </div>
 
                   <div class="d-grid gap-2">
-                    <a type="button" href="../enderecos.php" target="_parent" class="btn btn-outline-dark">Gerenciar Promocoes</a>
+                    <a type="button" href="./gerenciar_promocoes.php" target="_parent" class="btn btn-outline-dark">Gerenciar Promocoes</a>
                   </div>
 
                   <div class="d-grid gap-2">
@@ -191,10 +191,6 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' 
 
                   <div class="d-grid gap-2">
                     <a type="button" href="../enderecos.php" target="_parent" class="btn btn-outline-dark">Gerenciar Carrossel</a>
-                  </div>
-
-                  <div class="d-grid gap-2">
-                    <a type="button" href="../enderecos.php" target="_parent" class="btn btn-outline-dark">Gerenciar Comentarios</a>
                   </div>
 
                 </div>

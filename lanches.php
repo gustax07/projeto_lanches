@@ -96,7 +96,7 @@ if (isset($_SESSION['usuario'])) {
 
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2">
 
-                    <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>">
+                    <a style="text-decoration: none; display: block; height: 100%;" href="./lanches_descricao.php?id=<?= $i['id'] ?>" target="_parent">
 
                         <div class="card h-100 produto-card">
 
