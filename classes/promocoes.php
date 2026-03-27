@@ -22,6 +22,20 @@ class Promocoes{
         return $arr_resultado;
     }
 
+    public function Editar(){
+        $sql = "UPDATE promocoes SET nome_promocao = ?, preco_promocional = ?, data_validade = ? WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->nome_promocao, 
+            $this->preco_promocional, 
+            $this->data_validade,
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
 }
 
 ?>

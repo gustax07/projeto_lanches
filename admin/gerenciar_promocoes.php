@@ -30,6 +30,8 @@ include_once('header.php')
             flex-direction: row;
             align-items: center;
             height: calc(100vh - 100px);
+
+
         }
 
         .card {
@@ -73,11 +75,12 @@ include_once('header.php')
             cursor:not-allowed !important;
         }
         input {
-            width: 80%;
+            width: 100%;
             padding: 5px;
+            font-size: 12px;
             border-radius: 5px;
-            border: 1px solid #3333335c;
-            margin: 0;
+            border: 1px solid #109125ff;
+            margin: 0px;
             
         }
     </style>
@@ -85,7 +88,7 @@ include_once('header.php')
 
 <body>
     <div class="col-9 px-3 py-2 d-flex justify-content-end align-items-end wrap" style="height: 20vh;">
-        <select class="form-select" style="width: 10vw;" aria-label="Default select example">
+        <select class="form-select" style="width: 150px;" aria-label="Default select example">
             <?php foreach ($itens_listar as $i) { ?>
                 <option value="<?= $i['id'] ?>"><?= $i['nome'] ?></option>
             <?php } ?>
@@ -95,7 +98,7 @@ include_once('header.php')
     <div class="d-flex justify-content-center">
         <hr style="width: 50vw;">
     </div>
-    <div id="cards-load" class="container-fluid d-flex justify-content-center align-items-start vh-100 gap-5">
+    <div id="cards-load" class="container-fluid d-flex justify-content-center align-items-start vh-100 gap-5 flex-wrap">
      <div class="spinner-border" role="status">
 </div>
     </div>
@@ -127,7 +130,8 @@ include_once('header.php')
                 const isActive = promocao['status'] == 1;
                 const opacity = isActive ? 1 : 0.6;
                 const checked = isActive ? 'checked' : '';
-                        
+                        const dataOriginal = new Date(promocao['data_validade']);
+                        const dataConvertida = dataOriginal.toLocaleDateString('pt-BR');
                 container.innerHTML += `
                 <div class="card id-${promocao['id']}" style="height: 550px; opacity: ${opacity}">
                 <div class="card-body">
@@ -141,12 +145,12 @@ include_once('header.php')
                 <img src="../images/${promocao['imagem']}" class="rounded mb-3 border border-white" alt="...">
                 <h6 class="fw-bold">Produto: ${promocao['nome']} </h6>
                 <div class="d-flex align-items-end">
-                <h6 class="me-2 fs-6 fw-bold">Preco: </h6>
+                <h6 class="me-1 d-flex flex-wrap fs-6 fw-bold">Preco: R$ 
                 <h6 id="preco" style="color: green;"> ${promocao['preco_promocional']}</h6>
-                <h6 class="mx-2"> - </h6>
-                <h6 style="text-decoration: line-through; color: red"> ${promocao['preco']}</h6>
+                <h6 class="mx-2 traco"> - </h6>
+                <h6 class="precoOriginal" style="text-decoration: line-through; color: red">${promocao['preco']}</h6></h6>
                 </div>
-                <p class="fw-bold">Validade: <span id="validade" class="fw-normal"> ${promocao['data_validade']}</span> </p>
+                <p class="fw-bold">Validade: <span id="validade" class="fw-normal">${promocao['data_validade']}</span> </p>
                 <hr style="margin-top: -3px;">
                 <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary btnEditar" onclick="EditarPromocao(${promocao['id']})"><i class="bi bi-pencil-square"></i> Editar</button>
@@ -167,8 +171,9 @@ include_once('header.php')
             const btnEditar = card.querySelector('.btnEditar')
             const btnSalvar = card.querySelector('.btnSalvar')
             const btnCancelar = card.querySelector('.btnCancelar')
-            const btnExcluir = card.querySelector('.btnExcluir')
-
+            const chkPromocao = card.querySelector('.chkPromocao')
+            
+            chkPromocao.disabled = true;
             btnCancelar.hidden = false;
             btnEditar.hidden = true;
             btnSalvar.hidden = false;
@@ -177,15 +182,100 @@ include_once('header.php')
             const idPreco = card.querySelector('#preco')
             const idValidade = card.querySelector('#validade')
 
+            idNome.dataset.antigo = idNome.textContent
+            idPreco.dataset.antigo = idPreco.textContent
+            idValidade.dataset.antigo = idValidade.textContent
+
             idNome.innerHTML = `<input id="idNome" type="text" value="${idNome.textContent}">`
             idPreco.innerHTML = `<input id="idPreco" type="text" value="${idPreco.textContent}">`
             idValidade.innerHTML = `<input id="idValidade" type="date" value="${idValidade.textContent}">`
         
         }
 
-        function SalvarPromocao(id) {
+      async function SalvarPromocao(id) {
             const card = document.querySelector('.id-' + id)
+            const idNome = card.querySelector('#idNome')
+            const idPreco = card.querySelector('#idPreco')
+            const idValidade = card.querySelector('#idValidade')
+            const precoOriginal = card.querySelector('.precoOriginal').innerText
+            const btnEditar = card.querySelector('.btnEditar')
+
+            valorNome = idNome.value
+            valorPreco = idPreco.value
+            valorValidade = idValidade.value
+
+            //Verificar se os campos foram preenchidos
+            if (valorNome == '' || valorPreco == '' || valorValidade == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO!',
+                    text: 'Preencha todos os campos!',
+                })
+                return;
+            }
+
+            //Verificar se o preço é um número
+            if (isNaN(valorPreco)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO!',
+                    text: 'O preço deve ser um número!',
+                })
+                return;
+            }
+            //verificar se o preco é numero valido
+            if (valorPreco < 0.10 || valorPreco >= precoOriginal) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO!',
+                    text: 'O preço deve ser maior que 0.10 e menor que ' + precoOriginal + '!',
+                })
+                return;
+            }
+
+            try {
+                const response = await fetch('../actions/promocoes/editar_promocoes.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        nome: valorNome,
+                        preco: valorPreco,
+                        validade: valorValidade
+                    })
+                    },
+                )
+
+                const data = await response.json()
+            }catch (error) {
+                console.log(error)
+            }
+
+
         }
+
+        function CancelarPromocao(id) {
+            const card = document.querySelector('.id-' + id)
+            const idNome = card.querySelector('#nome')
+            const idPreco = card.querySelector('#preco')
+            const idValidade = card.querySelector('#validade')
+            const btnEditar = card.querySelector('.btnEditar')
+            const btnSalvar = card.querySelector('.btnSalvar')
+            const btnCancelar = card.querySelector('.btnCancelar')
+            const chkPromocao = card.querySelector('.chkPromocao')
+
+            idNome.innerText = idNome.dataset.antigo
+            idPreco.innerText = idPreco.dataset.antigo
+            idValidade.innerText = idValidade.dataset.antigo
+
+            chkPromocao.disabled = false;
+            btnCancelar.hidden = true;
+            btnEditar.hidden = false;
+            btnSalvar.hidden = true;
+        }
+
     </script>
 </body>
 
