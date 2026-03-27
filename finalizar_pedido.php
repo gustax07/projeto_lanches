@@ -7,12 +7,11 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: logar.php');
     exit;
 }
-
+include('./includes/sweet_alert2_include.php');
 include('header.php');
 
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
-
 require_once('./classes/enderecos.class.php');
 $enderecos = new Enderecos();
 $idUsuario = $_SESSION['usuario']['id'];

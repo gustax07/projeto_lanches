@@ -8,7 +8,8 @@ $idEndereco  = $_POST['id_endereco'];
 $observacoes = strip_tags($_POST['observacoes']) ?? null;
 
 if (!is_numeric($idPedido) || !is_numeric($idEndereco)) {
-    die('Dados inválidos');
+    header('Location:../../index.php?err=carrinho_vazio');
+    exit();
 }
 
 $pedido = new Pedidos();

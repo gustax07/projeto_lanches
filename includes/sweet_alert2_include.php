@@ -85,6 +85,7 @@ $err = [
     //pagamento
     "pagamento_falha" => "Falha ao realizar o pagamento!",
     "pagamento_pendente" => "Pagamento pendente, aguarde e veja a situação do seu pedido na aba de pedidos!",
+    "carrinho_vazio" => "O carrinho esta vazio!",
 
 ];
 ?>
