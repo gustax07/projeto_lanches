@@ -4,16 +4,16 @@ require_once('banco.class.php');
 
 
 class Promocoes{
-    public int $id;
-    public string $nome_promocao;
-    public float $preco_promocional;
-    public DateTime $data_validade;
-    public int $id_item_fk;
-    public int $status;
+    public $id;
+    public $nome_promocao;
+    public $preco_promocional;
+    public $data_validade;
+    public $id_item_fk;
+    public $status;
 
 
     public function Listar(){
-        $sql = "SELECT p.id, p.nome_promocao, p.preco_promocional, p.data_validade, p.status, i.preco, i.imagem, i.nome FROM promocoes p INNER JOIN itens i ON p.id_item_fk = i.id;";
+        $sql = "SELECT p.id, p.nome_promocao, p.preco_promocional, p.data_validade, p.status, i.preco, i.imagem, i.nome, p.id_item_fk FROM promocoes p INNER JOIN itens i ON p.id_item_fk = i.id;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
@@ -36,6 +36,32 @@ class Promocoes{
         return $comando->rowCount();
     }
 
+    public function AlterarStatus(){
+        $sql = "UPDATE promocoes SET status = ? WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->status,
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    public function Cadastrar(){
+        $sql = "INSERT INTO promocoes (nome_promocao, preco_promocional, data_validade, id_item_fk, status) VALUES (?, ?, ?, ?, ?)";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->nome_promocao, 
+            $this->preco_promocional, 
+            $this->data_validade,
+            $this->id_item_fk,
+            $this->status
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
 }
 
 ?>

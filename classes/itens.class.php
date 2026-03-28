@@ -141,7 +141,7 @@ class Itens
         return ceil((int)$arr_resultado['total'] / $itensPorPagina);
     }
     public function ListarPromocoes(){
-        $sql = "SELECT id, nome FROM itens;";
+        $sql = "SELECT id, nome, imagem, preco FROM itens;";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute();
