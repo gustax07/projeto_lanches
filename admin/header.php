@@ -170,11 +170,11 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
 
                   <div class="d-grid gap-2">
-                    <a type="button" href="./abertura.php" target="_parent" class="btn btn-outline-dark">Abertura e Fechamento</a>
+                    <a type="button" href="<?= $base_path ?>abertura.php" target="_parent" class="btn btn-outline-dark">Abertura e Fechamento</a>
                   </div>
 
                   <div class="d-grid gap-2">
-                    <a type="button" href="./gerenciar_promocoes.php" target="_parent" class="btn btn-outline-dark">Gerenciar Promocoes</a>
+                    <a type="button" href="<?= $base_path ?>gerenciar_promocoes.php" target="_parent" class="btn btn-outline-dark">Gerenciar Promocoes</a>
                   </div>
 
                   <div class="d-grid gap-2">
