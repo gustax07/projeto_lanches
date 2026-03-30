@@ -33,8 +33,6 @@ include_once('header.php')
             flex-direction: row;
             align-items: center;
             height: calc(100vh - 100px);
-
-
         }
 
         .card {
@@ -191,12 +189,12 @@ include_once('header.php')
                     </div>
                     <hr>
                     <div class="group-modal">
-                        <label for="NomePromocao">Nome da Promoção</label>
-                        <input type="text" placeholder="Nome da promocao" require>
+                        <label for="NomePromocao" >Nome da Promoção</label>
+                        <input type="text" id="nomePromocao" placeholder="Nome da promocao" require>
                         <label for="PrecoPromocional">Preço</label>
-                        <input type="text" placeholder="Preço" require>
+                        <input type="text" id="precoPromocao" placeholder="Preço" require>
                         <label for="DataValidade">Data de Validade</label>
-                        <input type="date" placeholder="Data de validade" require>
+                        <input type="date" id="dataPromocao" placeholder="Data de validade" require>
                     </div>
 
                 </div>
@@ -419,35 +417,6 @@ include_once('header.php')
             const btnSalvar = document.querySelector('.btnSalvar')
             const btnCancelar = document.querySelector('.btnCancelar')
 
-            //Verificar se os campos foram preenchidos
-            if (valorNome == '' || valorPreco == '' || valorValidade == '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ERRO!',
-                    text: 'Preencha todos os campos!',
-                })
-                return;
-            }
-
-            //Verificar se o preço é um número
-            if (isNaN(valorPreco)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ERRO!',
-                    text: 'O preço deve ser um número!',
-                })
-                return;
-            }
-            //verificar se o preco é numero valido
-            if (valorPreco < 0.10 || valorPreco >= precoOriginal) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ERRO!',
-                    text: 'O preço deve ser maior que 0.10 e menor que ' + precoOriginal + '!',
-                })
-                return;
-            }
-
             btnSalvar.dataset.antigo = btnSalvar.innerHTML;
             btnCancelar.dataset.antigo = btnCancelar.innerHTML;
 
@@ -545,13 +514,41 @@ include_once('header.php')
             modal.show();
         }
 
-        function CadastrarPromocao(){
+     async function CadastrarPromocao() {
             const nomePromocao = document.getElementById('nomePromocao').value;
-            const precoPromocional = document.getElementById('precoPromocional').value;
-            const dataValidade = document.getElementById('dataValidade').value;
+            const precoPromocional = document.getElementById('precoPromocao').value;
+            const dataValidade = document.getElementById('dataPromocao').value;
+            const precoOriginal = document.getElementById('Mpreco').value;
 
-            
+            const response = await fetch('../actions/promocoes/cadastrar_promocao.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: nomePromocao,
+                    preco: precoPromocional,
+                    validade: dataValidade,
+                    precoOriginal: precoOriginal
+                })
+            })
 
+            const data = await response.json();
+            if (data['status'] == 'sucesso') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'SUCESSO!',
+                    text: data.message,
+                }).then(() => {
+                    CarregarCardsPromocoes();
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO!',
+                    text: data.message,
+                })
+            }
         }
     </script>
 </body>

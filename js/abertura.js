@@ -21,14 +21,12 @@ function editar_horario(id) {
     td_fim.dataset.antigo = valor_fim;
     td_botoes.dataset.antigo = `
                             <div class="btn-wrapper">
-                                <button type="button" class="Btn" style="background-color: #17a2b8;" onclick="editar_horario(1)">Alterar <svg viewBox="0 0 512 512" class="svg">
+                                <button type="button" class="Btn" style="background-color: #17a2b8;" onclick="editar_horario(${id})">Alterar <svg viewBox="0 0 512 512" class="svg">
                                         <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
                                     </svg></button><!-- botao de fechar o sistema -->
-                                <button type="button" class="Btn" style="background-color: #6c757d;" onclick="fechar_horario(1)">Fechar <svg class="svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"></path></svg></button>                            
+                                <button type="button" class="Btn" style="background-color: #6c757d;" onclick="fechar_horario(${id})">Fechar <svg class="svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"></path></svg></button>                            
                                 </div>
 `;
-    console.log(td_botoes.dataset.antigo);
-
     //tranforma em input
     td_inicio.innerHTML = `<input type="time" id="horario_inicio_${id}" value="${valor_inicio}">`;
     td_fim.innerHTML = `<input type="time" id="horario_fim_${id}" value="${valor_fim}">`;
@@ -86,7 +84,7 @@ async function salvar_horario(id) {
         })
         const data = await response.json();
 
-        if (data.status === 'sucesso') {
+        if (data.status == 'sucesso') {
             td_inicio.innerText = valor_inicio;
             td_fim.innerText = valor_fim;
             td_botoes.innerHTML = td_botoes.dataset.antigo;
@@ -100,12 +98,13 @@ async function salvar_horario(id) {
             Swal.fire({
                 icon: 'warning',
                 tile: 'AVISO!',
-                text: 'Digite um horario diferente!',
+                text: data.mensagem + ',' + valor_inicio + '-' + valor_fim + "=" + id,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#a31818'
             });
             btnSalvar.innerHTML = btnBackup;
             btnSalvar.removeAttribute('disabled');
+            
         }
     } catch (error) {
         console.error('Erro:', error);
