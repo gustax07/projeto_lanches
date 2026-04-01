@@ -150,15 +150,21 @@ include_once('header.php')
 </head>
 
 <body>
-    <div class="col-lg-9 col-sm-12 px-3 py-2 d-flex justify-content-end align-items-end" style="height: 20vh;">
-        <select id="select" class="form-select" style="width: 200px;" aria-label="opc">
-            <?php foreach ($itens_listar as $i) {
-                if (!in_array($i['id'], $itens_em_promocao)) {
-                    echo ('<option  value="' . $i['id'] . '">' . $i['nome'] . '</option>');
-                }
-            } ?>
-        </select>
-        <button class="ms-1 btn-tasty" onclick="AdicionarModal()"><i class="bi bi-plus-circle"></i> Cadastrar</button>
+    <div class="container col-lg-6 col-sm-12 px-3 py-2 d-flex justify-content-between align-items-end flex-wrap" style="height: 20vh;">
+        <div class="d-flex justify-content-start align-items-center gap-2 flex-1">
+            <input type="text" class="form-control w-100" id="pesquisa" placeholder="Pesquisar">
+            <button class="btn-tasty" type="button" onclick="PesquisarPromocao()"><i class="bi bi-search"></i></button>
+        </div>
+        <div class="d-flex justify-content-end">
+            <select id="select" class="form-select" style="width: 200px;" aria-label="opc">
+                <?php foreach ($itens_listar as $i) {
+                    if (!in_array($i['id'], $itens_em_promocao)) {
+                        echo ('<option  value="' . $i['id'] . '">' . $i['nome'] . '</option>');
+                    }
+                } ?>
+            </select>
+            <button class="ms-1 btn-tasty" onclick="AdicionarModal()"><i class="bi bi-plus-circle"></i> Cadastrar</button>
+        </div>
     </div>
     <div class="d-flex justify-content-center">
         <hr style="width: 50vw;">
@@ -186,10 +192,11 @@ include_once('header.php')
                         <input id="Mnome" type="text" disabled>
                         <label for="PrecoOriginal">Preço</label>
                         <input id="Mpreco" type="text" disabled>
+                        <input id="idItemFk" type="hidden" disabled>
                     </div>
                     <hr>
                     <div class="group-modal">
-                        <label for="NomePromocao" >Nome da Promoção</label>
+                        <label for="NomePromocao">Nome da Promoção</label>
                         <input type="text" id="nomePromocao" placeholder="Nome da promocao" require>
                         <label for="PrecoPromocional">Preço</label>
                         <input type="text" id="precoPromocao" placeholder="Preço" require>
@@ -498,8 +505,9 @@ include_once('header.php')
             btnSalvar.hidden = true;
         }
 
+        const modal = new bootstrap.Modal(document.getElementById('cadastrarPromocoes'));
+
         function AdicionarModal() {
-            const modal = new bootstrap.Modal(document.getElementById('cadastrarPromocoes'));
             const select = document.getElementById('select');
             const itens_listar = <?php echo json_encode($itens_listar) ?>;
 
@@ -509,16 +517,18 @@ include_once('header.php')
                     document.getElementById('Mnome').value = item.nome;
                     document.getElementById('Mimg').src = '../images/' + item.imagem;
                     document.getElementById('Mpreco').value = item.preco;
+                    document.getElementById('idItemFk').value = item.id;
                 }
             });
             modal.show();
         }
 
-     async function CadastrarPromocao() {
+        async function CadastrarPromocao() {
             const nomePromocao = document.getElementById('nomePromocao').value;
             const precoPromocional = document.getElementById('precoPromocao').value;
             const dataValidade = document.getElementById('dataPromocao').value;
             const precoOriginal = document.getElementById('Mpreco').value;
+            const idItemFk = document.getElementById('idItemFk').value;
 
             const response = await fetch('../actions/promocoes/cadastrar_promocao.php', {
                 method: 'POST',
@@ -529,7 +539,8 @@ include_once('header.php')
                     nome: nomePromocao,
                     preco: precoPromocional,
                     validade: dataValidade,
-                    precoOriginal: precoOriginal
+                    precoOriginal: precoOriginal,
+                    idItemFk: idItemFk
                 })
             })
 
@@ -540,7 +551,8 @@ include_once('header.php')
                     title: 'SUCESSO!',
                     text: data.message,
                 }).then(() => {
-                    CarregarCardsPromocoes();
+                    modal.hide();
+                    window.location.reload();
                 });
             } else {
                 Swal.fire({
@@ -548,6 +560,67 @@ include_once('header.php')
                     title: 'ERRO!',
                     text: data.message,
                 })
+            }
+        }
+
+        function ExcluirPromocao(id) {
+            const card = document.querySelector('.id-' + id)
+            Swal.fire({
+                title: 'Você tem certeza?',
+                text: "Você não poderá reverter isso!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const response = await fetch('../actions/promocoes/excluir_promocao.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: id
+                        })
+                    })
+                    const data = await response.json();
+                    if (data['status'] == 'sucesso') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'SUCESSO!',
+                            text: data.message,
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ERRO!',
+                            text: data.message,
+
+                        })
+                    }
+                }
+
+            })
+        }
+
+      async function PesquisarPromocao() {
+            const nome = document.getElementById('pesquisa').value;
+
+            const response = await fetch('../actions/promocoes/pesquisar_promocao.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pesquisa: nome
+                })
+            })
+            const data = await response.json();
+            console.log(data['promocoes'])
+            if (data['status'] == 'sucesso') {
             }
         }
     </script>

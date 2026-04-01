@@ -1,0 +1,29 @@
+<?php
+
+require_once('../restrict.php');
+$restrict = new restrict();
+$restrict->verificarMethodRequest('../../admin/gerenciar_promocoes.php');
+
+$dados = json_decode(file_get_contents('php://input'), true);
+$pesquisa = $dados['pesquisa'];
+
+if (empty($pesquisa)) {
+    echo json_encode(['status' => 'erro', 'message' => 'Preencha todos os campos.']);
+    exit();
+}
+
+require_once('../../classes/promocoes.php');
+$promocoes = new Promocoes();
+$promocoes_listar = $promocoes->PesquisarPromocao($pesquisa);
+
+if ($promocoes_listar) {
+    echo json_encode(['status' => 'sucesso', 'message' => $pesquisa, 'promocoes' => $promocoes_listar]);
+    exit();
+} else {
+    echo json_encode(['status' => 'erro', 'message' => 'Não foi possível pesquisar a promoção.']);
+    exit();
+}
+
+
+
+?>

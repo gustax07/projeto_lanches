@@ -62,6 +62,32 @@ class Promocoes{
         Banco::desconectar();
         return $comando->rowCount();
     }
+
+    public function Excluir(){
+        $sql = "DELETE FROM promocoes WHERE id = ?";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+
+    //sistema de pesquisa usando sintaxe LIKE
+    public function PesquisarPromocao($termo){
+        $sql = "SELECT p.id, p.nome_promocao, p.preco_promocional, p.data_validade, p.status, i.preco, i.imagem, i.nome, p.id_item_fk 
+        FROM promocoes p 
+        INNER JOIN itens i ON p.id_item_fk = i.id
+        WHERE p.nome_promocao LIKE :termo OR i.nome LIKE :termo ORDER BY id ASC";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->bindValue(":termo", "%$termo%");
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }
 
 ?>

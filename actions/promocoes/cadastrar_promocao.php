@@ -9,7 +9,7 @@ $nomePromocao = $dados['nome'];
 $precoPromocional = $dados['preco'];
 $dataValidade = $dados['validade'];
 $precoOriginal = $dados['precoOriginal'];
-
+$idItemFk = $dados['idItemFk'];
 
 if (empty($nomePromocao) || empty($precoPromocional) || empty($dataValidade)) {
     echo json_encode(['status' => 'erro', 'message' => 'Preencha todos os campos.']);
@@ -36,6 +36,8 @@ $promocoes = new Promocoes();
 $promocoes->nome_promocao = $nomePromocao;
 $promocoes->preco_promocional = $precoPromocional;
 $promocoes->data_validade = $dataValidade;
+$promocoes->id_item_fk = $idItemFk;
+$promocoes->status = 1;
 
 if ($promocoes->cadastrar()){
     echo json_encode(['status' => 'sucesso', 'message' => 'Promoção cadastrada com sucesso.']);
