@@ -14,41 +14,43 @@
    ::-webkit-scrollbar-thumb:hover {
        background: rgba(140, 140, 140, 0.6);
    }
+   
+   .header-backgroud {
+    display: block;
+    height: 200px;
+    width: 100%;
+}
 
-   body {
+   .lanches body {
        overflow-x: hidden;
        overflow-y: auto;
        height: 100vh;
    }
 
-   a {
+   .lanches a {
        text-decoration: none;
        color: #222;
        transition: 0.3s;
    }
 
-   a:hover {
+   .lanches a:hover {
        color: #E9A652;
    }
 
-   .material-symbols-outlined {
-       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
-   }
-
-   .modal {
+   .lanches .modal {
        z-index: 2000 !important;
    }
 
-   .modal-backdrop {
+   .lanches .modal-backdrop {
        z-index: 1990 !important;
    }
 
-   .modal-dialog {
+   .lanches .modal-dialog {
        margin-top: 120px;
    }
 
    /* ================= CARDS DE PRODUTOS ================= */
-   .produto-card {
+   .lanches .produto-card {
        border: none;
        border-radius: 12px;
        box-shadow: 0 4px 10px rgba(135, 75, 0, 0.08);
@@ -57,13 +59,13 @@
        overflow: hidden;
    }
 
-   .produto-card:hover {
+   .lanches .produto-card:hover {
        transform: translateY(-5px);
        box-shadow: 0 8px 20px rgba(217, 122, 0, 0.15);
    }
 
    /* O Cofre da Imagem: Daqui a foto não passa! */
-   .produto-img-container {
+   .lanches .produto-img-container {
        width: 100%;
        height: 180px !important;
        /* O !important obriga a manter 180px */
@@ -79,7 +81,7 @@
    }
 
    /* A foto dentro do cofre */
-   .produto-img {
+   .lanches .produto-img {
        width: 100%;
        height: 100%;
        object-fit: cover !important;
@@ -88,14 +90,19 @@
    }
 
    /* Textos */
-   .produto-titulo {
+   .lanches .produto-titulo {
        font-size: 1.1rem;
        font-weight: 700;
        color: #333;
        margin-bottom: 4px;
    }
 
-   .produto-preco {
+   .lanches .cardapio {
+       font-weight: 800;
+
+   }
+
+   .lanches .produto-preco {
        font-size: 1.2rem;
        font-weight: 800;
        color: #D97A00;
@@ -103,36 +110,36 @@
    }
 
    /* Descrição com o corte corrigido */
-   .produto-descricao {
+   .lanches .produto-descricao {
        font-size: 0.85rem;
        color: #777;
        margin-bottom: 0;
    }
 
-   .pagination .page-link {
+   .lanches .pagination .page-link {
        color: #ff7b00;
    }
 
-   .pagination .page-item.active .page-link {
+   .lanches .pagination .page-item.active .page-link {
        background-color: #ff7b00;
        border-color: #ff7b00;
        color: white;
    }
 
-   .banner-img {
+   .lanches .banner-img {
        height: 250px;
        object-fit: cover;
        object-position: center;
    }
 
    @media (min-width: 768px) {
-       .banner-img {
+       .lanches .banner-img {
            height: 1000px;
            width: 100%;
        }
    }
 
-   .btn-carrinho {
+   .lanches .btn-carrinho {
        position: fixed;
        bottom: 20px;
        right: 20px;
@@ -159,12 +166,12 @@
        transition: all 0.3s ease;
    }
 
-   .btn-carrinho:hover {
+   .lanches .btn-carrinho:hover {
        background: #e96b00;
        transform: scale(1.05);
    }
 
-   .badge-carrinho {
+   .lanches .badge-carrinho {
        background: red;
        color: white;
 
@@ -181,7 +188,7 @@
    }
 
    @media (max-width: 768px) {
-       .btn-float {
+       .lanches .btn-float {
            border-radius: 12px;
            width: auto;
            height: auto;

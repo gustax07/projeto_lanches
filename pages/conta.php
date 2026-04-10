@@ -1,29 +1,15 @@
-<?php include('header.php');
-include('includes/sweet_alert2_include.php');
+<?php
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
-    exit;
-}
+$usuario = $_SESSION['usuario'];
 
-$usuario = $_SESSION['usuario']; ?>
+?>
+<link rel="stylesheet" href="css/seguranca.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
+<title>Minha conta</title>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <?php include('./includes/bootstrap_include.php'); ?>
-    <link rel="stylesheet" href="css/seguranca.css">
-    <link rel="icon" type="image/png" href="images/icon_burguer.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tastyburger | minha conta</title>
-</head>
-
-<body>
-    
-    <div class="container my-5">
+<div class="conta">
+    <div class="header-backgroud"></div>
+    <div class="container mb-5">
 
         <h3 class="text-center mb-4">
             <span class="material-symbols-outlined icon-title">person</span>
@@ -36,15 +22,9 @@ $usuario = $_SESSION['usuario']; ?>
                 <div class="card card-box h-100">
                     <div class="card-body text-center">
 
-                        <img
-                            src="images/<?= !empty($usuario['foto']) ? $usuario['foto'] : 'foto_perfil_default.png' ?>"
-                            class="foto-perfil mb-3">
-
-
+                        <img src="images/<?= !empty($usuario['foto']) ? $usuario['foto'] : 'foto_perfil_default.png' ?>" class="foto-perfil mb-3">
                         <h5 class="mb-1"><?= htmlspecialchars($usuario['nome']) ?></h5>
-
                         <p class="text-muted mb-3"><?= htmlspecialchars($usuario['email']) ?></p>
-
 
                         <div class="info-item">
                             <span class="material-symbols-outlined">badge</span>
@@ -71,23 +51,13 @@ $usuario = $_SESSION['usuario']; ?>
                         <form action="actions/clientes/editar_clientes.php" method="POST">
 
                             <div class="mb-3">
-                                <input
-                                    type="text"
-                                    name="nome"
-                                    id="nome"
-                                    class="form-control"
+                                <input type="text" name="nome" id="nome" class="form-control"
                                     value="<?= htmlspecialchars($usuario['nome']) ?>">
-
                             </div>
 
                             <div class="mb-3">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    class="form-control"
+                                <input type="email" name="email" id="email" class="form-control"
                                     value="<?= htmlspecialchars($usuario['email']) ?>">
-
                             </div>
 
                             <hr>
@@ -109,7 +79,7 @@ $usuario = $_SESSION['usuario']; ?>
                                 <input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control">
                             </div>
 
-                            <button type="submit" class="btn btn-warning w-100">
+                            <button type="submit" class="btn btn-warning w-100 text-white">
                                 Salvar alterações
                             </button>
 
@@ -122,7 +92,4 @@ $usuario = $_SESSION['usuario']; ?>
         </div>
 
     </div>
-    <?php include('footer.html'); ?>
-</body>
-
-</html>
+</div>

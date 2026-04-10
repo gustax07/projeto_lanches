@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="./css/footer.css">
-<footer>
+<link rel="stylesheet" href="css/footer.css">
+<footer class="footer">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-sm-6 d-flex justify-content-start text-center">
@@ -20,16 +20,12 @@
                 
                 <ul class="footer-list">
                     <h3>Ajuda</h3>
-                    <li>
-                    </li>
                     <li><a href="#" class="footer-link">Contato</a></li>
                     <li><a href="#" class="footer-link">Perguntas Frequentes</a></li>
                 </ul>
                 
                 <ul class="footer-list">
                     <h3>Sobre</h3>
-                    <li>
-                    </li>
                     <li><a href="#" class="footer-link">Diretrizes</a></li>
                     <li><a href="#" class="footer-link">Politica de Privacidade</a></li>
                 </ul>

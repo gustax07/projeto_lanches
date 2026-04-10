@@ -1,15 +1,15 @@
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-include_once("./includes/bootstrap_include.php");
+include_once("includes/bootstrap_include.php");
 
 
 ?>
 
 <link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
-<script src="./js/header.js" defer></script>
+<script src="js/header.js" defer></script>
 <style>
   .alert {
     font-size: 14px !important;
@@ -18,7 +18,7 @@ include_once("./includes/bootstrap_include.php");
 </style>
 
 
-
+<div class="header">
 <div class="site-header">
   <div class="container">
 
@@ -26,7 +26,7 @@ include_once("./includes/bootstrap_include.php");
 
       <!-- Logo/Título centralizado -->
       <h1 class="logo-title">
-        <a href="../projeto_lanches">Tasty Burguer</a>
+        <a href="/projeto_lanches/">Tasty Burguer</a>
       </h1>
       <div class="col d-flex align-items-end mx-3 mt-2">
         <div id="status">
@@ -39,35 +39,36 @@ include_once("./includes/bootstrap_include.php");
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->
         <div class="header-buttons">
-          <a href="./logar.php" target="_parent" class="btn-login">Logar</a>
-          <a href="./cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
+          <a href="logar.php" target="_parent" class="btn-login">Logar</a>
+          <a href="cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
         </div>
 
       <?php else: ?>
+       
+        <?php if ($_SESSION['usuario']['id_tipo_fk'] == 6): ?>
+        <a class="btn btn-warning text-white me-3" href="admin" target="_blank">Dashboard</a>
+        <?php endif; ?>
 
         <!-- Botões direita (LOGADO) -->
         <div class="header-buttons">
           <h3 class="user-greeting">Bem-vindo, <strong><?= $_SESSION['usuario']['nome']; ?>!</strong></h3>
 
-          <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="text-decoration: none;">
+          <?php
+          $foto = !empty($_SESSION['usuario']['foto'])
+            ? 'images/' . $_SESSION['usuario']['foto']
+            : 'images/foto_perfil_default.png';
+          ?>
 
-            <?php
-            $foto = !empty($_SESSION['usuario']['foto'])
-              ? 'images/' . $_SESSION['usuario']['foto']
-              : 'images/foto_perfil_default.png';
-            ?>
+          <button data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="btn rounded-circle profile-btn-header" type="button">
+            <img src="<?= $foto ?>" alt="Foto do usuário" class="rounded-circle" />
+          </button>
 
-            <button class="btn rounded-circle profile-btn-header" type="button">
-              <img src="<?= $foto ?>" alt="Foto do usuário" class="rounded-circle" />
-            </button>
-          </a>
-
-
-          <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title" id="offcanvasExampleLabel">Meu perfil</h5>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+
             <div class="offcanvas-body">
               <div>
                 <!-- setar uma foto padrão se a foto for vazia, se não for, pegar a foto do banco -->
@@ -99,21 +100,14 @@ include_once("./includes/bootstrap_include.php");
                           <div style="display: flex; flex-direction: column; gap: 8px;">
 
                             <!-- input escondido -->
-                            <input
-                              type="file"
-                              name="foto"
-                              id="inputFoto"
-                              accept="image/*"
-                              hidden>
-
+                            <input type="file" name="foto" id="inputFoto" accept="image/*" hidden>
 
                             <div class="d-grid gap-2">
                               <button type="button" onclick="abrirSeletor()" class="btn btn-outline-dark">Alterar foto de perfil</button>
                             </div>
 
-
                             <div class="d-grid gap-2">
-                              <a type="button" href="seguranca.php" target="_parent" class="btn btn-outline-dark">minha conta</a>
+                              <a href="conta.php" class="btn btn-outline-dark">Minha Conta</a>
                             </div>
 
                           </div>
@@ -121,18 +115,20 @@ include_once("./includes/bootstrap_include.php");
                       </div>
                     </div>
                   </div>
+
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         endereços
                       </button>
                     </h2>
+
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
 
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                           <div class="d-grid gap-2">
-                            <a type="button" href="enderecos.php" target="_parent" class="btn btn-outline-dark">ver endereços cadastrados</a>
+                            <a type="button" href="enderecos.php" class="btn btn-outline-dark">Endereços</a>
                           </div>
                         </div>
 
@@ -186,4 +182,5 @@ include_once("./includes/bootstrap_include.php");
       <?php endif; ?>
     </div>
   </div>
+</div>
 </div>

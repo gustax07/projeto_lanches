@@ -1,0 +1,125 @@
+  body {
+            margin: 0px;
+            padding: 0px;
+            border: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            height: calc(100vh - 100px);
+        }
+
+        .card {
+            margin: 10px;
+            box-shadow: 1px 1px 30px rgb(0, 0, 0, 0.2);
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            margin: 0;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+        }
+
+        .form-check-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-success:hidden,
+        .btn-primary:hidden {
+            display: none;
+        }
+
+        .btn-success:disabled,
+        .btn-primary:disabled {
+            cursor: not-allowed !important;
+        }
+
+        input {
+            padding: 6px 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #d2d2d2;
+            margin: 5px 0;
+        }
+
+        input:focus {
+            outline: 2px solid green;
+        }
+
+        .group-modal {
+            display: flex;
+            flex-direction: column;
+            margin: 30px;
+        }
+
+        .img-modal img {
+            border: none !important;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center
+        }
+
+        .img-modal {
+            box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            width: 200px;
+            background-color: #fdfbfbb2;
+        }
+
+        .group-modal input:focus {
+            outline: 2px solid #ffb700;
+        }
+
+        .btn-tasty {
+            background-color: #ffb65d;
+            border: none;
+            color: #ffffff;
+            font-weight: 400;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer
+        }
+
+        .btn-cancel-tasty {
+            background-color: #ff5f5f;
+            border: none;
+            color: #ffffff;
+            font-weight: 400;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer
+        }
+
+        .form-check-input {
+            background-color: #ffb65d !important;
+            border-color: #ffb65d !important;
+        }
+
+        .form-check {
+            outline: none !important;
+        }

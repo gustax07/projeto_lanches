@@ -1,59 +1,56 @@
- body {
-            background: #f7f7f7;
-        }
+.finalizar_pedido .checkout-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+}
 
-        .checkout-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-        }
+.finalizar_pedido .titulo {
+    font-weight: 600;
+    margin-bottom: 30px;
+}
 
-        .titulo {
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
+.finalizar_pedido .lista-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
 
-        .lista-item {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
+.finalizar_pedido .lista-item:last-child {
+    border-bottom: none;
+}
 
-        .lista-item:last-child {
-            border-bottom: none;
-        }
+.finalizar_pedido .preco {
+    font-weight: 600;
+}
 
-        .preco {
-            font-weight: 600;
-        }
+.finalizar_pedido .resumo {
+    border-top: 2px solid #000;
+    margin-top: 20px;
+    padding-top: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
 
-        .resumo {
-            border-top: 2px solid #000;
-            margin-top: 20px;
-            padding-top: 15px;
-            font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-        }
+.finalizar_pedido textarea {
+    resize: none;
+}
 
-        textarea {
-            resize: none;
-        }
+@media (max-width: 990px) {
+    .finalizar_pedido .checkout-container {
+        padding: 20px;
+    }
 
-        @media (max-width: 990px) {
-            .checkout-container {
-                padding: 20px;
-            }
-            .vr-style {
-                display: none !important;
-            }
-            
-            .entregas {
-                margin-top: 40px;
-            }
-            
-        }
+    .finalizar_pedido .vr-style {
+        display: none !important;
+    }
+
+    .finalizar_pedido .entregas {
+        margin-top: 40px;
+    }
+
+}

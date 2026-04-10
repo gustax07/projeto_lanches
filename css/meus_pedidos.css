@@ -1,21 +1,21 @@
-.pedidos-container {
+.meus_pedidos .pedidos-container {
     min-height: 70vh;
     padding: 20px;
 }
 
-.lista-pedidos {
+.meus_pedidos .lista-pedidos {
     background-color: #fff;
     border-radius: 14px;
     padding: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.lista-pedidos h5 {
+.meus_pedidos .lista-pedidos h5 {
     font-weight: 700;
     margin-bottom: 15px;
 }
 
-.lista-pedidos .list-group-item {
+.meus_pedidos .lista-pedidos .list-group-item {
     cursor: pointer;
     transition: all 0.2s ease;
     border-radius: 10px;
@@ -24,48 +24,48 @@
     padding: 12px 15px;
 }
 
-.lista-pedidos .list-group-item:hover {
+.meus_pedidos .lista-pedidos .list-group-item:hover {
     background-color: #fff8e1;
     transform: translateX(4px);
 }
 
-.lista-pedidos .list-group-item.active {
+.meus_pedidos .lista-pedidos .list-group-item.active {
     background-color: #ffc107;
     border-color: #ffc107;
     color: #000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.lista-pedidos small {
+.meus_pedidos .lista-pedidos small {
     font-size: 0.8rem;
 }
 
-.lista-pedidos .badge {
+.meus_pedidos .lista-pedidos .badge {
     font-size: 0.75rem;
     padding: 6px 8px;
 }
 
-.detalhes-pedido {
+.meus_pedidos .detalhes-pedido {
     background-color: #fff;
     border-radius: 14px;
     padding: 30px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.detalhes-pedido h4 {
+.meus_pedidos .detalhes-pedido h4 {
     font-weight: 700;
 }
 
-.status-atual {
+.meus_pedidos .status-atual {
     font-size: 1.1rem;
     margin-bottom: 15px;
 }
 
-.status-atual strong {
+.meus_pedidos .status-atual strong {
     color: #ff9800;
 }
 
-.progresso-container{
+.meus_pedidos .progresso-container {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -73,7 +73,7 @@
     margin-top: 40px;
 }
 
-.progresso-linha{
+.meus_pedidos .progresso-linha {
     position: absolute;
     top: 16px;
     left: 0;
@@ -83,14 +83,14 @@
     z-index: 0;
 }
 
-.progresso-etapa{
+.meus_pedidos .progresso-etapa {
     position: relative;
     text-align: center;
     z-index: 1;
     flex: 1;
 }
 
-.bolinha{
+.meus_pedidos .bolinha {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -101,50 +101,49 @@
     transition: all 0.3s ease;
 }
 
-.progresso-etapa span{
+.meus_pedidos .progresso-etapa span {
     font-size: 0.85rem;
 }
 
-.progresso-etapa.ok .bolinha{
+.meus_pedidos .progresso-etapa.ok .bolinha {
     background: #198754;
     border-color: #198754;
 }
 
-.progresso-etapa.atual .bolinha{
+.meus_pedidos .progresso-etapa.atual .bolinha {
     background: #ffc107;
     border-color: #ffc107;
 }
 
-.progresso-etapa.pendente .bolinha{
+.meus_pedidos .progresso-etapa.pendente .bolinha {
     background: #e9ecef;
 }
 
 @media (max-width: 768px) {
 
-    .lista-pedidos {
+    .meus_pedidos .lista-pedidos {
         border-right: none !important;
         margin-bottom: 20px;
     }
 
-    .progresso-container{
+    .meus_pedidos .progresso-container {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .progresso-linha{
-        display:none;
+    .meus_pedidos .progresso-linha {
+        display: none;
     }
 
-    .progresso-etapa{
-        display:flex;
-        align-items:center;
-        margin-bottom:10px;
+    .meus_pedidos .progresso-etapa {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
     }
 
-    .bolinha{
-        margin-right:10px;
-        margin-bottom:0;
+    .meus_pedidos .bolinha {
+        margin-right: 10px;
+        margin-bottom: 0;
     }
 
 }
-

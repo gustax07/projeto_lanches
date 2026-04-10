@@ -1,0 +1,35 @@
+.endereco .card-padrao {
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.endereco .btn-principal {
+    background-color: #FFC781;
+    border: none;
+    font-weight: bold;
+}
+
+.endereco .btn-principal:hover {
+    background-color: #e9b56f;
+}
+
+/* endereço listado */
+.endereco .endereco-item {
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.endereco .endereco-item:hover {
+    border-color: #FFC781;
+    background-color: #fff8ec;
+}
+
+
+.endereco .endereco-item.ativo {
+    border-color: #FFC781;
+    background-color: #fff4e1;
+}

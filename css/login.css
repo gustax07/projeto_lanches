@@ -1,38 +1,31 @@
-body {
+.login {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Gradiente marrom para dourado conforme a print */
-    background: linear-gradient(180deg, #d19a5a 0%, #8b5a2b 100%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: start;
 }
 
-.login-wrapper {
+.login .login-wrapper {
     width: 100%;
     max-width: 420px;
     text-align: center;
 }
 
-.brand-name {
+.login .brand-name {
     font-family: 'Pacifico', cursive;
     color: rgb(150, 109, 59);
     font-size: 3.5rem;
     margin-bottom: 30px;
-    /* Sombra suave no texto para dar profundidade */
     text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.1);
 }
 
-.login-box {
+.login .login-box {
     background: #ffffff;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
-.login-header {
+.login .login-header {
     font-family: 'Pacifico', cursive;
     color: rgb(233, 168, 90);
     font-size: 2rem;
@@ -40,12 +33,14 @@ body {
     margin-bottom: 25px;
 }
 
-.input-group {
-    text-align: left;
-    margin-bottom: 20px;
+.login .group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;   
+    text-align: start;
 }
 
-.input-group label {
+.login label {
     display: block;
     color: #7b5e4c;
     font-weight: bold;
@@ -53,29 +48,28 @@ body {
     margin-bottom: 8px;
 }
 
-.input-group input {
-    width: 100%;
+.login input {
     padding: 12px 15px;
-    border: 1px solid #f3b167;
+    border: 2px solid #f3b167;
     border-radius: 10px;
-    background-color: #e8f0fe; /* Azul clarinho da print */
-    font-size: 1rem;
-    box-sizing: border-box;
+    background-color: #fffefe; /* Azul clarinho da print */
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.login input:focus {
+    border-color: #d19a5a;
+    box-shadow: 0 0 5px rgba(233, 168, 90, 0.5);
     outline: none;
 }
 
-.input-group input:focus {
-    border-color: #d19a5a;
-    box-shadow: 0 0 5px rgba(233, 168, 90, 0.5);
-}
-
-.captcha-box {
+.login .captcha-box {
     display: flex;
     justify-content: center;
     margin: 25px 0;
 }
 
-.btn-submit {
+.login .btn-submit {
     width: 100%;
     padding: 14px;
     background-color: #e9a85a;
@@ -89,18 +83,18 @@ body {
     
 }
 
-.btn-submit:hover {
+.login .btn-submit:hover {
     background-color: #d19a5a;
     transform: translateY(-2px);
 }
-.link
+.login .link
 {
     color: lightskyblue;
     text-decoration: none;
     transition: all 0.3s ease;
     border: 10px;
 }
-.link:hover
+.login .link:hover
 {
     color: black;
 }

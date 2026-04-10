@@ -1,10 +1,10 @@
 {
-let diassemana = [];
+let diasemana = [];
 async function BuscarDadosDoBanco() {
     try {
 
         const resposta = await fetch('./actions/horario_dias/buscar_horarios.php');
-        diassemana = await resposta.json();
+        diasemana = await resposta.json();
 
         AtualizarStatus();
     } catch (erro) {
@@ -13,7 +13,7 @@ async function BuscarDadosDoBanco() {
 }
 
 function AtualizarStatus() {
-    if (diassemana.length == 0) return;
+    if (diasemana.length == 0) return;
     const data = new Date();
     const dia = data.getDay();
 
@@ -21,16 +21,16 @@ function AtualizarStatus() {
     const m = String(data.getMinutes()).padStart(2, '0');
     const hora_minuto = `${h}:${m}:00`;
 
-    const horario_inicio = diassemana[dia].horario_inicio;
-    const horario_fim = diassemana[dia].horario_fim;
+    const horario_inicio = diasemana[dia].horario_inicio;
+    const horario_fim = diasemana[dia].horario_fim;
 
-    const status = document.getElementById('status');
+    const btnFinalizar = document.getElementById('btnFinalizar');
     if (hora_minuto >= horario_inicio && hora_minuto <= horario_fim) {
-        status.innerText = 'Aberto';
-        status.setAttribute('class', 'alert alert-success');
+        btnFinalizar.removeAttribute('disabled');
+        btnFinalizar.textContent = 'Finalizar Pedido';
     } else {
-        status.innerText = 'Fechado';
-        status.setAttribute('class', 'alert alert-danger');
+        btnFinalizar.setAttribute('disabled', 'true');
+        btnFinalizar.textContent = 'Lanchonete Fechado';
     }
 }
 

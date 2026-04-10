@@ -12,18 +12,28 @@ class Itens
 
     //listar os itens
     public function Listar($pagina = 1, $itensPorPagina = 5)
-    {
-        $offset = ($pagina - 1) * $itensPorPagina;
-        $sql = "SELECT * FROM itens LIMIT :limit OFFSET :offset";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
-        $comando->bindValue(':limit', $itensPorPagina, PDO::PARAM_INT);
-        $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $comando->execute();
-        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
-        return $arr_resultado;
-    }
+{
+    $offset = ($pagina - 1) * $itensPorPagina;
+
+    $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
+            FROM itens i 
+            LEFT JOIN promocoes p ON i.id = p.id_item_fk 
+            AND p.status = 1 
+            AND (p.data_validade >= CURDATE() OR p.data_validade IS NULL)
+            ORDER BY i.nome ASC
+            LIMIT :limit OFFSET :offset";
+
+    $banco = Banco::conectar();
+    $comando = $banco->prepare($sql);
+    $comando->bindValue(':limit', $itensPorPagina, PDO::PARAM_INT);
+    $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $comando->execute();
+    
+    $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+    Banco::desconectar();
+    
+    return $arr_resultado;
+}
 
     //cadastrar um novo item
     public function Cadastrar()

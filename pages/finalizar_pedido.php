@@ -38,18 +38,13 @@ if (isset($_SESSION['usuario'])) {
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
     <title>Finalizar Pedido</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./css/finalizar_pedido.css">
-</head>
 
-<body>
-    <div class="container bg-light p-5 rounded-3 mb-5 shadow-lg mt-5 w-100">
+    <link rel="stylesheet" href="css/finalizar_pedido.css">
+    <script src="js/finalizar_pedido.js" defer></script>
+<div class="finalizar_pedido">
+    <div class="header-backgroud"></div>
+    <div class="container bg-light p-5 rounded-3 mb-5 shadow-lg w-100">
         <h2 class="titulo"><i class="bi bi-bag-check-fill"></i> Finalizar Pedido</h2>
 
         <div class="row">
@@ -139,7 +134,6 @@ if (isset($_SESSION['usuario'])) {
 
                     </div>
 
-
                     <!-- observações -->
                     <div class="mt-4">
                         <label class="form-label">Observações</label>
@@ -156,9 +150,4 @@ if (isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
-
-    <?php include('footer.php'); ?>
-
-</body>
-
-</html>
+</div>

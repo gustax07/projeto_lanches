@@ -8,7 +8,7 @@ $dados = json_decode(file_get_contents('php://input'), true);
 $pesquisa = $dados['pesquisa'];
 
 if (empty($pesquisa)) {
-    echo json_encode(['status' => 'erro', 'message' => 'Preencha todos os campos.']);
+    echo json_encode(['pesquisa' => $pesquisa]);
     exit();
 }
 
@@ -20,7 +20,7 @@ if ($promocoes_listar) {
     echo json_encode(['status' => 'sucesso', 'message' => $pesquisa, 'promocoes' => $promocoes_listar]);
     exit();
 } else {
-    echo json_encode(['status' => 'erro', 'message' => 'Não foi possível pesquisar a promoção.']);
+    echo json_encode(['status' => 'erro', 'message' => 'Nenhuma promoção encontrada.']);
     exit();
 }
 

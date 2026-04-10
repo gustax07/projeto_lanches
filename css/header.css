@@ -1,45 +1,43 @@
 :root {
   --header-primary-dark: #874B00;
-  --header-primary:      #D97A00; /* Um laranja mais vibrante e apetitoso */
-  --header-accent:       #FFB03A;
-  --header-light:        #FFF6EB; /* Fundo creme bem suave */
-  --header-white:        #FFFFFF;
-  --header-shadow-sm:          0 4px 12px rgba(135, 75, 0, 0.08);
-  --header-shadow-md:          0 8px 24px rgba(135, 75, 0, 0.15);
-  --header-transition:         all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-body {
-  margin: 0;
-  background-color: var(--header-light); /* Fundo da página levemente creme */
+  --header-primary: #D97A00;
+  /* Um laranja mais vibrante e apetitoso */
+  --header-accent: #FFB03A;
+  --header-light: #FFF6EB;
+  /* Fundo creme bem suave */
+  --header-white: #FFFFFF;
+  --header-shadow-sm: 0 4px 12px rgba(135, 75, 0, 0.08);
+  --header-shadow-md: 0 8px 24px rgba(135, 75, 0, 0.15);
+  --header-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* ================= HEADER ================= */
-.site-header {
+.header .site-header {
   background: var(--header-white) !important;
-  padding: 12px 0 !important; /* Mais fino e elegante */
+  padding: 12px 0 !important;
+  /* Mais fino e elegante */
   box-shadow: var(--header-shadow-sm) !important;
   border-bottom: 3px solid var(--header-accent) !important;
 }
 
-.site-header .container {
+.header .site-header .container {
   max-width: 100% !important;
   margin: 0 !important;
   padding: 0 20px !important;
 }
 
-.header-content {
+.header .header-content {
   display: flex !important;
   align-items: center !important;
 }
 
 /* ================= LOGO ================= */
-.logo-title {
+.header .logo-title {
   display: flex !important;
   align-items: center !important;
 }
 
-.logo-title a {
+.header .logo-title a {
   font-size: 32px !important;
   font-weight: 900 !important;
   color: var(--header-primary-dark) !important;
@@ -51,19 +49,19 @@ body {
   transition: var(--header-transition) !important;
 }
 
-.logo-title a:hover {
+.header .logo-title a:hover {
   color: var(--header-primary) !important;
   transform: scale(1.02) !important;
 }
 
 /* ================= BOTÕES / PERFIL ================= */
-.header-buttons {
+.header .header-buttons {
   display: flex;
   gap: 15px;
   align-items: center;
 }
 
-.header-center {
+.header .header-center {
   display: flex;
   flex: 2;
   justify-content: center;
@@ -71,7 +69,7 @@ body {
 }
 
 /* Saudação do usuário */
-.user-greeting {
+.header .user-greeting {
   color: var(--header-primary-dark);
   font-family: 'Poppins', sans-serif;
   font-size: 1.1rem;
@@ -79,7 +77,7 @@ body {
 }
 
 /* Foto de Perfil no Header */
-.profile-btn-header {
+.header .profile-btn-header {
   padding: 0 !important;
   border: 3px solid var(--header-accent) !important;
   transition: var(--header-transition) !important;
@@ -88,20 +86,21 @@ body {
   object-fit: cover !important;
 }
 
-.profile-btn-header:hover {
+.header .profile-btn-header:hover {
   border-color: var(--header-primary) !important;
   transform: translateY(-2px);
   box-shadow: var(--header-shadow-md);
 }
 
-.profile-btn-header img {
-  width: 50px; /* Tamanho padronizado */
+.header .profile-btn-header img {
+  width: 50px;
+  /* Tamanho padronizado */
   height: 50px;
   object-fit: cover;
 }
 
 /* Botões de Login/Cadastro */
-.btn-login {
+.header .btn-login {
   color: var(--header-primary-dark);
   background: transparent;
   padding: 10px 24px;
@@ -111,12 +110,12 @@ body {
   transition: var(--header-transition);
 }
 
-.btn-login:hover {
+.header .btn-login:hover {
   color: var(--header-primary);
   background: var(--header-light);
 }
 
-.btn-register {
+.header .btn-register {
   background: var(--header-primary);
   color: var(--header-white);
   padding: 10px 28px;
@@ -127,7 +126,7 @@ body {
   transition: var(--header-transition);
 }
 
-.btn-register:hover {
+.header .btn-register:hover {
   background: var(--header-primary-dark);
   color: var(--header-white);
   transform: translateY(-2px);
@@ -135,22 +134,22 @@ body {
 }
 
 /* ================= OFFCANVAS (MENU LATERAL) ================= */
-.offcanvas {
+.header .offcanvas {
   border-left: none;
-  box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
 }
 
-.offcanvas-header {
+.header .offcanvas-header {
   background-color: var(--header-light);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.offcanvas-title {
+.header .offcanvas-title {
   color: var(--header-primary-dark);
   font-weight: 700;
 }
 
-.perfil-offcanvas {
+.header .perfil-offcanvas {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -161,7 +160,7 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-.perfil-offcanvas img {
+.header .perfil-offcanvas img {
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -170,14 +169,14 @@ body {
   box-shadow: var(--header-shadow-sm);
 }
 
-.perfil-offcanvas h3 {
+.header .perfil-offcanvas h3 {
   margin: 0;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--header-primary-dark);
 }
 
-.perfil-offcanvas p {
+.header .perfil-offcanvas p {
   color: #777;
   margin: 0;
   font-size: 0.95rem;
@@ -185,20 +184,23 @@ body {
 
 /* ================= RESPONSIVO ================= */
 @media (max-width: 768px) {
-  .user-greeting {
-    display: none; /* Esconde o "Bem-vindo" no celular para não espremer a logo */
-  }
-  
- .logo-title a {
-    font-size: 24px !important; /* Logo menor no celular */
+  .header .user-greeting {
+    display: none;
+    /* Esconde o "Bem-vindo" no celular para não espremer a logo */
   }
 
-  .btn-login, .btn-register {
+  .header .logo-title a {
+    font-size: 24px !important;
+    /* Logo menor no celular */
+  }
+
+  .header .btn-login,
+  .btn-register {
     padding: 8px 18px;
     font-size: 14px;
   }
-  
-  .profile-btn-header img {
+
+  .header .profile-btn-header img {
     width: 42px;
     height: 42px;
   }
