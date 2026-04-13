@@ -30,7 +30,7 @@ class Pedidos
         return $arr_resultado;
     }
 
-        
+
 
     public function ListarPedidosInnerJoinPorID()
     {
@@ -84,23 +84,23 @@ class Pedidos
 
     //adicionar um novo pedido
     public function Cadastrar()
-{
-    $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?, ?)";
-    
-    $banco = Banco::conectar();
-    $comando = $banco->prepare($sql);
-    $comando->execute([
-        $this->id_usuarios_fk,
-        $this->data_pedido
-    ]);
+    {
+        $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?, ?)";
 
-    // pega o ID do pedido recém-criado
-    $idPedido = $banco->lastInsertId();
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_usuarios_fk,
+            $this->data_pedido
+        ]);
 
-    Banco::desconectar();
+        // pega o ID do pedido recém-criado
+        $idPedido = $banco->lastInsertId();
 
-    return $idPedido;
-}
+        Banco::desconectar();
+
+        return $idPedido;
+    }
 
     //editar um pedido
     public function Editar()
@@ -200,7 +200,7 @@ class Pedidos
         Banco::desconectar();
         return $arr_resultado;
     }
-     public function ListarPedidosInnerJoinPorStatus()
+    public function ListarPedidosInnerJoinPorStatus()
     {
         $sql = "SELECT 
         p.id,
@@ -221,55 +221,55 @@ class Pedidos
         return $arr_resultado;
     }
     public function UltimoID()
-{
-    $banco = Banco::conectar();
-    return $banco->lastInsertId();
-}
-public function finalizarPedido()
-{
-    $sql = "UPDATE pedidos 
+    {
+        $banco = Banco::conectar();
+        return $banco->lastInsertId();
+    }
+    public function finalizarPedido()
+    {
+        $sql = "UPDATE pedidos 
             SET id_enderecos_fk = ?, 
                 observacoes = ?
             WHERE id = ? 
               AND id_usuarios_fk = ? 
               AND status = 'pendente'";
 
-    $banco = Banco::conectar();
-    $comando = $banco->prepare($sql);
-    $comando->execute([
-        $this->id_enderecos_fk,
-        $this->observacoes,
-        $this->id,
-        $this->id_usuarios_fk
-    ]);
-    Banco::desconectar();
-    return $comando->rowCount();
-}
-//listar por id
-public function BuscarPedidosPeloID()
-{
-    $sql = "SELECT * FROM pedidos WHERE id = ?;";
-    $banco = Banco::conectar();
-    $comando = $banco->prepare($sql);
-    $comando->execute([
-        $this->id
-    ]);
-    $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
-    Banco::desconectar();
-    return $arr_resultado;
-}
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_enderecos_fk,
+            $this->observacoes,
+            $this->id,
+            $this->id_usuarios_fk
+        ]);
+        Banco::desconectar();
+        return $comando->rowCount();
+    }
+    //listar por id
+    public function BuscarPedidosPeloID()
+    {
+        $sql = "SELECT * FROM pedidos WHERE id = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 
-//buscar pedidos por usuário
-public function BuscarPedidosPeloIDUsuario()
-{
-    $sql = "SELECT * FROM pedidos WHERE id_usuarios_fk = ?;";
-    $banco = Banco::conectar();
-    $comando = $banco->prepare($sql);
-    $comando->execute([
-        $this->id_usuarios_fk
-    ]);
-    $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-    Banco::desconectar();
-    return $arr_resultado;
-}
+    //buscar pedidos por usuário
+    public function BuscarPedidosPeloIDUsuario()
+    {
+        $sql = "SELECT * FROM pedidos WHERE id_usuarios_fk = ?;";
+        $banco = Banco::conectar();
+        $comando = $banco->prepare($sql);
+        $comando->execute([
+            $this->id_usuarios_fk
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        Banco::desconectar();
+        return $arr_resultado;
+    }
 }

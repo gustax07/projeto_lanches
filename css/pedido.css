@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+
     min-height: 100vh;
 }
 
@@ -15,6 +15,12 @@
 .pedido a {
     text-decoration: none !important;
 }
+
+.pedido .produto-preco {
+       font-size: 32px;
+       font-weight: 800;
+       color: #D97A00;
+   }
 
 .pedido .img-destaque {
     width: 100%;

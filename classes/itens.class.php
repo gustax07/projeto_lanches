@@ -86,7 +86,10 @@ class Itens
     //listar item por id
     public function ListarPorID()
     {
-        $sql = "SELECT * FROM itens WHERE id = ?";
+        $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
+        FROM itens i 
+        LEFT JOIN promocoes p ON i.id = p.id_item_fk 
+        WHERE i.id = ?";
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);
         $comando->execute([

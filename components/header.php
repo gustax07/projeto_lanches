@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 include_once("includes/bootstrap_include.php");
-
+include_once('includes/sweet_alert2_include.php')
 
 ?>
 

@@ -14,9 +14,9 @@
     $pagina = max(1, (int)($_GET['pagina'] ?? 1));
     $itensPorPagina = 24;
 
+    $itens->id_categoria_fk = $idCategoria;
     if ($idCategoria) {
-        $itens->id_categoria_fk = $idCategoria;
-        $itens_listar = $itens->ListarPorCategoria($pagina, $itensPorPagina);
+        $itens_listar = $itens->ListarPorCategoria();
         $totalPaginas = $itens->QuantidadePaginas($itensPorPagina);
     } else {
         $itens_listar = $itens->Listar($pagina, $itensPorPagina);
@@ -74,6 +74,7 @@
         <div class="row g-4 justify-content-center">
 
             <?php foreach ($itens_listar as $i) { ?>
+     
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                     <a href="pedido.php?id-produto=<?= $i['id'] ?>">
                         <div class="produto-card">
@@ -226,32 +227,28 @@
         <?php endif; ?>
 
     </button>
-</div>
-<script>
-    const itens = <?php echo json_encode($itensCarrinho) ?>;
-    const btnCarrinho = document.getElementById('btnCarrinho');
-
-    function verificarCarrinho() {
-        if (itens == 0) {
-            btnCarrinho.removeAttribute('href')
-            btnCarrinho.style.opacity = 0.5;
-            btnCarrinho.style.cursor = 'not-allowed';
-        } else {
-            btnCarrinho.style.opacity = 1;
-            btnCarrinho.style.cursor = 'pointer';
-            btnCarrinho.setAttribute('href', 'finalizar_pedido.php');
+    <script>
+        const itens = <?php echo json_encode($itensCarrinho) ?>;
+        const btnCarrinho = document.getElementById('btnCarrinho');
+        
+        function verificarCarrinho() {
+            if (itens == 0) {
+                btnCarrinho.removeAttribute('href')
+                btnCarrinho.style.opacity = 0.5;
+                btnCarrinho.style.cursor = 'not-allowed';
+            } else {
+                btnCarrinho.style.opacity = 1;
+                btnCarrinho.style.cursor = 'pointer';
+                btnCarrinho.setAttribute('href', 'finalizar_pedido.php');
+            }
         }
-    }
-
-    <?php if (!isset($_SESSION['usuario'])) { ?>
+        
+        <?php if (!isset($_SESSION['usuario'])) { ?>
         window.addEventListener('load', function() {
             let btnAbrirCarrinho = document.querySelector('.btn-carrinho');
             btnAbrirCarrinho.remove();
         });
-    <?php } ?>
-
-    function Porcentagem(preco_original, preco_promocional) {
-        const porcentagem = ((preco_original - preco_promocional) / preco_original) * 100;
-        return porcentagem.toFixed(0);
-    }
-</script>
+        <?php } ?>
+        
+    </script>
+        </div>

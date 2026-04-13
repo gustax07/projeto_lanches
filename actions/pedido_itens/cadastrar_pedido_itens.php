@@ -1,57 +1,57 @@
 <?php
-    print_r($_POST);
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+header('Content-Type: application/json');
+session_start();
+$dados = json_decode(file_get_contents('php://input'), true);
+
+// Se não vier nada no JSON, barra aqui
+
+$id_usuario = (int) $_SESSION['usuario']['id'];
+$id_item = (int) $dados['id_item'];
+$quantidade = (int) $dados['quantidade'];
+
+//verificar se o id_item nao esta vazio
+if (empty($id_item) || empty($quantidade)) {
+    echo json_encode(['status' => 'ERRO', 'message' => 'Dados incompletos' ]);
+    exit();
 }
 
-require_once '../../classes/pedidos.class.php';
-require_once '../../classes/pedidos_itens.class.php';
+require_once('../../classes/pedidos.class.php');
+require_once('../../classes/pedidos_itens.class.php');
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../logar.php');
-    exit;
-}
+$pedidos = new Pedidos;
+$pedido_itens = new Pedido_Itens;
 
-if (!isset($_POST['id_item'])) {
-    echo 'ID do item não recebido';
-    exit;
-}
+//verificar se tem um pedido criado
+$pedidos->id_usuarios_fk = $id_usuario;
+$idPedidoAberto = $pedidos->BuscarPedidosAbertos();
 
-$idUsuario = $_SESSION['usuario']['id'];
-$idItem    = $_POST['id_item'];
+if (empty($idPedidoAberto)) {
+    //criar um novo pedido raiz
+    $pedidos->data_pedido = date('Y-m-d H:i:s');
+    $pedidos->status = 'pendente';
+    $pedidos->id_usuarios_fk = $id_usuario;
 
-$quantidade = $_POST['quantidade'] ?? 1;
-$quantidade = (int) $quantidade;
-if ($quantidade < 1) {
-    $quantidade = 1;
-} elseif ($quantidade > 99) {
-    $quantidade = 99;
-}
-
-$pedido = new Pedidos();
-$pedido->id_usuarios_fk = $idUsuario;
-
-$pedidoAberto = $pedido->BuscarPedidosAbertos();
-
-if (empty($pedidoAberto)) {
-    
-    $pedido->status = 'pendente';
-    $pedido->data_pedido = date('Y-m-d H:i:s');
-    $pedido->Cadastrar();
-
-    $idPedido = $pedido->UltimoID();
+    if (!$pedidos->Cadastrar()) {
+        echo json_encode(['status' => 'ERRO', 'message' => 'Erro ao criar pedido raiz' ]);
+        exit();
+    }
+    //pegar o id do pedido criado
+    $idPedidoAberto = $pedidos->BuscarPedidosAbertos();
+    $idPedido = $idPedidoAberto[0]['id'];
 } else {
-    $idPedido = $pedidoAberto[0]['id'];
+    //pegar o id do pedido já existente
+    $idPedido = $idPedidoAberto[0]['id'];
 }
 
-$_SESSION['pedido_aberto'] = $idPedido;
+$pedido_itens->id_pedidos_fk = $idPedido;
+$pedido_itens->id_itens_fk = $id_item;
+$pedido_itens->quantidade = $quantidade;
 
-$itemPedido = new Pedido_Itens();
-$itemPedido->id_pedidos_fk = $idPedido;
-$itemPedido->id_itens_fk   = $idItem;
-$itemPedido->quantidade    = $quantidade;
-
-$itemPedido->Cadastrar();
-
-header('Location: ../../index.php');
-exit;
+if ($pedido_itens->Cadastrar()) {
+    echo json_encode(['status' => 'sucesso', 'message' => 'Lanche adicionado ao carrinho!' ]);
+    exit();
+} else {
+    echo json_encode(['status' => 'ERRO', 'message' => 'Erro ao cadastrar lanche no carrinho' ]);
+    exit();
+}
+?>
