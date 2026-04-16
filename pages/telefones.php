@@ -1,61 +1,58 @@
+
 <?php
 session_start();
 $idUsuario = $_SESSION['usuario']['id'];
 
-if (!isset($_SESSION['usuario'])) {
-  header('Location: logar.php');
-  exit;
-}
-include_once("classes/telefones.class.php");
+if (!isset($_SESSION['usuario'])) { header('Location: logar.php'); exit; }
+
+include_once("../includes/bootstrap_include.php");
+include_once("../includes/sweet_alert2_include.php");
+
+require_once("classes/telefones.class.php");
 $telefones = new Telefones();
 
 $telefones->id_usuarios_fk = $idUsuario;
 $listar = $telefones->ListarPorID();
 $qtdTelefones = count($listar);
 
-include_once("header.php");
-include_once("includes/bootstrap_include.php");
-include_once("includes/sweet_alert2_include.php");
-
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Telefones</title>
   <style>
     .card {
       margin: auto;
-      width: 23vw;
-      margin-bottom: 10px;
+      width: 30vw;
+      margin-bottom: 100px;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       background-color: #fff;
       color: #333;
-
+      
     }
-
-    @media (max-width: 768px) {
+    
+    @media (min-width: 900px) {
       .card {
-        width: 90%;
+        width: 33vw;
       }
     }
-
+    @media (max-width: 768px) {
+      .card {
+        width: 100%;
+      }
+    }
+    
     .card-body {
       display: flex;
       align-items: center;
-
+      
     }
-
+    
     h2 {
       text-align: center;
       margin-top: 30px;
       margin-bottom: 30px;
     }
-
+    
     .card input {
       margin: 5px;
       padding: 6px;
@@ -65,12 +62,12 @@ include_once("includes/sweet_alert2_include.php");
       color: #333;
       font-size: 16px;
     }
-
+    
     .card select:disabled,
     input:disabled {
       color: rgba(165, 165, 165, 1) !important;
     }
-
+    
     .btnn {
       
       padding: 10px 20px;
@@ -81,13 +78,13 @@ include_once("includes/sweet_alert2_include.php");
       font-size: 16px;
       cursor: pointer;
     }
-
+    
     .btn-lg {
       background-color: #ffffff00 !important;
       border: none !important;
       font-size: larger !important;
     }
-
+    
     select {
       margin: 5px;
       padding: 6px;
@@ -97,14 +94,15 @@ include_once("includes/sweet_alert2_include.php");
       color: #333;
       font-size: 16px;
     }
+    
     .card-footerr{
       display: flex;
       justify-content: space-between;
     }
   </style>
-</head>
 
-<body>
+<div>
+<div class="header-backgroud"></div>
   <h2>Lista de Telefones registrados</h2>
 
 
@@ -270,45 +268,45 @@ include_once("includes/sweet_alert2_include.php");
 
     async function CadastrarTelefone(id) {
 
-      // id++
-      // let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
-      // let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
+      id++
+      let telefone = document.getElementById(`telefone${id}`)?.value ?? "";
+      let ddi = document.getElementById(`ddi${id}`)?.value ?? "";
 
-      // if (telefone == "" || ddi == "" || id == "" ) {
-      //   Swal.fire({
-      //     icon: 'error',
-      //     title: 'Oops...',
-      //     text: 'Preencha todos os campos!',
-      //     confirmButtonColor: '#d33',
-      //     confirmButtonText: 'Ok'
-      //   })
-      //   return
-      // }
-      // try {
-      //   const response = await fetch('./actions/telefones/cadastrar_telefones.php', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify({
-      //       telefone: telefone,
-      //       ddi: ddi
-      //     })
-      //   });
+      if (telefone == "" || ddi == "" || id == "" ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Preencha todos os campos!',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        })
+        return
+      }
+      try {
+        const response = await fetch('./actions/telefones/cadastrar_telefones.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            telefone: telefone,
+            ddi: ddi
+          })
+        });
 
-      //   const resultado = await response.json();
+        const resultado = await response.json();
 
-      //   if (resultado.status == "sucesso") {
-      //     let telefone1 = document.getElementById(`telefone${id}`);
-      //     let ddi1 = document.getElementById(`ddi${id}`);
-      //     ddi1.setAttribute("disabled", true);
-      //     telefone1.setAttribute("disabled", true);
-      //   } else {
-      //     console.log(resultado.msg);
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
+        if (resultado.status == "sucesso") {
+          let telefone1 = document.getElementById(`telefone${id}`);
+          let ddi1 = document.getElementById(`ddi${id}`);
+          ddi1.setAttribute("disabled", true);
+          telefone1.setAttribute("disabled", true);
+        } else {
+          console.log(resultado.msg);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     function EditarTelefone(id) {
@@ -381,6 +379,4 @@ include_once("includes/sweet_alert2_include.php");
   </script>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-</body>
-
-</html>
+</div>

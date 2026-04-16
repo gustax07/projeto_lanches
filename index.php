@@ -23,7 +23,7 @@
   <?php
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$pastaProjeto = '/projeto_lanches';
+$pastaProjeto = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches' : '/';
 if (strpos($url, $pastaProjeto) === 0) {
     $url = substr($url, strlen($pastaProjeto));
 }

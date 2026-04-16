@@ -56,13 +56,16 @@ WHERE p.id = ?;";
         SELECT 
             i.id,
             i.nome,
-            i.preco,
+            i.preco,pr.preco_promocional,
             i.imagem,
-            SUM(pi.quantidade) AS quantidade
+
+            SUM(pi.quantidade) AS quantidade,
+            SUM(pi.quantidade * COALESCE(pr.preco_promocional, i.preco)) AS total
         FROM pedido_itens pi
         INNER JOIN itens i ON i.id = pi.id_itens_fk
+        LEFT JOIN promocoes pr ON i.id = pr.id_item_fk
         WHERE pi.id_pedidos_fk = ?
-        GROUP BY i.id, i.nome, i.preco, i.imagem
+        GROUP BY i.id, i.nome, i.preco, pr.preco_promocional, i.imagem
     ";
 
         $banco = Banco::conectar();
@@ -185,12 +188,11 @@ AND id_itens_fk = ?";
 
     public function calcularTotalPedido($pedidoId)
     {
-        $sql = "
-        SELECT SUM(pi.quantidade * p.preco) AS total
-FROM pedido_itens pi
-JOIN itens p ON pi.id_itens_fk = p.id
-WHERE pi.id_pedidos_fk = ?
-    ";
+        $sql = "SELECT SUM(pi.quantidade * COALESCE(pr.preco_promocional, p.preco)) AS total 
+        FROM pedido_itens pi 
+        JOIN itens p ON pi.id_itens_fk = p.id 
+        LEFT JOIN promocoes pr ON p.id = pr.id_item_fk
+        WHERE pi.id_pedidos_fk = ?";
 
         $banco = Banco::conectar();
         $comando = $banco->prepare($sql);

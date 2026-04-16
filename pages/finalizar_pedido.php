@@ -7,8 +7,6 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: logar.php');
     exit;
 }
-include('./includes/sweet_alert2_include.php');
-include('header.php');
 
 require_once('./classes/pedidos.class.php');
 require_once('./classes/pedidos_itens.class.php');
@@ -20,6 +18,7 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
 
 $itensCarrinho = [];
 $total = 0;
+$total_promocional = 0;
 
 if (isset($_SESSION['usuario'])) {
     $pedido = new Pedidos();
@@ -32,7 +31,8 @@ if (isset($_SESSION['usuario'])) {
         $itensCarrinho = $pedidoItens->ListarPorPedido();
 
         foreach ($itensCarrinho as $item) {
-            $total += $item['preco'] * $item['quantidade'];
+            $total_promocional += $item['total'] ;
+            $total += $item['quantidade'] * $item['preco'];
         }
     }
 }
@@ -75,12 +75,16 @@ if (isset($_SESSION['usuario'])) {
                                 <span class="badge bg-light text-dark border"><?= $item['quantidade'] ?>x</span>
                             </div>
 
-                            <div class="col-2 text-end text-muted" style="font-size: 0.9rem;">
-                                <?= number_format($item['preco'], 2, ',', '.') ?>
+                            <div class="col-2 d-flex align-items-center justify-content-end text-end text-muted" style="font-size: 0.9rem;">
+                                <?php if ($item['preco_promocional'] > 0): ?>
+                               <span class="text-decoration-line-through"> <?= number_format($item['preco'], 2, ',', '.') ?></span> - <?= number_format($item['preco_promocional'], 2, ',', '.') ?>
+                                <?php else: ?>
+                                    <?= number_format($item['preco'], 2, ',', '.') ?>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-3 text-end fw-bold text-success">
-                                R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
+                                R$ <?= number_format($item['total'], 2, ',', '.') ?>
                             </div>
 
                         </div>
@@ -88,7 +92,13 @@ if (isset($_SESSION['usuario'])) {
 
                     <div class="resumo">
                         <span>Total:</span>
-                        <strong>R$ <?= number_format($total, 2, ',', '.') ?></strong>
+                        <strong>
+                            <?php if ($total_promocional > 0): ?>
+                               <span class="text-decoration-line-through"> R$ <?= number_format($total, 2, ',', '.') ?></span> - <span class="text-danger">R$ <?= number_format($total_promocional, 2, ',', '.') ?></span>
+                            <?php else: ?>
+                                R$ <?= number_format($total, 2, ',', '.') ?>
+                            <?php endif; ?>
+                    </strong>
                     </div>
                 <?php } ?>
             </div>

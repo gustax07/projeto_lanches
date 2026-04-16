@@ -109,6 +109,9 @@ include_once('includes/sweet_alert2_include.php')
                             <div class="d-grid gap-2">
                               <a href="conta.php" class="btn btn-outline-dark">Minha Conta</a>
                             </div>
+                            <div class="d-grid gap-2">
+                              <a href="telefones.php" class="btn btn-outline-dark">Meus Telefones</a>
+                            </div>
 
                           </div>
                         </form>
@@ -147,7 +150,7 @@ include_once('includes/sweet_alert2_include.php')
 
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                           <div class="d-grid gap-2">
-                            <a type="button" href="meus_pedidos.php" target="_parent" class="btn btn-outline-dark">ver meus pedidos </a>
+                            <a type="button" href="meus_pedidos.php" class="btn btn-outline-dark">ver meus pedidos </a>
                           </div>
                         </div>
 

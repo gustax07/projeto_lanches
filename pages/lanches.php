@@ -10,19 +10,6 @@
 
     $itens = new Itens();
 
-
-    $pagina = max(1, (int)($_GET['pagina'] ?? 1));
-    $itensPorPagina = 24;
-
-    $itens->id_categoria_fk = $idCategoria;
-    if ($idCategoria) {
-        $itens_listar = $itens->ListarPorCategoria();
-        $totalPaginas = $itens->QuantidadePaginas($itensPorPagina);
-    } else {
-        $itens_listar = $itens->Listar($pagina, $itensPorPagina);
-        $totalPaginas = $itens->QuantidadePaginas($itensPorPagina);
-    }
-
     $itensCarrinho = [];
 
     if (isset($_SESSION['usuario'])) {
@@ -46,17 +33,18 @@
         return round($porcentagem, 0);
     }
     ?>
-    <div class="col-auto mb-5 mt-0 p-0 mx-0">
+    <div class="header-backgroud" style="height: 150px;"></div>
+    <div class="col-auto mt-0 p-0 mx-0" style="background-color: #e3e0e0;">
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/banner_1_burguer.png" class="img-fluid w-100">
+                <div class="carousel-item active d-flex justify-content-center">
+                    <img src="images/banner_1_burguer.png" loading="lazy" class="img-fluid">
                 </div>
-                <div class="carousel-item">
-                    <img src="images/banner_2_burguer.png" class="img-fluid w-100">
+                <div class="carousel-item d-flex justify-content-center">
+                    <img src="images/banner_2_burguer.png" loading="lazy" class="img-fluid">
                 </div>
-                <div class="carousel-item">
-                    <img src="images/banner_3_burguer.png" class="img-fluid w-100">
+                <div class="carousel-item d-flex justify-content-center">
+                    <img src="images/banner_3_burguer.png" loading="lazy" class="img-fluid">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -71,42 +59,16 @@
     </div>
 
     <div class="container-fluid mt-5">
-        <div class="row g-4 justify-content-center">
-
-            <?php foreach ($itens_listar as $i) { ?>
-     
-                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <a href="pedido.php?id-produto=<?= $i['id'] ?>">
-                        <div class="produto-card">
-                            <div class="produto-img-container">
-                                <img src="images/<?= (!empty($i['imagem']) && file_exists("./images/" . $i['imagem'])) ? $i['imagem'] : "icon_burguer.png" ?>" class="produto-img" alt="<?= $i['nome'] ?>">
-                            </div>
-                            <div class="card-body p-2 d-flex flex-column">
-                                <?php if (!empty($i['preco_promocional'])): ?>
-                                    <h5 class="produto-titulo"><?= $i['nome'] ?>
-                                        <span class="alert alert-danger ms-1" role="alert"> <i class="bi bi-tag"></i> <?= Porcentagem($i['preco'], $i['preco_promocional']) ?>%</span>
-                                    </h5>
-                                    <div class="produto-preco">
-                                        <span class="text-muted text-decoration-line-through">R$ <?= $i['preco'] ?></span>
-                                        <span class=" fw-bold">R$ <?= $i['preco_promocional'] ?></span>
-                                    </div>
-                                <?php else: ?>
-                                    <h5 class="produto-titulo"><?= $i['nome'] ?></h5>
-                                    <span class="produto-preco">R$ <?= $i['preco'] ?></span>
-                                <?php endif; ?>
-
-                                <p class="produto-descricao mt-auto text-truncate"><?= $i['descricao'] ?></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            <?php } ?>
+        <div id="cards-pedidos" class="row justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
 
     <!-- MODAL CARRINHO -->
-    <div class="modal fade" id="modalCarrinho" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog scrollable ">
+    <div class="modal fade" data-bs-backdrop="true" id="modalCarrinho" tabindex="-1" aria-labelledby="modalCarrinhoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -120,17 +82,22 @@
                         <?php } else {
                         foreach ($itensCarrinho as $item) {     ?>
                             <div class="d-flex align-items-center border-bottom pb-2">
-                                <img src="./images/<?= $item['imagem'] ?>" width="80" class="zrounded">
-
+                                <div class="mx-2" style="width: 80px; height: 80px;">
+                                    <img src="./images/<?= $item['imagem'] ?>" loading="lazy" style="width: 100%; height: 100%;" class="img-fluid object-fit-cover">
+                                </div>
                                 <div class="flex-grow-1">
                                     <strong><?= $item['nome'] ?></strong><br>
                                     Quantidade: <?= $item['quantidade'] ?><br>
-                                    Preço: R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                                    Preço: <?php if ($item['preco_promocional'] > 0): ?>
+                                    <span class="text-decoration-line-through">R$ <?= number_format($item['preco'], 2, ',', '.') ?></span> - <span class="text-danger">R$ <?= number_format($item['preco_promocional'], 2, ',', '.') ?></span>
+                                    <?php else: ?>
+                                        R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div>
                                     <strong>
-                                        R$ <?= number_format($item['preco'] * $item['quantidade'], 2, ',', '.') ?>
+                                        R$ <?= number_format($item['total'], 2, ',', '.') ?>
                                     </strong>
 
                                     <form action="actions/pedido_itens/remover_predidos_itens.php" method="post">
@@ -228,9 +195,142 @@
 
     </button>
     <script>
+        function fecharModal() {
+            const modal = document.getElementById('modalCarrinho');
+            const modalElement = bootstrap.Modal.getInstance(modal);
+            modalElement.hide();
+        }
+
+        let todosOsItens = [];
+        window.indexAtual = 1;
+        const LIMITE_POR_PAGINA = 24;
+        //listar por categoria atrves da URL 
+        async function carregarCategoria() {
+            const url = new URL(window.location.href);
+            const id = url.searchParams.get('id');
+
+            const response = await fetch('actions/pedido_itens/listar_por_categoria.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_categoria: id
+                }),
+            });
+            const data = await response.json();
+            if (data.status == 'sucesso') {
+                todosOsItens = data.lista;
+
+                renderCards();
+                indexAtual++;
+                verificarBotaoCarregarMais(todosOsItens.length);
+            } else {
+                verificarBotaoCarregarMais(0);
+                alert(data.message);
+            }
+        }
+
+        function carregarCategoriaOuItens() {
+            const url = new URL(window.location.href);
+            const id = url.searchParams.get('id');
+
+            if (id) {
+                carregarCategoria();
+            } else {
+                carregarItens();
+            }
+        }
+
+        function renderCards() {
+            const cards = document.getElementById('cards-pedidos');
+            const spinner = document.querySelector('.spinner-border');
+
+            if (spinner) {
+                cards.innerHTML = ``;
+            }
+            todosOsItens.forEach(item => {
+
+                let htmlPreco = '';
+
+                if (item.preco_promocional && item.preco_promocional > 0) {
+                    htmlPreco = `
+                            <div class="produto-preco">
+                            <span class="text-muted text-decoration-line-through me-2">R$ ${item.preco}</span>
+                            <span class="text-danger fw-bold">R$ ${item.preco_promocional}</span>
+                            </div>`;
+                } else {
+                    htmlPreco = `
+                            <div class="produto-preco">
+                            <span class="fw-bold">R$ ${item.preco}</span>
+                            </div>`;
+                }
+                const cardHTML = `
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                        <a href="pedido.php?id-produto=${item.id}" class="text-decoration-none text-dark" >
+                        <div class="produto-card shadow-sm h-100">
+                        <div class="produto-img-container">
+                        <img src="images/${item.imagem}" class="produto-img img-fluid" alt="${item.nome}" loading="lazy">
+                        </div>
+                        <div class="card-body p-2 d-flex flex-column">
+                        <h5 class="produto-titulo fs-6">${item.nome}</h5>
+                        
+                        ${htmlPreco}
+                        
+                        <p class="produto-descricao mt-auto text-truncate small">${item.descricao}</p>
+                        </div>
+                        </div>
+                        </a>
+                        </div>`;
+                cards.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        window.carregarItens = async function() {
+            try {
+                const response = await fetch('actions/lanches/listar_lanches.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pagina: indexAtual
+                    }),
+                });
+                const data = await response.json();
+                if (data.status == 'sucesso') {
+                    todosOsItens = data.lista;
+                    renderCards();
+                    indexAtual++;
+                    verificarBotaoCarregarMais(todosOsItens.length);
+                } else {
+                    verificarBotaoCarregarMais(0);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar lanches:", error);
+            }
+        }
+        window.onload = carregarCategoriaOuItens();
+
+        async function verificarBotaoCarregarMais(pagina) {
+            let btnArea = document.getElementById('area-btn-carregar');
+
+            if (!btnArea) {
+                document.getElementById('cards-pedidos').insertAdjacentHTML('afterend', `
+        <div id="area-btn-carregar" class="col-12 text-center mt-4 mb-5"></div>`);
+                btnArea = document.getElementById('area-btn-carregar');
+            }
+
+            if (pagina == LIMITE_POR_PAGINA) {
+                btnArea.innerHTML = `<button class="btn btn-outline-primary" onclick="carregarItens()">Carregar mais lanches</button>`;
+            } else {
+                btnArea.innerHTML = `<p class="text-muted">Você chegou ao fim do cardápio.</p>`;
+            }
+        }
+
         const itens = <?php echo json_encode($itensCarrinho) ?>;
         const btnCarrinho = document.getElementById('btnCarrinho');
-        
+
         function verificarCarrinho() {
             if (itens == 0) {
                 btnCarrinho.removeAttribute('href')
@@ -242,13 +342,12 @@
                 btnCarrinho.setAttribute('href', 'finalizar_pedido.php');
             }
         }
-        
+
         <?php if (!isset($_SESSION['usuario'])) { ?>
-        window.addEventListener('load', function() {
-            let btnAbrirCarrinho = document.querySelector('.btn-carrinho');
-            btnAbrirCarrinho.remove();
-        });
+            window.addEventListener('load', function() {
+                let btnAbrirCarrinho = document.querySelector('.btn-carrinho');
+                btnAbrirCarrinho.remove();
+            });
         <?php } ?>
-        
     </script>
-        </div>
+</div>

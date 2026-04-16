@@ -39,7 +39,7 @@ function Porcentagem($preco_original, $preco_promocional)
                 </div>
             </div>
             <div class="d-flex flex-column col-md-4 col-sm-5 mt-3">
-                <h1 class="fw-bold"><?= $i['nome'] ?>
+                <h1 id="nome" class="fw-bold"><?= $i['nome'] ?>
                 <?php if (!empty($i['preco_promocional'])): ?>
                 <span class="alert alert-danger ms-1" role="alert"> <i class="bi bi-tag"></i> <?= Porcentagem($i['preco'], $i['preco_promocional']) ?>%</span>
                 <?php endif; ?>
@@ -77,6 +77,14 @@ function Porcentagem($preco_original, $preco_promocional)
     </div>
 </div>
     <script>
+
+        window.addEventListener('load', function() {
+            //enviar o id do produto para o listar_itens_pedido.php
+            const url = new URL(window.location.href);
+            const id = url.searchParams.get('id-produto');
+            console.log(id);
+        });
+
         var preco_promocionall = document.getElementById('preco_promocional');
         var precoo = document.getElementById('preco');
 

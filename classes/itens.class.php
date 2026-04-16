@@ -11,9 +11,8 @@ class Itens
     public $id_categoria_fk;
 
     //listar os itens
-    public function Listar($pagina = 1, $itensPorPagina = 5)
+    public function Listar($limit, $offset)
 {
-    $offset = ($pagina - 1) * $itensPorPagina;
 
     $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
             FROM itens i 
@@ -25,7 +24,7 @@ class Itens
 
     $banco = Banco::conectar();
     $comando = $banco->prepare($sql);
-    $comando->bindValue(':limit', $itensPorPagina, PDO::PARAM_INT);
+    $comando->bindValue(':limit', $limit, PDO::PARAM_INT);
     $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
     $comando->execute();
     

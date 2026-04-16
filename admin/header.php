@@ -144,7 +144,7 @@ $base_path = ($_SERVER['HTTP_HOST'] == 'localhost') ? '/projeto_lanches/admin/' 
                     </div>
 
                     <div class="d-grid gap-2">
-                      <a type="button" href="../actions/clientes/sair.php" target="_parent" class="btn btn-outline-dark text-dark">Telefones</a>
+                      <a type="button" href="../telefones.php" target="_parent" class="btn btn-outline-dark text-dark">Telefones</a>
                     </div>
 
                     <div class="d-grid gap-2">
