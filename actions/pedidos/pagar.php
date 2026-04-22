@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Pedidos;
-use App\Pedido_Itens;
+use App\Pedidos_Itens;
 $pedidoServico = new Pedidos();
-$pedidoItensService = new Pedido_Itens();
+$pedidoItensService = new Pedidos_Itens();
 
 
 use Dotenv\Dotenv;

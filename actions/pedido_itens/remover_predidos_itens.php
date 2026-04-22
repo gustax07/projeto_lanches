@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . '/../../vendor/autoload.php';
-    use App\Pedido_Itens;
-    $pedidoItem = new Pedido_Itens();
+    use App\Pedidos_Itens;
+    $pedidoItem = new Pedidos_Itens();
     
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

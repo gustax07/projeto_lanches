@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Pedidos;
-use App\Pedido_Itens;
-$pedidoItens = new Pedido_Itens();
+use App\Pedidos_Itens;
+$pedidoItens = new Pedidos_Itens();
 $pedidos = new Pedidos();
 
 $pedidos->id = $_GET['id'];
