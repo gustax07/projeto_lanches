@@ -1,9 +1,12 @@
 <?php
+    require_once __DIR__ . '/../../vendor/autoload.php';
+    use App\Pedido_Itens;
+    $pedidoItem = new Pedido_Itens();
+    
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once('../../classes/pedidos_itens.class.php');
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../../index.php');
@@ -12,7 +15,6 @@ if (!isset($_SESSION['usuario'])) {
 
 if (isset($_POST['id_item']) && isset($_POST['id_pedido'])) {
     
-    $pedidoItem = new Pedido_Itens();
     $pedidoItem->id_pedidos_fk = $_POST['id_pedido'];
     $pedidoItem->id_itens_fk   = $_POST['id_item'];
 

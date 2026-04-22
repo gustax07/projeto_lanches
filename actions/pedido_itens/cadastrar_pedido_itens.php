@@ -1,9 +1,23 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedidos;
+use App\Pedidos_Itens;
+$pedidos = new Pedidos();
+$pedido_itens = new Pedidos_Itens();
+
 header('Content-Type: application/json');
 session_start();
 $dados = json_decode(file_get_contents('php://input'), true);
 
-// Se não vier nada no JSON, barra aqui
+if (empty($dados)) {
+    echo json_encode(['status' => 'ERRO', 'message' => 'Dados vazios' ]);
+    exit();
+}
+
+if (!isset($_SESSION['usuario'])) {
+    echo json_encode(['status' => 'ERRO', 'message' => 'Nenhum usuário logado, Faça login ou cadastre-se primeiro!' ]);
+    exit();
+}
 
 $id_usuario = (int) $_SESSION['usuario']['id'];
 $id_item = (int) $dados['id_item'];
@@ -15,11 +29,6 @@ if (empty($id_item) || empty($quantidade)) {
     exit();
 }
 
-require_once('../../classes/pedidos.class.php');
-require_once('../../classes/pedidos_itens.class.php');
-
-$pedidos = new Pedidos;
-$pedido_itens = new Pedido_Itens;
 
 //verificar se tem um pedido criado
 $pedidos->id_usuarios_fk = $id_usuario;
@@ -28,7 +37,6 @@ $idPedidoAberto = $pedidos->BuscarPedidosAbertos();
 if (empty($idPedidoAberto)) {
     //criar um novo pedido raiz
     $pedidos->data_pedido = date('Y-m-d H:i:s');
-    $pedidos->status = 'pendente';
     $pedidos->id_usuarios_fk = $id_usuario;
 
     if (!$pedidos->Cadastrar()) {

@@ -1,7 +1,13 @@
 <?php
-
-require_once('../../classes/usuarios.class.php');
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
 $funcionarios = new Usuarios();
+
+
+if (!isset($_GET['id'])){
+    header('Location: ../../admin/gerenciar_funcionarios.php');
+    exit;
+}
 $funcionarios->id = $_GET['id'];
 
 if ($funcionarios->Excluir()){

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Promocoes;
+$promocoes = new Promocoes();
 
 require_once('../restrict.php');
 $restrict = new restrict();
@@ -34,8 +37,6 @@ if ($validade < $dataAtual){
     exit();
 }
 
-require_once('../../classes/promocoes.php');
-$promocoes = new Promocoes();
 $promocoes->id = $id;
 $promocoes->nome_promocao = $nome;
 $promocoes->preco_promocional = $preco;

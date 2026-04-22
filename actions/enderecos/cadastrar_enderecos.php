@@ -1,7 +1,8 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Enderecos;
+$enderecos = new Enderecos();
 session_start();
-
-include('../../classes/enderecos.class.php');
 
 
 if (!isset($_SESSION['usuario'])) {
@@ -9,7 +10,6 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 } else {
     $idUsuario = $_SESSION['usuario']['id'];
-    $enderecos = new Enderecos();
     $enderecos->id_usuarios_fk = $idUsuario;
     $enderecos->rua = strip_tags($_POST['rua']);
     $enderecos->numero = strip_tags($_POST['numero']);

@@ -1,5 +1,7 @@
 <?php
-include('../classes/categorias.class.php');
+
+require_once __DIR__ . '../../vendor/autoload.php';
+use App\Categorias;
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
 $categorias->nome = $_GET['pesquisar'] ?? '';

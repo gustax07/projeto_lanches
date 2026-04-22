@@ -1,12 +1,13 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';  
+use App\Categorias;
+$categorias = new Categorias();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     header('Location: ../../index.php?err=acesso_nao_autorizado');
     exit;
 }
 
-include_once '../../classes/categorias.class.php';
-$categorias = new Categorias();
 $categorias->id = $_GET['id'];
 
 if (!empty($_GET['id'])) {

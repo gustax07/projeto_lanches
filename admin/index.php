@@ -1,9 +1,14 @@
 <?php
-require_once('../classes/dashboard.class.php');
+
+require_once __DIR__ . '../../vendor/autoload.php';
+use App\Dashboard;
+use App\Pedidos_Itens;
+
 $dashboard = new Dashboard();
 $dashboard_listar = $dashboard->ListarTodos()[0];
-require_once('../classes/pedidos_itens.class.php');
-$pedidos_itens = new Pedido_Itens();
+
+$pedidos_itens = new Pedidos_Itens();
+
 $produtos_mais_vendidos = $pedidos_itens->listarTop5Vendidos();
 $pedidos_status = $pedidos_itens->StatusFinanceiro();
 $status_dos_pedidos = $pedidos_itens->StatusPedidos();

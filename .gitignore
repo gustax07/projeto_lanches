@@ -1,5 +1,6 @@
 .env
 ca.pem
-# /vendor/
+/vendor/
 *.log
-vendor/
+.vscode
+sync_projeto.sh

@@ -1,59 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
    const carregarPagina = async (url, salvarNoHistorico = true) => {
     const root = document.getElementById('root');
     
+    // 1. Criamos objetos de URL para comparar
+    const novaURL = new URL(url, window.location.origin);
+    const urlAtual = new URL(window.location.href);
+
+    // 2. Verifica se mudou a página ou só o parâmetro (ID)
+    // Se o pathname for igual (ex: ambos são '/'), é apenas um filtro!
+    const MesmaPagina = novaURL.pathname === urlAtual.pathname;
+
     try {
-        // Efeito de carregamento
         root.style.opacity = '0.4';
 
-        // 1. VOLTAMOS PRO BÁSICO! Sem headers malucos. O navegador já manda a sessão nativamente.
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
         
-        if (!response.ok) throw new Error("Página não encontrada no servidor");
+        if (!response.ok) throw new Error("Erro de servidor");
         
         const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // 2. Substitui o miolo
-        const novoConteudo = doc.getElementById('root');
-        if (novoConteudo) {
-            root.innerHTML = novoConteudo.innerHTML;
-        }
+        root.innerHTML = html;
 
-        // 3. Atualiza o botão do carrinho (se existir)
-        const novoCarrinho = doc.querySelector('.btn-carrinho');
-        const carrinhoAtual = document.querySelector('.btn-carrinho');
-        if (novoCarrinho && carrinhoAtual) {
-            carrinhoAtual.innerHTML = novoCarrinho.innerHTML;
-        }
-            
-        // 4. Salva a URL nova (Usando o response.url para capturar redirecionamentos do PHP)
         if (salvarNoHistorico) {
-            window.history.pushState({}, "", response.url);
+            window.history.pushState({}, "", url);
         }
         
-        // 5. Re-executa os scripts
+        // --- MOTOR DE SCRIPTS ---
         const scripts = root.querySelectorAll('script');
         scripts.forEach(oldScript => {
             const newScript = document.createElement('script');
-            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-            newScript.appendChild(document.createTextNode(`{ ${oldScript.innerHTML} }`));
+            Array.from(oldScript.attributes).forEach(attr => {
+                newScript.setAttribute(attr.name, attr.value);
+            });
+            if (oldScript.textContent) {
+                newScript.textContent = oldScript.textContent;
+            }
             if (oldScript.parentNode) {
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             }
         });
 
-        window.scrollTo(0, 0);
+        // 3. O PULO DO GATO: Só scrolla se NÃO for a mesma página
+        if (!MesmaPagina) {
+            window.scrollTo(0, 0);
+        }
         
     } catch (erro) {
-        console.error("Erro na requisição SPA:", erro);
-        if (salvarNoHistorico) window.location.href = url; // Dá o F5 de emergência
+        console.error("SPA Quebrou:", erro);
+        window.location.href = url; 
     } finally {
         root.style.opacity = '1';
     }
 };
+
 
     document.body.addEventListener('click', e => {
         const link = e.target.closest('a');

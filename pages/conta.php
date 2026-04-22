@@ -1,10 +1,5 @@
-<?php
-
-$usuario = $_SESSION['usuario'];
-
-?>
 <link rel="stylesheet" href="css/seguranca.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" />
+<script src="js/conta.js" defer></script>
 <title>Minha conta</title>
 
 <div class="conta">
@@ -12,29 +7,73 @@ $usuario = $_SESSION['usuario'];
     <div class="container mb-5">
 
         <h3 class="text-center mb-4">
-            <span class="material-symbols-outlined icon-title">person</span>
+            <span class="bi bi-person-fill icon-title"></span>
             Minha Conta
         </h3>
 
         <div class="row g-4">
 
             <div class="col-12 col-md-5">
-                <div class="card card-box h-100">
-                    <div class="card-body text-center">
+                <div class="card card-box p-2 h-100">
+                    <div class="card-body">
 
-                        <img src="images/<?= !empty($usuario['foto']) ? $usuario['foto'] : 'foto_perfil_default.png' ?>" class="foto-perfil mb-3">
-                        <h5 class="mb-1"><?= htmlspecialchars($usuario['nome']) ?></h5>
-                        <p class="text-muted mb-3"><?= htmlspecialchars($usuario['email']) ?></p>
-
-                        <div class="info-item">
-                            <span class="material-symbols-outlined">badge</span>
-                            <?= $usuario['id_tipo_fk'] == 0 ? 'Cliente' : 'Funcionário' ?>
+                        <div class="d-flex justify-content-center">
+                            <img id="imgPerfi" class="foto-perfil placeholder mb-3">
                         </div>
 
+                        <h5 class="nome-user mb-3 text-center">
+                            <span id="nomePerfil">
+                                <p class="placeholder-glow">
+                                    <span class="placeholder col-12"></span>
+                                </p>
+                            </span>
+                        </h5>
 
-                        <div class="info-item">
-                            <span class="material-symbols-outlined">calendar_month</span>
-                            criado em: <?= date('d/m/Y', strtotime($usuario['data_cadastro'])) ?>
+                        <hr>
+
+                        <div class="container">
+
+                            <div class="info-item mb-1">
+                                <i class="bi bi-envelope-at-fill"></i>
+                                <span class="titulo-item">Email</span>
+                                <p id="emailPerfil" class="placeholder-glow">
+                                    <span class="placeholder col-12"></span>
+                                </p>
+                            </div>
+
+                            <div class="info-item mb-1">
+                                <i class="bi bi-person-vcard-fill"></i>
+                                <span class="titulo-item">Tipo de Conta</span>
+                                <p id="cargoPerfil" class="placeholder-glow">
+                                    <span class="placeholder col-12"></span>
+                                </p>
+                            </div>
+
+
+                            <div class="info-item mb-1">
+                                <i class="bi bi-calendar-date-fill"></i>
+                                <span class="titulo-item">Data de cadastro</span>
+                                <p id="dataCadastroPerfil" class="placeholder-glow">
+                                    <span class="placeholder col-12"></span>
+                                </p>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-warning w-100 text-white">
+                                    <i class="bi bi-pencil-square"></i> Alterar Foto de Perfil
+                                </button>
+                                <button class="btn btn-warning w-100 text-white">
+                                    <i class="bi bi-box-arrow-right"></i> Editar Informações
+                                </button>
+                                <button class="btn btn-warning w-100 text-white">
+                                    <i class="bi bi-lock-fill"></i> Alterar Senha
+                                </button>
+                                <button class="btn btn-danger w-100 text-white">
+                                    <i class="bi bi-trash"></i> Excluir Conta
+                                </button>
+
+                            </div>
+
                         </div>
 
                     </div>
@@ -51,13 +90,11 @@ $usuario = $_SESSION['usuario'];
                         <form action="actions/clientes/editar_clientes.php" method="POST">
 
                             <div class="mb-3">
-                                <input type="text" name="nome" id="nome" class="form-control"
-                                    value="<?= htmlspecialchars($usuario['nome']) ?>">
+                                <input type="text" name="nome" id="nome" class="form-control">
                             </div>
 
                             <div class="mb-3">
-                                <input type="email" name="email" id="email" class="form-control"
-                                    value="<?= htmlspecialchars($usuario['email']) ?>">
+                                <input type="email" name="email" id="email" class="form-control">
                             </div>
 
                             <hr>
@@ -92,4 +129,7 @@ $usuario = $_SESSION['usuario'];
         </div>
 
     </div>
+    <script>
+
+    </script>
 </div>

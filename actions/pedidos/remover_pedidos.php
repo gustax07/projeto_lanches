@@ -1,12 +1,12 @@
 <?php
-
-include_once("../../classes/pedidos_itens.class.php");
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedidos;
+use App\Pedido_Itens;
 $pedidoItens = new Pedido_Itens();
-$pedidoItens->id_pedidos_fk = $_GET['id'];
-
-include_once("../../classes/pedidos.class.php");
 $pedidos = new Pedidos();
+
 $pedidos->id = $_GET['id'];
+$pedidoItens->id_pedidos_fk = $_GET['id'];
 
 if ($pedidoItens->Excluir()){
     if ($pedidos->Excluir()){

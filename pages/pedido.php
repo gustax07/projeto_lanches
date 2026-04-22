@@ -1,10 +1,11 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Itens;
 
-require_once('classes/itens.class.php');
 $item = new Itens;
 $id = $_GET['id-produto'];
 $item->id = $id;
-$id_usuario = $_SESSION['usuario']['id'];
+
 $i = $item->ListarPorID()[0];
 
 function Porcentagem($preco_original, $preco_promocional)
@@ -77,12 +78,11 @@ function Porcentagem($preco_original, $preco_promocional)
     </div>
 </div>
     <script>
-
+{
         window.addEventListener('load', function() {
             //enviar o id do produto para o listar_itens_pedido.php
             const url = new URL(window.location.href);
             const id = url.searchParams.get('id-produto');
-            console.log(id);
         });
 
         var preco_promocionall = document.getElementById('preco_promocional');
@@ -117,13 +117,31 @@ function Porcentagem($preco_original, $preco_promocional)
                         allowOutsideClick: false,
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = 'index.php';
+                                window.location.href = '/';
                             }else if (result.isDismissed) {
                                 window.location.href = 'pages/carrinho.php';
                             }
                     });
                 } else {
-                    alert(data.message);
+                    Swal.fire({
+                        title: 'Erro',
+                        text: data.message,
+                        icon: 'error',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Login',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cadastre-se',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/logar';
+                            }else if (result.isDismissed) {
+                                window.location.href = '/cadastrar';
+                            }
+                    });
+
                 }
 
         }
@@ -187,6 +205,6 @@ function Porcentagem($preco_original, $preco_promocional)
             verificarQuantidade();
             CalcularTotal(preco, preco_promocional);
         }
-
+                    }
     </script>
 

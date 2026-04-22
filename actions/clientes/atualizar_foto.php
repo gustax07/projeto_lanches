@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
+$usuarios = new Usuarios();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../../index.php?err=acesso_nao_autorizado');
@@ -15,7 +18,7 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-require_once('../../classes/usuarios.class.php');
+
 $foto = $_FILES['foto'];
 if (empty($foto['name'])) {
     header('Location: ../../index.php?err=foto_vazia');
@@ -31,7 +34,6 @@ $pasta = '../../images/';
 
 move_uploaded_file($foto['tmp_name'], $pasta . $nomeFoto);
 
-$usuarios = new Usuarios();
 $usuarios->id = $_SESSION['usuario']['id'];
 $usuarios->foto = $nomeFoto ?? 'foto_perfil_default.png';
 

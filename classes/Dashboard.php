@@ -1,8 +1,8 @@
 <?php
 
-require_once("banco.class.php");
+namespace App;
 
-class Dashboard {
+class Dashboard extends Banco {
     public function ListarTodos() {
         $sql = "SELECT
                 (SELECT COUNT(*) FROM categorias) as total_categorias,
@@ -13,10 +13,10 @@ class Dashboard {
                 (SELECT COUNT(*) FROM tipos) as total_cargos,
                 (SELECT COUNT(*) FROM usuarios WHERE id_tipo_fk != 0) as total_funcionarios,
                 (SELECT COUNT(*) FROm usuarios WHERE id_tipo_fk = 0) as total_clientes";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute();
-        Banco::desconectar();
+        
         return $comando->fetchAll();
     }
 }

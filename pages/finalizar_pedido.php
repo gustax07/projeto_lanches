@@ -1,4 +1,8 @@
 <?php
+    require_once __DIR__ . '/../vendor/autoload.php';
+    use App\Enderecos;
+    use App\Pedidos;
+    use App\Pedidos_Itens;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,9 +12,6 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-require_once('./classes/pedidos.class.php');
-require_once('./classes/pedidos_itens.class.php');
-require_once('./classes/enderecos.class.php');
 $enderecos = new Enderecos();
 $idUsuario = $_SESSION['usuario']['id'];
 $enderecos_listar = $enderecos->ListarPorID($idUsuario);
@@ -26,7 +27,7 @@ if (isset($_SESSION['usuario'])) {
     $pedidoAberto = $pedido->BuscarPedidosAbertos();
 
     if (!empty($pedidoAberto)) {
-        $pedidoItens = new Pedido_Itens();
+        $pedidoItens = new Pedidos_Itens();
         $pedidoItens->id_pedidos_fk = $pedidoAberto[0]['id'];
         $itensCarrinho = $pedidoItens->ListarPorPedido();
 
@@ -127,6 +128,7 @@ if (isset($_SESSION['usuario'])) {
                                             type="radio"
                                             name="id_endereco"
                                             value="<?= $e['id'] ?>"
+                                            checked="checked"
                                             required>
 
                                         <div>
@@ -140,7 +142,7 @@ if (isset($_SESSION['usuario'])) {
 
                         <?php } ?>
 
-                        <a class="btn btn-warning mt-3 text-white" href="enderecos.php"><i class="bi bi-plus-lg"></i> Adicionar novo endereço</a>
+                        <a class="btn btn-warning mt-3 text-white" href="/enderecos"><i class="bi bi-plus-lg"></i> Adicionar novo endereço</a>
 
                     </div>
 

@@ -1,0 +1,47 @@
+:root {
+    --color-button-primary: #FFC781;
+    --color-preco: #D97A00;
+    --color-button-secondary: #dc4646;
+}
+.button-tasty {
+    background-color: var(--color-button-primary);
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button-tasty:hover {
+    background-color: #ffb84f;
+}
+
+.preco {
+    color: var(--color-preco);
+}
+
+.button-tasty-cancel {
+    background-color: var(--color-button-secondary);
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button-tasty-cancel:hover {
+    background-color: #ff7b00;
+}
+
+@media (max-width: 768px) {
+    .button-tasty {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .button-tasty-cancel {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

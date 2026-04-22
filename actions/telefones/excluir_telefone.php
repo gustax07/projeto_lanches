@@ -1,12 +1,12 @@
 <?php
-// Endpoint para excluir telefone via JSON POST
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Telefones;
+$telefones = new Telefones();
+
 header('Content-Type: application/json; charset=utf-8');
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
-
-require_once('../../classes/telefones.class.php');
-$telefones = new Telefones();
 
 if (!is_array($data) || !isset($data['id'])) {
     echo json_encode([

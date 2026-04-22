@@ -1,6 +1,9 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedidos;
+$pedido = new Pedidos();
+
 session_start();
-require_once '../../classes/pedidos.class.php';
 
 $idUsuario   = $_SESSION['usuario']['id'];
 $idPedido    = $_POST['id_pedido'];
@@ -12,7 +15,6 @@ if (!is_numeric($idPedido) || !is_numeric($idEndereco)) {
     exit();
 }
 
-$pedido = new Pedidos();
 $pedido->id = $idPedido;
 $pedido->id_usuarios_fk = $idUsuario;
 $pedido->id_enderecos_fk = $idEndereco;

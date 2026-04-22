@@ -1,10 +1,10 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Itens;
+$itens = new Itens();
 
 header('Content-Type: application/json');
 
-require_once('../../classes/itens.class.php');
-
-$itens = new Itens();
 
 $dados = json_decode(file_get_contents('php://input'), true);
 $id_categoria = $dados['id_categoria'];

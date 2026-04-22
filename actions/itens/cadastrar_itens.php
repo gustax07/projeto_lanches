@@ -1,14 +1,15 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Itens;
+$itens = new Itens();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
-require_once('../../classes/itens.class.php');
 
 // Verificar se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $itens = new Itens();
 
     // Coletar dados do formulário
     $nome = strip_tags($_POST['nome'] ?? '');

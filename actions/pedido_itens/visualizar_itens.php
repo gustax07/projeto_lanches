@@ -1,11 +1,17 @@
 <?php
-require_once("../../classes/pedidos_itens.class.php");
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedido_Itens;
+use App\Pedidos;
 $pedidoItens = new Pedido_Itens();
+$pedidos = new Pedidos();
+
+if (!isset($_GET['id'])) {
+    echo "Nenhum pedido encontrado.";
+    exit;
+}
 $pedidoItens->id_pedidos_fk = $_GET['id'];
 $itens_pedido = $pedidoItens->ListarPedidoInnerJoinComID();
 $id = $_GET['id'];
-include_once('../../classes/pedidos.class.php');
-$pedidos = new Pedidos();
 $pedidos->id = $_GET['id'];
 $pedidos_listar_status = $pedidos->ListarStatusComID();
 $total = 0;

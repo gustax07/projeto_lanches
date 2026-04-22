@@ -1,11 +1,12 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\HorarioDias;
+$horario_dia = new HorarioDias();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'erro', 'message' => 'Método de requisição inválido.']);
     exit;
 }
-require_once('../../classes/horarios_dias.class.php');
-$horario_dia = new HorarioDias();
 
 $dados = json_decode(file_get_contents('php://input'), true);
 $id = $dados['id'];

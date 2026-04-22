@@ -1,10 +1,11 @@
 <?php
 
-require_once('../classes/promocoes.php');
+require_once __DIR__ . '../../vendor/autoload.php';
+use App\Promocoes;
+use App\Itens;
 $promocoes = new Promocoes();
 $promocoes_listar = $promocoes->Listar();
 
-require_once('../classes/itens.class.php');
 $itens = new Itens();
 $itens_listar = $itens->ListarPromocoes();
 

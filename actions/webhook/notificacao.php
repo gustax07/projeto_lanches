@@ -5,7 +5,7 @@ error_log("WEBHOOK EXECUTOU");
 file_put_contents(__DIR__ . '/debug.txt', "WEBHOOK EXECUTOU\n", FILE_APPEND);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once('../../classes/pedidos.class.php');
+use App\Pedidos;
 
 use Dotenv\Dotenv;
 use MercadoPago\MercadoPagoConfig;

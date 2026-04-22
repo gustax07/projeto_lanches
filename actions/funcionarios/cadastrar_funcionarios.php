@@ -1,8 +1,8 @@
 <?php
-
-require_once('../../classes/usuarios.class.php');
-print_r($_POST);
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
 $funcionarios = new Usuarios();
+
 $funcionarios->nome = $_POST['nome'];
 $funcionarios->email = $_POST['email'];
 $funcionarios->senha = $_POST['senha'];

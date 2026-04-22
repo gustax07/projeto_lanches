@@ -1,13 +1,14 @@
 <?php
 
-require('../classes/itens.class.php');
+require_once __DIR__ . '../../vendor/autoload.php';
+use App\Itens;
+use App\Categorias;
 $itens = new Itens();
 $itens_listar = $itens->ListarInnerJoin();
 
 $pesquisa = $_GET['pesquisar'] ?? '';
 $listar_por_nome = $itens->PesquisarPorNome($pesquisa);
 
-require('../classes/categorias.class.php');
 $categorias = new Categorias();
 $categorias_listar = $categorias->Listar();
 

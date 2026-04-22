@@ -1,6 +1,6 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 include_once("includes/bootstrap_include.php");
@@ -11,7 +11,7 @@ include_once('includes/sweet_alert2_include.php')
 <link rel="stylesheet" href="css/header.css">
 <script src="js/header.js" defer></script>
 <style>
-  .alert {
+ .header .alert {
     font-size: 14px !important;
     padding: 2px 4px !important;
   }
@@ -26,7 +26,7 @@ include_once('includes/sweet_alert2_include.php')
 
       <!-- Logo/Título centralizado -->
       <h1 class="logo-title">
-        <a href="/projeto_lanches/">Tasty Burguer</a>
+        <a href="/">Tasty Burguer</a>
       </h1>
       <div class="col d-flex align-items-end mx-3 mt-2">
         <div id="status">
@@ -39,8 +39,8 @@ include_once('includes/sweet_alert2_include.php')
       <?php if (!isset($_SESSION['usuario'])): ?>
         <!-- Botões direita (NÂO LOGADO) -->
         <div class="header-buttons">
-          <a href="logar.php" target="_parent" class="btn-login">Logar</a>
-          <a href="cadastrar.php" target="_parent" class="btn-register">Cadastre-se</a>
+          <a href="/logar" target="_parent" class="btn-login">Logar</a>
+          <a href="/cadastrar" target="_parent" class="btn-register">Cadastre-se</a>
         </div>
 
       <?php else: ?>
@@ -107,10 +107,10 @@ include_once('includes/sweet_alert2_include.php')
                             </div>
 
                             <div class="d-grid gap-2">
-                              <a href="conta.php" class="btn btn-outline-dark">Minha Conta</a>
+                              <a href="/conta" class="btn btn-outline-dark">Minha Conta</a>
                             </div>
                             <div class="d-grid gap-2">
-                              <a href="telefones.php" class="btn btn-outline-dark">Meus Telefones</a>
+                              <a href="/telefones" class="btn btn-outline-dark">Meus Telefones</a>
                             </div>
 
                           </div>
@@ -131,7 +131,7 @@ include_once('includes/sweet_alert2_include.php')
 
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                           <div class="d-grid gap-2">
-                            <a type="button" href="enderecos.php" class="btn btn-outline-dark">Endereços</a>
+                            <a type="button" href="/enderecos" class="btn btn-outline-dark">Endereços</a>
                           </div>
                         </div>
 
@@ -150,7 +150,7 @@ include_once('includes/sweet_alert2_include.php')
 
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                           <div class="d-grid gap-2">
-                            <a type="button" href="meus_pedidos.php" class="btn btn-outline-dark">ver meus pedidos </a>
+                            <a type="button" href="/meus_pedidos" class="btn btn-outline-dark">ver meus pedidos </a>
                           </div>
                         </div>
 

@@ -1,6 +1,8 @@
 <?php
-include_once('../../classes/pedidos.class.php');
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedidos;
 $pedidos = new Pedidos();
+
 $pedidos->id = $_GET['id'];
 $pedidos_info = $pedidos->ListarStatusComID();
 $pedidos->status = $pedidos_info[0]['status'];

@@ -3,7 +3,7 @@ let diassemana = [];
 async function BuscarDadosDoBanco() {
     try {
 
-        const resposta = await fetch('./actions/horario_dias/buscar_horarios.php');
+        const resposta = await fetch('actions/horario_dias/buscar_horarios.php');
         diassemana = await resposta.json();
 
         AtualizarStatus();

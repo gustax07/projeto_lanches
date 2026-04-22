@@ -1,6 +1,6 @@
 <?php
-require_once('../../classes/horarios_dias.class.php'); 
-
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\HorarioDias;
 $horarios_dias = new HorarioDias();
 
 $listar = $horarios_dias->Listar();

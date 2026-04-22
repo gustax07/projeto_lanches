@@ -1,13 +1,6 @@
-<?php
-require_once('classes/enderecos.class.php');
-
-$enderecos = new Enderecos();
-$idUsuario = $_SESSION['usuario']['id'];
-$enderecos_listar = $enderecos->ListarPorID($idUsuario);
-
-?>
 <title>Meus Endereços</title>
 <link rel="stylesheet" href="css/enderecos.css">
+<script src="js/enderecos.js" defer></script>
 
 <div class="header-backgroud"></div>
 <div class="endereco">
@@ -61,33 +54,16 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
             </div>
 
             <div class="col-12 col-lg-8">
-                <div class="card card-padrao p-4">
+                <div class="card card-padrao p-4 h-100">
                     <h4 class="mb-4">Meus Endereços</h4>
-
-                    <?php if (count($enderecos_listar) == 0): ?>
-                        <p>Nenhum endereço cadastrado.</p>
-                    <?php else: ?>
-                        <?php foreach ($enderecos_listar as $e): ?>
-                            <div class="card mb-3 endereco-item">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-
-                                    <div>
-                                        <strong><?= $e['rua'] ?>, <?= $e['numero'] ?></strong><br>
-                                        <?= $e['bairro'] ?> - <?= $e['cidade'] ?>/<?= $e['estado'] ?><br>
-                                        CEP: <?= $e['cep'] ?>
-                                    </div>
-
-                                    <div class="d-flex gap-2">
-                                        <a href="editar_endereco.php?id=<?= $e['id'] ?>" class="btn btn-outline-primary btn-sm"> ✏️ Editar</a>
-
-                                        <a href="actions/enderecos/remover_enderecos.php?id=<?= $e['id'] ?>" class="btn btn-outline-danger btn-sm"> 🗑 Excluir</a>
-                                    </div>
-
-                                </div>
+                    <div id="cards-enderecos">
+                        <div class="d-flex aign-items-center justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
                             </div>
+                        </div>
+                    </div>
 
-                        <?php endforeach; ?>
-                    <?php endif; ?>
                 </div>
             </div>
 
@@ -95,23 +71,5 @@ $enderecos_listar = $enderecos->ListarPorID($idUsuario);
     </div>
 
     <script>
-        async function BuscarEndereco() {
 
-            try {
-                let cep = document.getElementById("cep").value;
-                let url = `https://viacep.com.br/ws/${cep}/json/`;
-
-                const response = await fetch(url);
-                const endereco = await response.json();
-
-                document.getElementById("logradouro").value = endereco.logradouro;
-                document.getElementById("bairro").value = endereco.bairro;
-                document.getElementById("localidade").value = endereco.localidade;
-                document.getElementById("estado").value = endereco.uf;
-
-            } catch (error) {
-                console.error('Erro ao buscar endereço:', error);
-            }
-
-        }
     </script>

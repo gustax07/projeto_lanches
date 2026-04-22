@@ -1,12 +1,13 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
+$funcionarios = new Usuarios();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once('../../classes/usuarios.class.php');
-    $funcionarios = new Usuarios();
     $id = $_POST['id'];
     $nome = $_POST['nome'];
     $email = $_POST['email'];

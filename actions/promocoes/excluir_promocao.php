@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Promocoes;
+$promocoes = new Promocoes();
 
 require('../restrict.php');
 $restrict = new restrict();
@@ -17,8 +20,6 @@ if (!is_numeric($id)){
     exit();
 }
 
-require('../../classes/promocoes.php');
-$promocoes = new Promocoes();
 $promocoes->id = $id;
 
 if ($promocoes->Excluir()){

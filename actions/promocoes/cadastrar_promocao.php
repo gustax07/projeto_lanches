@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Promocoes;
+$promocoes = new Promocoes();
 
 require_once('../restrict.php');
 $restrict = new restrict();
@@ -31,8 +34,6 @@ if (strlen($nomePromocao) < 3 || strlen($nomePromocao) > 20) {
     exit();
 }
 
-require_once('../../classes/promocoes.php');
-$promocoes = new Promocoes();
 $promocoes->nome_promocao = $nomePromocao;
 $promocoes->preco_promocional = $precoPromocional;
 $promocoes->data_validade = $dataValidade;

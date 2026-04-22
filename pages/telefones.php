@@ -5,10 +5,8 @@ $idUsuario = $_SESSION['usuario']['id'];
 
 if (!isset($_SESSION['usuario'])) { header('Location: logar.php'); exit; }
 
-include_once("../includes/bootstrap_include.php");
-include_once("../includes/sweet_alert2_include.php");
-
-require_once("classes/telefones.class.php");
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Telefones;
 $telefones = new Telefones();
 
 $telefones->id_usuarios_fk = $idUsuario;

@@ -1,9 +1,10 @@
 <?php 
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
+$usuario = new Usuarios();
 
 session_start();
-require_once('../../classes/usuarios.class.php');
 
-$usuario = new Usuarios();
 
 $usuario->id    = $_SESSION['usuario']['id'];
 $usuario->nome  = strip_tags($_POST['nome']);

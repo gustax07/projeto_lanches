@@ -1,0 +1,183 @@
+<link rel="stylesheet" href="css/meu_carrinho.css">
+<div class="header-backgroud"></div>
+<div class="carrinho">
+    <div class="container">
+        <h2 class="titulo">Meu carrinho <i class="bi bi-basket2-fill"></i></h2>
+        <hr>
+        <div id="cards-carrinho">
+            <div class="cards-itens">
+                <div class="d-flex justify-content-center w-100 h-100 align-itens-center">
+                    <div class="spinner-border m-5" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function abrirBotoesMobile(id) {
+        const cards = id.closest('.cards-itens')
+        const botoes = cards.querySelector('.botoes-mobile')
+        botoes.classList.toggle('disabled')
+    }
+window.listCarrinho =[];
+
+    async function CarregarItens() {
+        try {
+            const resposta = await fetch('actions/pedidos/listar_pedidos_carrinho.php');
+            const dados = await resposta.json();
+            let html = document.getElementById('cards-carrinho');
+
+            if (dados.status == 'sucesso') {
+                if (dados.lista.length > 0) {
+                    let htmlConteudo = '';
+                    listCarrinho = dados.lista;
+                 listCarrinho.forEach(e => {
+                    // 1. Verificação lógica antes de montar o HTML do item
+                    const styleSub = e.quantidade <= 1 ? 'display: none' : 'display: block';
+                    const styleAdd = e.quantidade >= 10 ? 'display: none' : 'display: block';
+
+                    // 2. Adicionamos o ID único para cada botão usando o ID do item
+                    htmlConteudo += `
+                    <div class="cards-itens item-${e.id}">
+                        <div class="img-container">
+                            <img src="images/${e.imagem}" loading="lazy" class="img-fluid h-100">
+                        </div>
+
+                        <div class="d-flex flex-column flex-grow-2">
+                            <span class="texto-produto">${e.nome}</span>
+                            <span class="preco-produto">R$ <span>${e.preco}</span></span>
+                            <a href="/pedido?id-produto=${e.id}" class="link">Ver mais detalhes...</a>
+                        </div>
+
+                        <div class="quantidade flex-grow-1 d-flex justify-content-center">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <button id="btnSub-${e.id}" style="${styleSub}" onclick="quantidadeVisual(${e.id}, false)"> 
+                                    <i class="bi bi-dash-circle"></i>
+                                </button>
+                                
+                                <span id="quantidade-${e.id}">${e.quantidade}</span>
+                                
+                                <button id="btnAdd-${e.id}" style="${styleAdd}" onclick="quantidadeVisual(${e.id}, true)"> 
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="acoes d-flex flex-grow-2">
+                            <button class="button-tasty" disabled type="button">Comprar agora</button>
+                            <button class="button-tasty-cancel" type="button">Remover</button>
+                        </div>
+
+                        <div class="acoes-mobile">
+                            <button type="button" onclick="abrirBotoesMobile(this);">Ações</button>
+                        </div>
+
+                        <div class="botoes-mobile disabled">
+                            <button class="button-tasty" disabled type="button">Comprar agora</button>
+                            <button class="button-tasty-cancel" type="button">Remover</button>
+                        </div>
+                    </div>`;
+                });
+                       
+                        html.innerHTML = htmlConteudo
+
+                    } else {
+                        html.innerHTML = `
+                        <div class="alert alert-danger" role="alert">
+                            Carrinho está vazio, adicione alguns itens <a href="/">aqui</a>.
+                            </div>
+                            `;
+                        }
+                    } else {
+                        
+                        html.innerHTML = `
+                        <div class="alert alert-danger" role="alert">
+                            ${dados.message}
+                            </div>
+                            `;
+                            
+                        }
+                    } catch (error) {
+                        
+                        console.log(error);
+                    }
+                    
+    }
+    CarregarItens()
+
+
+ 
+
+    async function addQuantidadee(id) {
+        const quantidade = document.getElementById(`quantidade-${id}`)
+        const valor = parseInt(quantidade.innerText)
+
+        try {
+            const resposta = await fetch('actions/pedido_itens/adicionar_quantidade.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    quantidade: valor,
+                }),
+                keepalive: true
+            });
+
+            Pendencias = false
+            const dados = await resposta.json();
+            if (dados.status == 'sucesso') {
+                quantidade.innerText = dados.quantidade;
+
+            } else {
+                alert(dados.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    let timer;
+    let Pendencias;
+    function quantidadeVisual(id, typeBool) {
+        const quantidade = document.getElementById(`quantidade-${id}`)
+        var valor = parseInt(quantidade.innerText)
+        if (valor > 0 && typeBool) {
+            valor++;
+        } else if (valor <= 10 && !typeBool) {
+            valor--;
+        }
+
+        if (valor >= 10) {
+            document.getElementById('btnAdd-' + id).style.display = 'none';
+        } else if (valor <= 1) {
+            document.getElementById('btnSub-' + id).style.display = 'none'
+        } else {
+            document.getElementById('btnSub-' + id).style.display = 'block';
+            document.getElementById('btnAdd-' + id).style.display = 'block';    
+        }
+
+        quantidade.innerText = valor;
+
+        Pendencias = true;
+
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            addQuantidadee(id);
+        }, 1000)
+
+    }
+    addEventListener('beforeunload', (event) => {
+        if (Pendencias) {
+            event.preventDefault();
+            return "Salvando Valores..."
+        }
+    })
+
+
+</script>

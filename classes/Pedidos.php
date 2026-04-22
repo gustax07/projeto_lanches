@@ -1,8 +1,9 @@
 <?php
 
-require_once("banco.class.php");
+namespace App;
+use PDO;
 
-class Pedidos
+class Pedidos extends Banco
 {
     public $id;
     public $id_usuarios_fk;
@@ -22,11 +23,11 @@ class Pedidos
         p.observacoes
         FROM pedidos p
         JOIN usuarios u on u.id = p.id_usuarios_fk;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
@@ -43,13 +44,13 @@ class Pedidos
         FROM pedidos p
         JOIN usuarios u on u.id = p.id_usuarios_fk
         WHERE p.id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
@@ -57,28 +58,28 @@ class Pedidos
     {
         $sql = "SELECT * FROM pedidos 
                 WHERE id_usuarios_fk = ? AND status = 'pendente'
-                LIMIT 1";
+                ORDER BY id DESC";
 
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
     public function ListarStatusComID()
     {
         $sql = "SELECT status FROM pedidos WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
@@ -87,27 +88,23 @@ class Pedidos
     {
         $sql = "INSERT INTO pedidos (id_usuarios_fk, data_pedido) VALUES (?, ?)";
 
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk,
             $this->data_pedido
         ]);
 
-        // pega o ID do pedido recém-criado
-        $idPedido = $banco->lastInsertId();
 
-        Banco::desconectar();
-
-        return $idPedido;
+        return $comando->rowCount();
     }
 
     //editar um pedido
     public function Editar()
     {
         $sql = "UPDATE pedidos SET id_usuarios_fk = ?, id_enderecos_fk = ?, status = ?, data_pedido = ?, observacoes = ? WHERE id = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk,
             $this->id_enderecos_fk,
@@ -116,7 +113,7 @@ class Pedidos
             $this->observacoes,
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
@@ -124,59 +121,59 @@ class Pedidos
     public function Excluir()
     {
         $sql = "DELETE FROM pedidos WHERE id = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
     public function CancelarPedido()
     {
         $sql = "UPDATE pedidos SET status = 'cancelado' WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
     public function PrepararPedido()
     {
         $sql = "UPDATE pedidos SET status = 'preparando' WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
     public function ConcluirPedido()
     {
         $sql = "UPDATE pedidos SET status = 'concluido' WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
     public function SaiuParaEntregaPedido()
     {
         $sql = "UPDATE pedidos SET status = 'saiu para entrega' WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
@@ -191,13 +188,13 @@ class Pedidos
         FROM pedidos p
         JOIN usuarios u on u.id = p.id_usuarios_fk
         WHERE u.nome = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->nome
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
     public function ListarPedidosInnerJoinPorStatus()
@@ -211,20 +208,16 @@ class Pedidos
         FROM pedidos p
         JOIN usuarios u on u.id = p.id_usuarios_fk
         WHERE p.status = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->status
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
-    public function UltimoID()
-    {
-        $banco = Banco::conectar();
-        return $banco->lastInsertId();
-    }
+
     public function finalizarPedido()
     {
         $sql = "UPDATE pedidos 
@@ -234,28 +227,28 @@ class Pedidos
               AND id_usuarios_fk = ? 
               AND status = 'pendente'";
 
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_enderecos_fk,
             $this->observacoes,
             $this->id,
             $this->id_usuarios_fk
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
     //listar por id
     public function BuscarPedidosPeloID()
     {
         $sql = "SELECT * FROM pedidos WHERE id = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
@@ -263,13 +256,13 @@ class Pedidos
     public function BuscarPedidosPeloIDUsuario()
     {
         $sql = "SELECT * FROM pedidos WHERE id_usuarios_fk = ?;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_usuarios_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 }

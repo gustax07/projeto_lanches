@@ -1,14 +1,17 @@
 <?php
 //criar sessao
-require_once('../classes/usuarios.class.php');
+require_once __DIR__ . '../../vendor/autoload.php';
+use App\Usuarios;
+use App\Tipos;
+
 $usuarios = new Usuarios();
 $usuarios_listar = $usuarios->ListarFuncionariosPorINNERJOIN();
 
 $usuarios->id_tipo_fk = $_GET['id_tipo_fk'] ?? 0;
 $listarPorCargo = $usuarios->ListarFuncionariosPorINNERJOINECARGO();
 
-require_once('../classes/tipos.class.php');
 $tipos = new Tipos();
+
 $tipos_listar = $tipos->Listar();
 
 unset($tipos_listar[0]);

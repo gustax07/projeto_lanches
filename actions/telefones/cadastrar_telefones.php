@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Telefones;
+$telefones = new Telefones();
+
 session_start();
 
 if (!isset($_SESSION['usuario']['id'])) {
@@ -7,8 +11,6 @@ if (!isset($_SESSION['usuario']['id'])) {
 }
 $dados = json_decode(file_get_contents('php://input'), true);
 
-require_once('../../classes/telefones.class.php');
-$telefones = new Telefones();
 $telefones->id_usuarios_fk = $_SESSION['usuario']['id'];
 $telefones->numero = $dados['telefone'];
 $telefones->ddi = $dados['ddi'];

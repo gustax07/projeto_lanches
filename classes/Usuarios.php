@@ -1,8 +1,9 @@
 <?php
 
-require_once('banco.class.php');
+namespace App;
+use PDO;
 
-class Usuarios
+class Usuarios extends Banco
 {
     public $id;
     public $nome;
@@ -15,22 +16,22 @@ class Usuarios
     public function Logar()
     {
         $sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->email,
             $hash = hash('sha256', $this->senha)
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
     public function Cadastrar()
     {
         $sql = "INSERT INTO usuarios (nome, email, senha, data_cadastro, id_tipo_fk)
         VALUES (?, ?, ?, ?, ?)";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->nome,
             $this->email,
@@ -38,18 +39,18 @@ class Usuarios
             $this->data_cadastro,
             $this->id_tipo_fk
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
     //Listar usuarios
     public function ListarFuncionarios()
     {
         $sql = "SELECT * FROM usuarios WHERE id_tipo_fk != 0";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
     public function ListarFuncionariosPorINNERJOIN()
@@ -64,11 +65,11 @@ t.nome_tipo AS cargo
 FROM usuarios u
 JOIN tipos t ON u.id_tipo_fk = t.id
 WHERE u.id_tipo_fk != 0;";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
      public function ListarFuncionariosPorINNERJOINECARGO()
@@ -82,38 +83,38 @@ WHERE u.id_tipo_fk != 0;";
                 FROM usuarios u
                 JOIN tipos t ON u.id_tipo_fk = t.id
                 WHERE u.id_tipo_fk = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_tipo_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
     //ListarPorID
     public function ListarPorID()
     {
-        $sql = "SELECT * FROM usuarios WHERE id = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        $sql = "SELECT nome, email, data_cadastro, id_tipo_fk, foto FROM usuarios WHERE id = ?";
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
     public function ListarPorIDCargo()
     {
         $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_tipo_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
         return $arr_resultado;
     }
 
@@ -122,20 +123,20 @@ WHERE u.id_tipo_fk != 0;";
     {
         if ($this->senha == null) {
             $sql = "UPDATE usuarios SET nome = ?, email = ? , id_tipo_fk = ? WHERE id = ?";
-            $banco = Banco::conectar();
-            $comando = $banco->prepare($sql);
+            
+            $comando = self::conectar()->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
                 $this->id_tipo_fk,
                 $this->id
             ]);
-            Banco::desconectar();
+            
             return $comando->rowCount();
         } else {
             $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?,id_tipo_fk = ? WHERE id = ?";
-            $banco = Banco::conectar();
-            $comando = $banco->prepare($sql);
+            
+            $comando = self::conectar()->prepare($sql);
             $comando->execute([
                 $this->nome,
                 $this->email,
@@ -143,7 +144,7 @@ WHERE u.id_tipo_fk != 0;";
                 $this->id_tipo_fk,
                 $this->id
             ]);
-            Banco::desconectar();
+            
             return $comando->rowCount();
         }
     }
@@ -153,36 +154,48 @@ WHERE u.id_tipo_fk != 0;";
     public function Excluir()
     {
         $sql = "DELETE FROM usuarios WHERE id = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 
     public function ListarClientes()
     {
         $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = 0";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        Banco::desconectar();
+        
+        return $arr_resultado;
+    }
+
+    public function ListarClientesPorID(){
+        $sql = "SELECT * FROM usuarios WHERE id_tipo_fk = 0 AND id = ?";
+        
+        $comando = self::conectar()->prepare($sql);
+        $comando->execute([
+            $this->id
+        ]);
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+        
         return $arr_resultado;
     }
 
     public function MudarFoto()
     {
         $sql = "UPDATE usuarios SET foto = ? WHERE id = ?";
-        $banco = Banco::conectar();
-        $comando = $banco->prepare($sql);
+        
+        $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->foto,
             $this->id
         ]);
-        Banco::desconectar();
+        
         return $comando->rowCount();
     }
 }

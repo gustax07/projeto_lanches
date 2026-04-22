@@ -1,14 +1,14 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Itens;
+$itens = new Itens();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
-require_once('../../classes/itens.class.php');
-
 // Verificar se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $itens = new Itens();
     $id = strip_tags($_GET['id'] ?? '');
     $itens->id = $id;
     $imagem = $itens->ListarPorID()[0]['imagem'];

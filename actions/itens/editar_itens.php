@@ -1,12 +1,13 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Itens;
+$itens = new Itens();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once("../../classes/itens.class.php");
-    $itens = new Itens();
 
     // Coletar dados do formulário
     $id_item = $_GET['id'];

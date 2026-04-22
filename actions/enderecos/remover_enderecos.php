@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Enderecos;
+$enderecos = new Enderecos();
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
@@ -6,14 +9,12 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-require_once('../../classes/enderecos.class.php');
 
 if (!isset($_GET['id'])) {
     header('Location: ../../enderecos.php');
     exit;
 }
 
-$enderecos = new Enderecos();
 $enderecos ->id = $_GET['id'];
 
 if($enderecos->Excluir())

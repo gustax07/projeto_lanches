@@ -1,13 +1,14 @@
 <?php
 require_once '../captcha.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Usuarios;
+$clientes = new Usuarios();
 
 if (!validarCaptcha($_POST['g-recaptcha-response'])) {
     header("Location: ../../logar.php?err=captcha_invalido");
     exit();
 }
-require_once('../../classes/usuarios.class.php');
 
-$clientes = new Usuarios();
 $clientes->nome = strip_tags($_POST['nome']);
 $clientes->email = strip_tags($_POST['email']);
 $clientes->senha = strip_tags($_POST['senha']);

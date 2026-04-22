@@ -1,9 +1,8 @@
 <?php
-
-use FontLib\Table\Type\head;
-
-include_once('../../classes/pedidos.class.php');
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Pedidos;
 $pedidos = new Pedidos();
+
 $pedidos->id = $_GET['id'];
 $pedidos->status = $pedidos->ListarStatusComID()[0]['status'];
 

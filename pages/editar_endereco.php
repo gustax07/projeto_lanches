@@ -10,7 +10,8 @@ if (!isset($_GET['id'])) {
     header('Location: enderecos.php');
     exit;
 }
-require_once('classes/enderecos.class.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Enderecos;
 
 $idEndereco = $_GET['id'];
 $idUsuario  = $_SESSION['usuario']['id'];

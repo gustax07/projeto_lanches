@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Promocoes;
+$promocoes = new Promocoes();
 
 require_once('../restrict.php');
 $restrict = new restrict();
@@ -8,8 +11,6 @@ $dados = json_decode(file_get_contents('php://input'), true);
 $id = $dados['id'];
 $status = $dados['status'];
 
-require_once('../../classes/promocoes.php');
-$promocoes = new Promocoes();
 $promocoes->id = $id;
 $promocoes->status = $status;
 

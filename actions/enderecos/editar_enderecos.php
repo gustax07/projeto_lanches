@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Enderecos;
+$enderecos = new Enderecos();
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
@@ -11,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-require_once('../../classes/enderecos.class.php');
 
 $idUsuario  = $_SESSION['usuario']['id'];
 $idEndereco = $_POST['id'] ?? null;
@@ -21,7 +23,6 @@ if (!$idEndereco) {
     exit;
 }
 
-$enderecos = new Enderecos();
 
 $enderecos->id     = $idEndereco;
 $enderecos->rua    = strip_tags(trim($_POST['rua']) ?? '');

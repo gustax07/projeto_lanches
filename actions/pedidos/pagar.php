@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once ('../../classes/pedidos.class.php');     
-require_once ('../../classes/pedidos_itens.class.php');
+use App\Pedidos;
+use App\Pedido_Itens;
+$pedidoServico = new Pedidos();
+$pedidoItensService = new Pedido_Itens();
 
 
 use Dotenv\Dotenv;
@@ -26,7 +28,6 @@ try {
     $pedidoId = (int) $_GET['pedido_id'];
 
 
-    $pedidoServico = new Pedidos();
     $pedidoServico->id = $pedidoId;
     $pedido = $pedidoServico->BuscarPedidosPeloID();
 
@@ -34,7 +35,6 @@ try {
         throw new Exception("Pedido não encontrado.");
     }
 
-    $pedidoItensService = new Pedido_Itens();
     $valorTotal = $pedidoItensService->calcularTotalPedido($pedidoId);
 
 

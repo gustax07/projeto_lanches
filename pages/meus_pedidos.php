@@ -1,7 +1,8 @@
 <?php
 session_start();
-include('header.php');
-require_once('classes/pedidos.class.php');
+
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Pedidos;
 
 if (!isset($_SESSION['usuario'])) {
   header("Location: logar.php");

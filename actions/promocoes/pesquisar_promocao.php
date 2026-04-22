@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Promocoes;
+$promocoes = new Promocoes();
 
 require_once('../restrict.php');
 $restrict = new restrict();
@@ -12,8 +15,6 @@ if (empty($pesquisa)) {
     exit();
 }
 
-require_once('../../classes/promocoes.php');
-$promocoes = new Promocoes();
 $promocoes_listar = $promocoes->PesquisarPromocao($pesquisa);
 
 if ($promocoes_listar) {
