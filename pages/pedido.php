@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+
 use App\Itens;
 
 $item = new Itens;
@@ -10,7 +11,7 @@ $i = $item->ListarPorID()[0];
 
 function Porcentagem($preco_original, $preco_promocional)
 {
-    if (empty($preco_promocional)){
+    if (empty($preco_promocional)) {
         return;
     };
 
@@ -41,15 +42,15 @@ function Porcentagem($preco_original, $preco_promocional)
             </div>
             <div class="d-flex flex-column col-md-4 col-sm-5 mt-3">
                 <h1 id="nome" class="fw-bold"><?= $i['nome'] ?>
-                <?php if (!empty($i['preco_promocional'])): ?>
-                <span class="alert alert-danger ms-1" role="alert"> <i class="bi bi-tag"></i> <?= Porcentagem($i['preco'], $i['preco_promocional']) ?>%</span>
-                <?php endif; ?>
-            </h1>
-            <p class="text-muted">By Tasty Burgers</p>
-            
-            <div class="produto-preco">
-                    <?php if (!empty($i['preco_promocional'])): ?>  
-                        <span id="preco" class="text-muted text-decoration-line-through" >R$<?= $i['preco'] ?></span>
+                    <?php if (!empty($i['preco_promocional'])): ?>
+                        <span class="alert alert-danger ms-1" role="alert"> <i class="bi bi-tag"></i> <?= Porcentagem($i['preco'], $i['preco_promocional']) ?>%</span>
+                    <?php endif; ?>
+                </h1>
+                <p class="text-muted">By Tasty Burgers</p>
+
+                <div class="produto-preco">
+                    <?php if (!empty($i['preco_promocional'])): ?>
+                        <span id="preco" class="text-muted text-decoration-line-through">R$<?= $i['preco'] ?></span>
                         <span class="text-muted">-</span>
                         <span id="preco_promocional" class="produto-preco">R$<?= $i['preco_promocional'] ?></span>
                     <?php else: ?>
@@ -77,8 +78,8 @@ function Porcentagem($preco_original, $preco_promocional)
         </div>
     </div>
 </div>
-    <script>
-{
+<script>
+    {
         window.addEventListener('load', function() {
             //enviar o id do produto para o listar_itens_pedido.php
             const url = new URL(window.location.href);
@@ -91,7 +92,7 @@ function Porcentagem($preco_original, $preco_promocional)
         const add = document.querySelector('.bi-plus-circle')
         const sub = document.querySelector('.bi-dash-circle')
 
-    window.AdicionarItemAoCarrinho = async function(id_item) {
+        window.AdicionarItemAoCarrinho = async function(id_item) {
             const quantidade = document.getElementById('quantidade').value;
 
             const response = await fetch('actions/pedido_itens/cadastrar_pedido_itens.php', {
@@ -99,61 +100,65 @@ function Porcentagem($preco_original, $preco_promocional)
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id_item: id_item, quantidade: quantidade }),
+                body: JSON.stringify({
+                    id_item: id_item,
+                    quantidade: quantidade
+                }),
             });
 
-                const data = await response.json();
-                if (data.status == 'sucesso') {
-                    Swal.fire({
-                        title: 'Sucesso',
-                        text: data.message,
-                        icon: 'success',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Voltar ao menu',
-                        showCancelButton: true,
-                        cancelButtonText: 'Abrir o carrinho',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '/';
-                            }else if (result.isDismissed) {
-                                window.location.href = 'pages/carrinho.php';
-                            }
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Erro',
-                        text: data.message,
-                        icon: 'error',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Login',
-                        showCancelButton: true,
-                        cancelButtonText: 'Cadastre-se',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '/logar';
-                            }else if (result.isDismissed) {
-                                window.location.href = '/cadastrar';
-                            }
-                    });
+            const data = await response.json();
+            if (data.status == 'sucesso') {
 
-                }
+                Swal.fire({
+                    title: 'Sucesso',
+                    text: data.message,
+                    icon: 'success',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Voltar ao menu',
+                    showCancelButton: true,
+                    cancelButtonText: 'Abrir o carrinho',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/';
+                    } else if (result.isDismissed) {
+                        window.location.href = '/meu_carrinho';
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Erro',
+                    text: data.message,
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Login',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cadastre-se',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/logar';
+                    } else if (result.isDismissed) {
+                        window.location.href = '/cadastrar';
+                    }
+                });
+
+            }
 
         }
 
         function CalcularTotal(preco, preco_promocional) {
             var quantidade = document.getElementById('quantidade').value;
 
-            if (preco_promocional){
+            if (preco_promocional) {
                 parseFloat(preco_promocional);
                 var total_promocional = quantidade * preco_promocional;
                 var resultado_promocional = total_promocional.toFixed(2);
-                preco_promocionall.innerHTML =`R$${resultado_promocional}`;
+                preco_promocionall.innerHTML = `R$${resultado_promocional}`;
             }
             parseInt(quantidade);
             parseFloat(preco);
@@ -205,6 +210,5 @@ function Porcentagem($preco_original, $preco_promocional)
             verificarQuantidade();
             CalcularTotal(preco, preco_promocional);
         }
-                    }
-    </script>
-
+    }
+</script>

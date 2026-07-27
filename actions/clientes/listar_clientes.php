@@ -6,7 +6,8 @@ $usuario = new Usuarios();
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
-  echo json_encode(['status' => 'erro', 'lista' => 'Usuário não encontrado']);
+  echo json_encode(['status' => 'erro', 'lista' => '0x1', 'message' => 'Usuário não encontrado']);
+  exit;
 }
 
 $id_usuario = $_SESSION['usuario']['id'] ?? null;

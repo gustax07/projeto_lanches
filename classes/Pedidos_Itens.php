@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use PDO;
 
 class Pedidos_Itens extends Banco
@@ -14,24 +15,24 @@ class Pedidos_Itens extends Banco
     public function ListarPedidoInnerJoinComID()
     {
         $sql = "SELECT 
-    p.id AS id_pedido,
-    p.data_pedido,
-    p.observacoes,
-    i.nome AS Pedido,
-    i.descricao,
-    i.preco,
-    pi.quantidade
-FROM pedido_itens pi
-JOIN pedidos p ON p.id = pi.id_pedidos_fk
-JOIN itens i ON i.id = pi.id_itens_fk
-WHERE p.id = ?;";
-        
+                p.id AS id_pedido,
+                p.data_pedido,
+                p.observacoes,
+                i.nome AS Pedido,
+                i.descricao,
+                i.preco,
+                pi.quantidade
+                FROM pedido_itens pi
+                JOIN pedidos p ON p.id = pi.id_pedidos_fk
+                JOIN itens i ON i.id = pi.id_itens_fk
+                WHERE p.id = ?;";
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_pedidos_fk
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
@@ -41,65 +42,66 @@ WHERE p.id = ?;";
         $sql = "SELECT * FROM pedido_itens WHERE id = ? 
         INNER JOIN pedidos ON pedido_itens.id_pedidos_fk = pedidos.id 
         INNER JOIN itens ON pedido_itens.id_itens_fk = itens.id";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
     public function ListarPorPedido()
     {
-        $sql = "
-        SELECT 
-            i.id,
-            i.nome,
-            i.preco,pr.preco_promocional,
-            i.imagem,
-
-            SUM(pi.quantidade) AS quantidade,
-            SUM(pi.quantidade * COALESCE(pr.preco_promocional, i.preco)) AS total
-        FROM pedido_itens pi
-        INNER JOIN itens i ON i.id = pi.id_itens_fk
-        LEFT JOIN promocoes pr ON i.id = pr.id_item_fk
-        WHERE pi.id_pedidos_fk = ?
-        GROUP BY i.id, i.nome, i.preco, pr.preco_promocional, i.imagem
+        $sql = "SELECT 
+                i.id,
+                i.nome,
+                i.preco,pr.preco_promocional,
+                i.imagem,
+                SUM(pi.quantidade) AS quantidade,
+                SUM(pi.quantidade * COALESCE(pr.preco_promocional, i.preco)) AS total
+                FROM pedido_itens pi
+                INNER JOIN itens i ON i.id = pi.id_itens_fk
+                LEFT JOIN promocoes pr ON i.id = pr.id_item_fk
+                WHERE pi.id_pedidos_fk = ?
+                GROUP BY i.id, i.nome, i.preco, pr.preco_promocional, i.imagem
     ";
 
-        
+
         $comando = self::conectar()->prepare($sql);
-        $comando->execute([$this->id_pedidos_fk]);
+        $comando->execute([
+            $this->id_pedidos_fk
+        ]);
 
         return $comando->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-
-
     //adicionar um novo pedido_itens
-    public function Cadastrar()
-    {
-        $sql = "INSERT INTO pedido_itens (id_pedidos_fk, id_itens_fk, quantidade) VALUES (?, ?, ?)";
-        
-        $comando = self::conectar()->prepare($sql);
-        $comando->execute([
-            $this->id_pedidos_fk,
-            $this->id_itens_fk,
-            $this->quantidade
-        ]);
-        
-        return $comando->rowCount();
-    }
+   public function Cadastrar()
+{
+    $sql = "INSERT INTO pedido_itens (id_pedidos_fk, id_itens_fk, quantidade) 
+            VALUES (:id_pedido, :id_item, :quantidade) 
+            ON DUPLICATE KEY UPDATE quantidade = quantidade + :quantidade;";
+
+    $comando = self::conectar()->prepare($sql);
+    
+    // O execute() agora recebe um array associativo
+    $comando->execute([
+        ':id_pedido'  => $this->id_pedidos_fk,
+        ':id_item'    => $this->id_itens_fk,
+        ':quantidade' => $this->quantidade
+    ]);
+
+    return $comando->rowCount();
+}
 
 
     //editar um pedido_itens
     public function Editar()
     {
         $sql = "UPDATE pedido_itens SET id_pedidos_fk = ?, id_itens_fk = ?, quantidade = ? WHERE id = ?";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id_pedidos_fk,
@@ -107,24 +109,11 @@ WHERE p.id = ?;";
             $this->quantidade,
             $this->id
         ]);
-        
+
         return $comando->rowCount();
     }
 
-    //excluir um pedido_itens
-    public function Excluir(){
-        $sql = "DELETE FROM pedido_itens
-                WHERE id_pedidos_fk = ?
-                AND id_itens_fk = ?";
-        
-        $comando = self::conectar()->prepare($sql);
-        $comando->execute([
-            $this->id_pedidos_fk,
-            $this->id_itens_fk
-        ]);
-        
-        return $comando->rowCount();
-    }
+ 
     public function listarTop5Vendidos()
     {
         $sql = "SELECT i.id, i.nome, i.preco, i.imagem, SUM(pi.quantidade) AS quantidade
@@ -133,7 +122,7 @@ WHERE p.id = ?;";
         GROUP BY i.id, i.nome, i.preco, i.imagem
         ORDER BY quantidade DESC
         LIMIT 5";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         return $comando->fetchAll(PDO::FETCH_ASSOC);
@@ -150,11 +139,11 @@ WHERE p.id = ?;";
                 DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
                 GROUP BY DATE(pedidos.data_pedido)
                 ORDER BY dia ASC;";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
     public function StatusPedidos()
@@ -163,11 +152,11 @@ WHERE p.id = ?;";
                 FROM pedidos 
                 WHERE data_pedido >= CURRENT_DATE() 
                 GROUP BY status;";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
@@ -178,11 +167,11 @@ WHERE p.id = ?;";
                 WHERE data_pedido >= CURRENT_DATE() 
                 GROUP BY HOUR(data_pedido) 
                 ORDER BY hora ASC;";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
@@ -194,16 +183,17 @@ WHERE p.id = ?;";
         LEFT JOIN promocoes pr ON p.id = pr.id_item_fk
         WHERE pi.id_pedidos_fk = ?";
 
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([$pedidoId]);
         $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
-        
+
 
         return (float) $arr_resultado['total'];
     }
 
-    public function addQuantidade(){
+    public function addQuantidade()
+    {
         $sql = "UPDATE pedido_itens SET quantidade = ? WHERE id_pedidos_fk = ? AND id_itens_fk = ?";
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
@@ -214,10 +204,29 @@ WHERE p.id = ?;";
         return $comando->rowCount();
     }
 
-    public function SelectQuantidade(){
+    public function SelectQuantidade()
+    {
         $sql = "SELECT quantidade FROM pedido_itens;";
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         return $comando->fetchAll(PDO::FETCH_ASSOC);
     }
+
+  public function RemoverItemSeguro($idUsuario, $idItem)
+{
+    // Um único comando que valida o dono do carrinho e deleta o item
+    $sql = "DELETE pi FROM pedido_itens pi
+            INNER JOIN pedidos p ON pi.id_pedidos_fk = p.id
+            WHERE pi.id_itens_fk = :id_item 
+              AND p.id_usuarios_fk = :id_usuario 
+              AND p.status = 'pendente'"; 
+    $comando = self::conectar()->prepare($sql);
+    $comando->execute([
+        ':id_item' => $idItem,
+        ':id_usuario' => $idUsuario
+    ]);
+
+    // Retorna true se deletou alguma linha
+    return $comando->rowCount() > 0; 
+}
 }

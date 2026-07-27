@@ -1,30 +1,32 @@
 <?php
 
 namespace App;
+
+use DateTime;
 use PDO;
 
 class Usuarios extends Banco
 {
-    public $id;
-    public $nome;
-    public $email;
-    public $senha;
-    public $id_tipo_fk;
-    public $data_cadastro;
-    public $foto;
+    public int $id;
+    public string $nome;
+    public string $email;
+    public string $senha;
+    public int $id_tipo_fk;
+    public DateTime $data_cadastro;
+    public string $foto;
 
     public function Logar()
     {
-        $sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+        $sql = "SELECT id FROM usuarios WHERE email = ? AND senha = ?";
         
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->email,
             $hash = hash('sha256', $this->senha)
         ]);
-        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+  
         
-        return $arr_resultado;
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
     }
     public function Cadastrar()
     {

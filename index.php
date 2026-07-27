@@ -1,5 +1,6 @@
 <html lang="pt-BR">
-<?php include("includes/sweet_alert2_include.php"); ?>
+<?php include_once("includes/bootstrap_include.php");
+include_once('includes/sweet_alert2_include.php'); ?>
 
 <head>
     <meta charset="UTF-8">
@@ -11,13 +12,6 @@
     <script src="/js/router.js" defer></script>
 
     <title>Tasty Burguer - home</title>
-    <style>
-        body {
-            margin: 0px;
-            padding: 0px;
-            border: none;
-        }
-    </style>
 </head>
 
 <body>

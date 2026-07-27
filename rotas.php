@@ -1,12 +1,10 @@
 <?php
 
 return [
-    '/' => 'pages/lanches.php',
-    '/index' => 'pages/lanches.php',
-    '/cadastrar' => 'pages/cadastrar.php',
-    '/logar' => 'pages/logar.php',
-    '/conta' => 'pages/conta.php',
-    '/enderecos' => 'pages/enderecos.php',
+    '/' => 'pages/lanches.html',
+    '/cardapio' => 'pages/lanches.html',
+    '/conta' => 'pages/conta.html',
+    '/enderecos' => 'pages/enderecos.html',
     '/telefones' => 'pages/telefones.php',
     '/editar_endereco' => 'pages/editar_endereco.php',
     '/meus_pedidos' => 'pages/meus_pedidos.php',

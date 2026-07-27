@@ -1,5 +1,5 @@
-{
-     async function listarCategorias() {
+
+async function listarCategorias() {
     const catNew = document.getElementById('catNew');
     const urlParams = new URLSearchParams(window.location.search);
     const idAtual = urlParams.get('id'); // Pega o ID da URL se existir
@@ -20,7 +20,7 @@
                 const isActive = (idAtual == cat.id) ? 'active' : '';
                 conteudoCategorias += `
                     <li class="nav-item">
-                    <a class="nav-link ${isActive}" href="/?id=${cat.id}" onclick="marcarAtivo(this)">
+                    <a class="nav-link ${isActive}" href="/cardapio?id=${cat.id}" onclick="marcarAtivo(this)">
                             ${cat.nome}
                         </a>
                     </li>`;
@@ -40,4 +40,3 @@ function marcarAtivo(elemento) {
 }
 
 listarCategorias();
-}

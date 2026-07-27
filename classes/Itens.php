@@ -1,5 +1,7 @@
 <?php
+
 namespace App;
+
 use PDO;
 
 class Itens extends Banco
@@ -13,9 +15,9 @@ class Itens extends Banco
 
     //listar os itens
     public function Listar($limit, $offset)
-{
+    {
 
-    $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
+        $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
             FROM itens i 
             LEFT JOIN promocoes p ON i.id = p.id_item_fk 
             AND p.status = 1 
@@ -23,23 +25,45 @@ class Itens extends Banco
             ORDER BY i.nome ASC
             LIMIT :limit OFFSET :offset";
 
-    
-    $comando = self::conectar()->prepare($sql);
-    $comando->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $comando->execute();
-    
-    $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-    
-    
-    return $arr_resultado;
-}
+
+        $comando = self::conectar()->prepare($sql);
+        $comando->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $comando->execute();
+
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return $arr_resultado;
+    }
+
+
+    public function ListarPorCategoria($limit, $offset)
+    {
+        $sql = "SELECT i.*, p.preco_promocional, p.id AS id_promocao 
+            FROM itens i 
+            LEFT JOIN promocoes p ON i.id = p.id_item_fk 
+            AND p.status = 1 
+            AND (p.data_validade >= CURDATE() OR p.data_validade IS NULL)
+            WHERE i.id_categoria_fk = :id_categoria_fk
+            ORDER BY i.nome ASC
+            LIMIT :limit OFFSET :offset ";
+
+        $comando = self::conectar()->prepare($sql);
+        $comando->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $comando->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $comando->bindValue(':id_categoria_fk', $this->id_categoria_fk, PDO::PARAM_INT);
+        $comando->execute();
+        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        return $arr_resultado;
+    }
 
     //cadastrar um novo item
     public function Cadastrar()
     {
         $sql = "INSERT INTO itens (nome, descricao, preco, imagem, id_categoria_fk) VALUES (?, ?, ?, ?, ?)";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->nome,
@@ -48,7 +72,7 @@ class Itens extends Banco
             $this->imagem,
             $this->id_categoria_fk
         ]);
-        
+
         return $comando->rowCount();
     }
 
@@ -56,7 +80,7 @@ class Itens extends Banco
     public function Editar()
     {
         $sql = "UPDATE itens SET nome = ?, descricao = ?, preco = ?, imagem = ?, id_categoria_fk = ? WHERE id = ?";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->nome,
@@ -66,7 +90,7 @@ class Itens extends Banco
             $this->id_categoria_fk,
             $this->id
         ]);
-        
+
         return $comando->rowCount();
     }
 
@@ -74,12 +98,12 @@ class Itens extends Banco
     public function Excluir()
     {
         $sql = "DELETE FROM itens WHERE id = ?";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
-        
+
         return $comando->rowCount();
     }
 
@@ -90,13 +114,13 @@ class Itens extends Banco
         FROM itens i 
         LEFT JOIN promocoes p ON i.id = p.id_item_fk 
         WHERE i.id = ?";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute([
             $this->id
         ]);
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
@@ -106,11 +130,11 @@ class Itens extends Banco
         $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem, i.id_categoria_fk
                 FROM itens i 
                 INNER JOIN categorias c ON i.id_categoria_fk = c.id ORDER BY id ASC";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
@@ -119,47 +143,37 @@ class Itens extends Banco
         $sql = "SELECT i.id, i.nome, c.nome AS categoria, i.descricao, i.preco, i.imagem, i.id_categoria_fk
                 FROM itens i 
                 INNER JOIN categorias c ON i.id_categoria_fk = c.id WHERE i.nome LIKE :termo or i.descricao LIKE :termo ORDER BY id ASC";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->bindValue(":termo", "%$termo%");
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 
-    public function ListarPorCategoria()
-    {
-        $sql = "SELECT * FROM itens WHERE id_categoria_fk = ?";
-        
-        $comando = self::conectar()->prepare($sql);
-        $comando->execute([
-            $this->id_categoria_fk
-        ]);
-        $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $arr_resultado;
-    }
+
 
     //descobrir quantas páginas existem para os itens
     public function QuantidadePaginas($itensPorPagina = 24)
     {
         $sql = "SELECT COUNT(*) AS total FROM itens";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetch(PDO::FETCH_ASSOC);
-        
+
 
         return ceil((int)$arr_resultado['total'] / $itensPorPagina);
     }
-    public function ListarPromocoes(){
+    public function ListarPromocoes()
+    {
         $sql = "SELECT id, nome, imagem, preco FROM itens;";
-        
+
         $comando = self::conectar()->prepare($sql);
         $comando->execute();
         $arr_resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $arr_resultado;
     }
 }

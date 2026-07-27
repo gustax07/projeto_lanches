@@ -1,6 +1,6 @@
  .carrinho {
      width: 100%;
-     height: 100vh;
+     margin-bottom: 50px;    
  }
 
  .carrinho .container {
@@ -94,8 +94,7 @@
  }
 
 
-
- @media (max-width: 768px) {
+ @media (max-width: 992px) {
      .carrinho .acoes {
          display: none !important;
      }
@@ -108,7 +107,7 @@
      }
  }
 
- @media (min-width: 768px) {
+ @media (min-width: 992px) {
      .carrinho .botoes-mobile {
          display: none;
      }

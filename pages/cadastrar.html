@@ -1,13 +1,25 @@
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/login.css">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<title>Cadastrar nova Conta</title>
-<div class="login">
-  <div class="header-backgroud"></div>
-  <div class="container d-flex justify-content-center align-items-center mb-5">
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/login.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <title>Login</title>
+</head>
+
+<body>
+  <div class="login">
+    <div class="header-backgroud"></div>
     <div class="login-wrapper">
 
       <div class="login-box">
+        <div class="col-2">
+          <button class="btn-back" onclick="window.history.back()" type="button"><i
+              class="bi bi-arrow-left"></i></button>
+        </div>
         <h2 class="login-header">Criar Conta</h2>
 
         <form method="post" action="./actions/clientes/cadastrar_clientes.php">
@@ -33,7 +45,10 @@
 
           <button type="submit" class="btn-submit">Cadastrar</button>
         </form>
+        <a class="link" href="logar.html">Já tem uma conta ? Faça login</a>
       </div>
     </div>
   </div>
-</div>
+</body>
+
+</html>

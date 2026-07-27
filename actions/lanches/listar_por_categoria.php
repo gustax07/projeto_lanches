@@ -8,8 +8,10 @@ header('Content-Type: application/json');
 
 $dados = json_decode(file_get_contents('php://input'), true);
 $id_categoria = $dados['id_categoria'];
+$pagina = isset($dados['pagina']) ? (int)$dados['pagina'] : 1;
+$offset = ($pagina -1) * 24;
 $itens->id_categoria_fk = $id_categoria;
-$itensCategoria = $itens->ListarPorCategoria();
+$itensCategoria = $itens->ListarPorCategoria(24, $offset);
 
 if ($itensCategoria) {
     echo json_encode(['status' => 'sucesso', 'lista' => $itensCategoria]);

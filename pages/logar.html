@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/icon_burguer.png" type="image/png">
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Login - Tasty Burguer</title>
+</head>
+
+<body>
+    <div class="login">
+        <div class="login-box">
+            <div class="row align-items-center mb-3">
+                <div class="col-2">
+                    <button class="btn-back" onclick="window.history.back()" type="button">
+                        <i class="bi bi-arrow-left"></i></button>
+                </div>
+                <div class="col-8">
+                    <h2 class="login-header">Login</h2>
+                </div>
+            </div>
+
+            <div class="group">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <span id="mensagem" class="mensagem">E-mail Inválido</span>
+                <label class="user-select-none">Email</label>
+            </div>
+
+            <div class="group">
+                <input type="password" id="senha" name="senha" placeholder=" " required>
+                <span id="toggleSenha" class="bi bi-eye-slash eye"></span>
+                <label class="user-select-none">Senha</label>
+                <span id="mensagem" class="mensagem">a senha deve conter no mínimo 6 caracteres</span>
+            </div>
+
+            <div class="link-footer">
+                <a class="link" href="cadastrar.html">Esqueci a senha</a>
+            </div>
+            <div class="captcha-box d-none">
+                <div class="g-recaptcha" data-sitekey="6LfOn3csAAAAAHV9Lm0HQia3ZfqKu4jEuiqKfans"></div>
+            </div>
+
+            <button class="btn-submit" onclick="Logar();">Entrar</button>
+
+            <p>Não tem uma conta? <a class="link" href="cadastrar.html">Crie uma</a></p>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById('toggleSenha').addEventListener('click', function () {
+            var senha = document.getElementById('senha');
+            if (senha.type === 'password') {
+                senha.type = 'text';
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye');
+            } else {
+                senha.type = 'password';
+                this.classList.remove('bi-eye');
+                this.classList.add('bi-eye-slash');
+            }
+        });
+
+        let count = 0;
+
+        async function Logar() {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const recaptcha = grecaptcha.getResponse();
+
+            const response = await fetch('/actions/funcionarios/logar_funcionarios.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    senha: senha,
+                    recaptcha: recaptcha || ''
+                }),
+                keepalive: true
+            });
+
+            const data = await response.json();
+            if (data.status == 'sucesso') {
+                window.location.href = '/'
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: data.message,
+                    showConfirmButton: false,
+                  
+                })
+            }
+
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>

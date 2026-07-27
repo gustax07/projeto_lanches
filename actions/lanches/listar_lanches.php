@@ -15,7 +15,7 @@ $itens_listar = $itens->Listar(24, $offset);
 if ($itens_listar){
     echo json_encode(['status' => 'sucesso', 'lista' => $itens_listar]);
 }else {
-    echo json_encode(['status' => 'erro', 'message' => 'Nenhum item Encontrado']);
+    echo json_encode(['status' => 'erro', 'message' => $offset]);
 }
 exit();
 ?>
