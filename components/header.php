@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="css/header.css">
-<script src="js/header.js" defer></script>
+<link rel="stylesheet" href="/css/header.css">
+<script src="/js/header.js" defer></script>
 
 <div class="header">
   <div class="site-header">
