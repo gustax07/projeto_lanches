@@ -3,7 +3,7 @@ namespace App;
 use PDO;
 use PDOException;
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+$dotenv->safeLoad();
 class Banco
 {
     private static $dbNome = null;
