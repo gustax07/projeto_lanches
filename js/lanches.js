@@ -15,7 +15,7 @@ async function carregarCategoria() {
     const id = url.searchParams.get('id');
 
     try {
-        const response = await fetch('actions/lanches/listar_por_categoria.php', {
+        const response = await fetch('/actions/lanches/listar_por_categoria.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ function renderCards() {
 async function carregarItens() {
 
     try {
-        const response = await fetch('actions/lanches/listar_lanches.php', {
+        const response = await fetch('/actions/lanches/listar_lanches.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,7 +5,7 @@ async function listarCategorias() {
     const idAtual = urlParams.get('id'); // Pega o ID da URL se existir
 
     try {
-        const response = await fetch('actions/categorias/listar_categorias.php');
+        const response = await fetch('/actions/categorias/listar_categorias.php');
         const dados = await response.json();
 
         if (dados.status == 'sucesso') {
